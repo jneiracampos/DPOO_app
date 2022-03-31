@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class App {
-	
+
 	/**
 	 * Ejecuta la aplicacion: le muestra el menu al usuario y le pide que ingrese 
 	 * una opcion, y ejecuta la opcion seleccionada por el usuario. Este proceso se
@@ -21,15 +21,13 @@ public class App {
 					System.out.println("Saliendo de la aplicacion...");
 					continuar = false;
 				}
-				
 			}
 			catch (NumberFormatException e) {
 				System.out.println("Debe seleccionar uno de las opciones");
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Muestra al usuario el menu con las opciones para que escoja la siguiente
 	 * accion que quiere ejecutar.
@@ -37,7 +35,7 @@ public class App {
 	public void mostrarMenu() {
 		System.out.println("\nOpciones de la aplicacion\n");
 	}
-	
+
 	/**
 	 * Este metodo sirve para imprimir un mensaje en la consola pidiendole
 	 * informacion al usuario y luego leer lo que escribe el usuario.
@@ -57,7 +55,7 @@ public class App {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Este es el metodo principal de la aplicacion, con el que inicia la ejecucion 
 	 * de la aplicacion
@@ -67,5 +65,4 @@ public class App {
 		App consola = new App();
 		consola.ejecutaraplicacion();
 	}
-
 }
