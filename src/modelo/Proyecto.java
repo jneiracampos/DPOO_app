@@ -12,15 +12,15 @@ public class Proyecto {
 	 */
 	private String descripcion;
 	/**
-	 * La descripcion del proyecto.
+	 * La fecha de inicio del proyecto.
 	 */
 	private LocalDate fechaInicio;
 	/**
-	 * La descripcion del proyecto.
+	 * La fecha de fin del proyecto.
 	 */
 	private LocalDate fechaFin;
 	/**
-	 * La descripcion del proyecto.
+	 * El participante creador del proyecto.
 	 */
 	private Participante participante;
 	

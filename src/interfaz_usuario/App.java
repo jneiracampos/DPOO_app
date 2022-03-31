@@ -16,8 +16,27 @@ public class App {
 		while(continuar) {
 			try {
 				mostrarMenu();
-				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opcion"));
+				int opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));
 				if (opcion_seleccionada == 1) {
+					
+				}
+
+				if (opcion_seleccionada == 2) {
+					
+				}
+
+				if (opcion_seleccionada == 3) {
+					
+				}
+
+				if (opcion_seleccionada == 4) {
+					
+				}
+
+				if (opcion_seleccionada == 5) {
+					
+				}
+				else if (opcion_seleccionada == 6) {
 					System.out.println("Saliendo de la aplicacion...");
 					continuar = false;
 				}
@@ -34,8 +53,15 @@ public class App {
 	 * Muestra al usuario el menu con las opciones para que escoja la siguiente
 	 * accion que quiere ejecutar.
 	 */
+	
 	public void mostrarMenu() {
 		System.out.println("\nOpciones de la aplicacion\n");
+		System.out.println("1. Crear proyecto");
+		System.out.println("2. Agregar otro participante");
+		System.out.println("3. Agregar una actividad");
+		System.out.println("4. Modificar fecha y hora de una actividad"); //revisar
+		System.out.println("5. Consultar reporte de un participante");
+		System.out.println("6. Salir de la aplicacion");
 	}
 	
 	/**
@@ -45,6 +71,7 @@ public class App {
 	 * @param mensaje
 	 * @return La cadena de caracteres que el usuario escriba como respuesta.
 	 */
+	
 	public String input(String mensaje) {
 		try {
 			System.out.print(mensaje + ": ");

@@ -36,8 +36,8 @@ public class Participante {
 	public Participante(String nombre, String correo) {
 		this.nombre = nombre;
 		this.correo = correo;
-		this.nombres = new HashMap<>();
-		this.correos = new HashMap<>();
+		this.nombres = new HashMap<String, String>();
+		this.correos = new HashMap<String, String>();
 		nombres.put(nombre, correo);
 		correos.put(correo, nombre);
 	}
