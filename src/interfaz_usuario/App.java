@@ -25,7 +25,7 @@ public class App {
 
 			try {
 
-				mostrarMenu();
+				mostrarMenu1();
 
 				int opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));
 				
@@ -36,30 +36,20 @@ public class App {
 					proyecto = Registro.nuevoProyecto("DPOO", "Proyecto", fechaInicio, fechaFin, participanteInicial);
 					System.out.println(proyecto.getNombre());
 					System.out.println(proyecto.getParticipante().getNombre());
+					ejecutarMenu();
 				}
 
-				if (opcion_seleccionada == 2) {
-					proyecto = Registro.getProyecto("DPOO"); //Se debe crear antes de abrir el proyecto
+				else if (opcion_seleccionada == 2) {
+					if (Registro.isProyecto("DPOO")) {
+						proyecto = Registro.getProyecto("DPOO");
+						ejecutarMenu();
+					} 
+					else {
+						System.out.println("No se tiene registro de este proyecto");
+					}
 				}
 
-				if (opcion_seleccionada == 3) {
-					Participante otroParticipante = Registro.nuevoParticipante("DP", "d.perez");
-					proyecto.addOtroParticipante(otroParticipante);
-					System.out.println(proyecto.getNombreOtroParticipante("d.perez"));
-					System.out.println(proyecto.getCorreoOtroParticipante("DP"));
-				}
-
-				if (opcion_seleccionada == 4) {
-					LocalDate fecha = LocalDate.of(2020,03,02);
-					Actividad actividad = Registro.nuevaActividad("Implementacion", "Tercera entrega", "Java", fecha);
-					proyecto.addActividad(actividad);
-					System.out.println(proyecto.getActividad("Implementacion").getDescripcion());
-				}
-
-				if (opcion_seleccionada == 5) {
-					
-				}
-				else if (opcion_seleccionada == 6) {
+				else if (opcion_seleccionada == 3) {
 					System.out.println("Saliendo de la aplicacion...");
 					continuar = false;
 				}
@@ -69,21 +59,60 @@ public class App {
 			}
 		}
 	}
+	
+	private void ejecutarMenu() {
+		
+		boolean continuar = true;
+		
+		while(continuar) {
+			try {
+				
+				mostrarMenu2();
+				
+				int opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));
+				
+				if (opcion_seleccionada == 1) {
+					Participante otroParticipante = Registro.nuevoParticipante("DP", "d.perez");
+					proyecto.addOtroParticipante(otroParticipante);
+					System.out.println(proyecto.getNombreOtroParticipante("d.perez"));
+					System.out.println(proyecto.getCorreoOtroParticipante("DP"));
+				}
+				
+				else if (opcion_seleccionada == 2) {
+					LocalDate fecha = LocalDate.of(2020,03,02);
+					Actividad actividad = Registro.nuevaActividad("Implementacion", "Tercera entrega", "Java", fecha);
+					proyecto.addActividad(actividad);
+					System.out.println(proyecto.getActividad("Implementacion").getDescripcion());
+				}
+				
+				else if (opcion_seleccionada == 3) {
+					
+				}
+				
+			}
+			catch (NumberFormatException e) {
+				System.out.println("Debe seleccionar uno de las opciones");
+			}	
+		}
+	}
 
 	/**
-	 * Muestra al usuario el menu con las opciones para que escoja la siguiente
-	 * accion que quiere ejecutar.
+	 * Muestra al usuario el menu con las opciones para que escoja la accion
+	 * que quiere ejecutar.
 	 */
 	
-	public void mostrarMenu() {
+	public void mostrarMenu1() {
 		System.out.println("\nOpciones de la aplicacion\n");
 		System.out.println("1. Crear proyecto");
 		System.out.println("2. Abrir proyecto");
-		System.out.println("3. Agregar otro participante");
-		System.out.println("4. Agregar una actividad");
-		System.out.println("5. Modificar fecha y hora de una actividad"); //revisar
-		System.out.println("6. Consultar reporte de un participante");
-		System.out.println("7. Salir de la aplicacion");
+		System.out.println("3. Salir de la aplicacion");
+	}
+	
+	private void mostrarMenu2() {
+		System.out.println("1. Agregar un participante");
+		System.out.println("2. Agregar una actividad");
+		System.out.println("3. Consultar reporte de un participante");
+		System.out.println("4. Volver al anterior menu");
 	}
 
 	/**

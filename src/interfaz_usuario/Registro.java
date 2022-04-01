@@ -6,6 +6,10 @@ import modelo.Participante;
 import modelo.Proyecto;
 import modelo.Actividad;
 
+/**
+ * Los metodos y variables deben ser static porque no tiene sentido que haya una instancia de la clase Registro
+ */
+
 public class Registro {
 	
 	/**
@@ -41,6 +45,10 @@ public class Registro {
 	//***************************************************************************************
 	// Otros metodos
 	//***************************************************************************************
+	
+	public static boolean isProyecto(String nombreProyecto) {
+		return proyectos.containsKey(nombreProyecto);
+	}
 	
 	public static Proyecto getProyecto(String nombreProyecto) {
 		return proyectos.get(nombreProyecto);
