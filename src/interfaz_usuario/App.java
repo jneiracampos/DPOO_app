@@ -39,21 +39,21 @@ public class App {
 				}
 
 				if (opcion_seleccionada == 2) {
+					proyecto = Registro.getProyecto("DPOO");
+				}
+
+				if (opcion_seleccionada == 3) {
 					Participante otroParticipante = Registro.nuevoParticipante("DP", "d.perez");
 					proyecto.addOtroParticipante(otroParticipante);
 					System.out.println(proyecto.getNombreOtroParticipante("d.perez"));
 					System.out.println(proyecto.getCorreoOtroParticipante("DP"));
 				}
 
-				if (opcion_seleccionada == 3) {
+				if (opcion_seleccionada == 4) {
 					LocalDate fecha = LocalDate.of(2020,03,02);
 					Actividad actividad = Registro.nuevaActividad("Implementacion", "Tercera entrega", "Java", fecha);
 					proyecto.addActividad(actividad);
 					System.out.println(proyecto.getActividad("Implementacion").getDescripcion());
-				}
-
-				if (opcion_seleccionada == 4) {
-					
 				}
 
 				if (opcion_seleccionada == 5) {
@@ -78,6 +78,7 @@ public class App {
 	public void mostrarMenu() {
 		System.out.println("\nOpciones de la aplicacion\n");
 		System.out.println("1. Crear proyecto");
+		System.out.println("1. Abrir proyecto");
 		System.out.println("2. Agregar otro participante");
 		System.out.println("3. Agregar una actividad");
 		System.out.println("4. Modificar fecha y hora de una actividad"); //revisar

@@ -11,7 +11,7 @@ public class Registro {
 	/**
 	 * HashMap que almacena las parejas (nombreProyecto: proyecto)
 	 */
-	private static HashMap<String, Proyecto> proyectos = new HashMap<String, Proyecto>();;
+	private static HashMap<String, Proyecto> proyectos = new HashMap<String, Proyecto>();
 	
 	//***************************************************************************************
 	// Constructores
@@ -40,5 +40,9 @@ public class Registro {
 	//***************************************************************************************
 	// Otros metodos
 	//***************************************************************************************
+	
+	public static Proyecto getProyecto(String nombreProyecto) {
+		return proyectos.get(nombreProyecto);
+	}
 	
 }
