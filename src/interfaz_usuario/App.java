@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
-
 import modelo.Actividad;
 import modelo.Participante;
 import modelo.Proyecto;

@@ -25,11 +25,11 @@ public class Proyecto {
 	 */
 	private Participante participante;
 	/**
-	 * HashMap que almacena las parejas (nombre: correo)
+	 * HashMap que almacena las parejas (nombreParticipante: correoParticipante)
 	 */
 	private HashMap<String, String> nombres;
 	/**
-	 * HashMap que almacena las parejas (correo: nombre)
+	 * HashMap que almacena las parejas (correoParticipante: nombreParticipante)
 	 */
 	private HashMap<String, String> correos;
 	/**
