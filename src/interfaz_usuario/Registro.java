@@ -1,6 +1,7 @@
 package interfaz_usuario;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import modelo.Participante;
 import modelo.Proyecto;
@@ -11,8 +12,9 @@ public class Registro {
 	/**
 	 * HashMap que almacena las parejas (nombreProyecto: proyecto)
 	 */
-	private static HashMap<String, Proyecto> proyectos = new HashMap<String, Proyecto>();;
-	
+	private static HashMap<String, Proyecto> proyectos = new HashMap<String, Proyecto>();
+	ArrayList<HashMap<String, ArrayList<String>>> listaProyectos = new ArrayList<HashMap<String, ArrayList<String>>>();
+	HashMap<String, ArrayList<String>> mapProyectos = new HashMap<String, ArrayList<String>>();
 	//***************************************************************************************
 	// Constructores
 	//***************************************************************************************
@@ -37,8 +39,33 @@ public class Registro {
 		return actividad;
 	}
 	
+	public Registro(String nuevoParticipante, String nuevaActividad) {
+
+		this.nuevoParticipante =nuevoParticipante;
+		this.nuevaActividad = nuevaActividad;
+		ArrayList<String> participante = new ArrayList<String>();
+		ArrayList<String> actividad = new ArrayList<String>();
+		participante.add(nuevoParticipante);
+		actividad.add(nuevaActividad);
+		mapProyectos.put("Participante", participante);
+		mapProyectos.put("Actividad", actividad);
+		listaProyectos.add(mapProyectos);
+		
+	
+	}
 	//***************************************************************************************
 	// Otros metodos
 	//***************************************************************************************
+	public int getProyecto() {
+		return idPedido;
+	}
+
+	public String getParticipante() {
+		return nombreParticipante;
+	}
+
+	public String getActividad() {
+		return actividad;
+	}
 	
 }
