@@ -4,36 +4,35 @@ import java.time.LocalDate;
 
 public class Actividad {
 	/**
-	 * El nombre del proyecto.
+	 * El nombre de la actividad.
 	 */
 	private String nombre;
 	/**
-	 * La descripcion del proyecto.
+	 * La descripcion de la actividad.
 	 */
 	private String descripcion;
 	/**
-	 * La fecha de inicio del proyecto.
+	 * El tipo de actividad.
 	 */
 	private String tipo;
 	/**
-	 * La fecha de fin del proyecto.
+	 * La fecha en que se realizó la actividad.
 	 */
 	private LocalDate fecha;
 	/**
-	 * El participante creador del proyecto.
+	 * El tiempo total invertido en esta actividad.
 	 */
-	private int tiempoTotal;
+	//private int tiempoTotal; COMENTADO PARA EVITAR LA ADVERTENCIA
 	
 	//******************************************************************
 	// Constructor
 	//******************************************************************
 		
-	public Actividad(String nombre, String descripcion, String tipo, LocalDate fecha, int tiempoTotal) {
+	public Actividad(String nombre, String descripcion, String tipo, LocalDate fecha) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.tipo = tipo;
 		this.fecha = fecha;
-		this.tiempoTotal = tiempoTotal;
 	}
 		
 	//******************************************************************
@@ -54,10 +53,6 @@ public class Actividad {
 
 	public LocalDate getFecha() {
 		return fecha;
-	}
-
-	public int getTiempoTotal() {
-		return tiempoTotal;
 	}
 	
 	//******************************************************************

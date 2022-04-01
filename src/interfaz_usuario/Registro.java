@@ -8,23 +8,39 @@ import modelo.Actividad;
 
 public class Registro {
 	
-	public Registro() {
-		
-	}
+	Proyecto proyecto;
+	Actividad actividad;
+	Participante participante;
 	
-	public Participante nuevoParticipante(String nombre, String correo) {
+	//***************************************************************************************
+	// Constructores de otras clases
+	//***************************************************************************************
+	
+	/**
+	 * Estos metodos inicializan los constructores de las clases en el modelo.
+	 */
+	
+	public static Participante nuevoParticipante(String nombre, String correo) {
 		Participante participante = new Participante(nombre, correo);
 		return participante;
 	}
 	
-	public Proyecto nuevoProyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Participante participanteInicial) {
+	public static Proyecto nuevoProyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Participante participanteInicial) {
 		Proyecto proyecto = new Proyecto(nombre, descripcion, fechaInicio, fechaFin, participanteInicial);
 		return proyecto;
 	}
 	
-	public Actividad nuevaActividad(String nombre, String descripcion, String tipo, LocalDate fecha, int tiempoTotal) {
-		Actividad actividad = new Actividad(nombre, descripcion, tipo, fecha, tiempoTotal);
+	public static Actividad nuevaActividad(String nombre, String descripcion, String tipo, LocalDate fecha) {
+		Actividad actividad = new Actividad(nombre, descripcion, tipo, fecha);
 		return actividad;
 	}
+	
+	//***************************************************************************************
+	// Otros metodos
+	//***************************************************************************************
+	
+	/**
+	 * Llamado a metodos de la clase Proyecto.
+	 */
 	
 }

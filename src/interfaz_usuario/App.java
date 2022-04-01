@@ -3,30 +3,54 @@ package interfaz_usuario;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
+
+import modelo.Actividad;
+import modelo.Participante;
+import modelo.Proyecto;
 
 public class App {
-
+	
+	Proyecto proyecto;
+	
 	/**
 	 * Ejecuta la aplicacion: le muestra el menu al usuario y le pide que ingrese 
 	 * una opcion, y ejecuta la opcion seleccionada por el usuario. Este proceso se
 	 * repite hasta que el usuario seleccione la opcion de abandonar la aplicacion.
 	 */
 	public void ejecutaraplicacion() {
+
 		boolean continuar = true;
+
 		while(continuar) {
+
 			try {
+
 				mostrarMenu();
+
 				int opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));
+				
 				if (opcion_seleccionada == 1) {
-					
+					Participante participanteInicial = Registro.nuevoParticipante("JC", "j.neira");
+					LocalDate fechaInicio = LocalDate.of(2020,03,02);
+					LocalDate fechaFin = LocalDate.of(2020,04,02);
+					proyecto = Registro.nuevoProyecto("DPOO", "Proyecto", fechaInicio, fechaFin, participanteInicial);
+					System.out.println(proyecto.getNombre());
+					System.out.println(proyecto.getParticipante().getNombre());
 				}
 
 				if (opcion_seleccionada == 2) {
-					
+					Participante otroParticipante = Registro.nuevoParticipante("DP", "d.perez");
+					proyecto.addOtroParticipante(otroParticipante);
+					System.out.println(proyecto.getNombreOtroParticipante("d.perez"));
+					System.out.println(proyecto.getCorreoOtroParticipante("DP"));
 				}
 
 				if (opcion_seleccionada == 3) {
-					
+					LocalDate fecha = LocalDate.of(2020,03,02);
+					Actividad actividad = Registro.nuevaActividad("Implementacion", "Tercera entrega", "Java", fecha);
+					proyecto.addActividad(actividad);
+					System.out.println(proyecto.getActividad("Implementacion").getDescripcion());
 				}
 
 				if (opcion_seleccionada == 4) {

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Proyecto {
 	/**
@@ -23,6 +24,18 @@ public class Proyecto {
 	 * El participante creador del proyecto.
 	 */
 	private Participante participante;
+	/**
+	 * HashMap que almacena las parejas (nombre: correo)
+	 */
+	private HashMap<String, String> nombres;
+	/**
+	 * HashMap que almacena las parejas (correo: nombre)
+	 */
+	private HashMap<String, String> correos;
+	/**
+	 * HashMap que almacena las parejas (nombreActividad: actividad)
+	 */
+	private HashMap<String, Actividad> actividades;
 	
 	//******************************************************************
 	// Constructor
@@ -45,11 +58,14 @@ public class Proyecto {
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.participante = participanteInicial;
+		this.nombres = new HashMap<String, String>();
+		this.correos = new HashMap<String, String>();
+		this.actividades = new HashMap<String, Actividad>();
 	}
 	
-	//******************************************************************
+	//************************************************************************************
 	// Metodos para consultar los atributos
-	//******************************************************************
+	//************************************************************************************
 
 	public String getNombre() {
 		return nombre;
@@ -71,7 +87,32 @@ public class Proyecto {
 		return participante;
 	}
 	
-	//******************************************************************
-	// Otros metodos
-	//******************************************************************
+	//************************************************************************************
+	// Metodos para almacenar otros participantes a una instancia de Proyecto
+	//************************************************************************************
+	
+	public void addOtroParticipante(Participante otroParticipante) {
+		nombres.put(otroParticipante.getNombre(), otroParticipante.getCorreo());
+		correos.put(otroParticipante.getCorreo(), otroParticipante.getNombre());
+	}
+	
+	public String getNombreOtroParticipante(String correo) {
+		return correos.get(correo);
+	}
+	
+	public String getCorreoOtroParticipante(String nombre) {
+		return nombres.get(nombre);
+	}
+	
+	//************************************************************************************
+	// Metodos para almacenar actividades a una instancia de Proyecto
+	//************************************************************************************
+	
+	public void addActividad(Actividad actividad) {
+		actividades.put(actividad.getNombre(), actividad);
+	}
+	
+	public Actividad getActividad(String nombreActividad) {
+		return actividades.get(nombreActividad);
+	}
 }
