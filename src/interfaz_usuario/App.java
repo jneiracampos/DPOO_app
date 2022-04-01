@@ -10,7 +10,7 @@ import modelo.Proyecto;
 
 public class App {
 	
-	Proyecto proyecto;
+	private Proyecto proyecto;
 	
 	/**
 	 * Ejecuta la aplicacion: le muestra el menu al usuario y le pide que ingrese 
@@ -39,7 +39,7 @@ public class App {
 				}
 
 				if (opcion_seleccionada == 2) {
-					proyecto = Registro.getProyecto("DPOO");
+					proyecto = Registro.getProyecto("DPOO"); //Se debe crear antes de abrir el proyecto
 				}
 
 				if (opcion_seleccionada == 3) {
@@ -78,12 +78,12 @@ public class App {
 	public void mostrarMenu() {
 		System.out.println("\nOpciones de la aplicacion\n");
 		System.out.println("1. Crear proyecto");
-		System.out.println("1. Abrir proyecto");
-		System.out.println("2. Agregar otro participante");
-		System.out.println("3. Agregar una actividad");
-		System.out.println("4. Modificar fecha y hora de una actividad"); //revisar
-		System.out.println("5. Consultar reporte de un participante");
-		System.out.println("6. Salir de la aplicacion");
+		System.out.println("2. Abrir proyecto");
+		System.out.println("3. Agregar otro participante");
+		System.out.println("4. Agregar una actividad");
+		System.out.println("5. Modificar fecha y hora de una actividad"); //revisar
+		System.out.println("6. Consultar reporte de un participante");
+		System.out.println("7. Salir de la aplicacion");
 	}
 
 	/**
