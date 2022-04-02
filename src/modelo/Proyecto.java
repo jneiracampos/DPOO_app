@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Proyecto {
@@ -25,17 +26,30 @@ public class Proyecto {
 	 */
 	private Participante participante;
 	/**
-	 * HashMap que almacena las parejas (nombreParticipante: correoParticipante)
+	 * HashMap que almacena las parejas (nombreParticipante: Participante)
 	 */
-	private HashMap<String, String> nombres;
+	private HashMap<String, Participante> nombres;
 	/**
-	 * HashMap que almacena las parejas (correoParticipante: nombreParticipante)
+	 * HashMap que almacena las parejas (correoParticipante: Participante)
 	 */
-	private HashMap<String, String> correos;
+	private HashMap<String, Participante> correos;
 	/**
-	 * HashMap que almacena las parejas (nombreActividad: actividad)
+	 * ArrayList que almacena objetos de tipo Actividad
 	 */
-	private HashMap<String, Actividad> actividades;
+	private ArrayList<Actividad> arregloActividades;
+	/**
+	 * HashMap que almacena las parejas (nombreActividad: ArrayList(Actividad))
+	 */
+	private HashMap<String, ArrayList<Actividad>> actividades;
+	/**
+	 * HashMap que almacena las parejas (nombreParticipante: HashMap(diaActividad: ArrayList(Actividad)))
+	 */
+	private HashMap<String, HashMap<LocalDate, ArrayList<Actividad>>> diaActividadPorParticipante;
+	/**
+	 * HashMap que almacena las parejas (nombreParticipante: HashMap(tipoActividad: ArrayList(Actividad)))
+	 */
+	private HashMap<String, HashMap<String, ArrayList<Actividad>>> tipoActividadesPorParticipante;
+	
 	
 	//******************************************************************
 	// Constructor
@@ -58,9 +72,11 @@ public class Proyecto {
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.participante = participanteInicial;
-		this.nombres = new HashMap<String, String>();
-		this.correos = new HashMap<String, String>();
-		this.actividades = new HashMap<String, Actividad>();
+		this.nombres = new HashMap<String, Participante>();
+		this.correos = new HashMap<String, Participante>();
+		this.actividades = new HashMap<String, ArrayList<Actividad>>();
+		this.diaActividadPorParticipante = new HashMap<String, HashMap<LocalDate, ArrayList<Actividad>>>();
+		this.tipoActividadesPorParticipante = new HashMap<String, HashMap<String, ArrayList<Actividad>>>();
 	}
 	
 	//************************************************************************************
@@ -87,32 +103,64 @@ public class Proyecto {
 		return participante;
 	}
 	
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setFechaFin(LocalDate fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+	
 	//************************************************************************************
 	// Metodos para almacenar otros participantes a una instancia de Proyecto
 	//************************************************************************************
 	
 	public void addOtroParticipante(Participante otroParticipante) {
-		nombres.put(otroParticipante.getNombre(), otroParticipante.getCorreo());
-		correos.put(otroParticipante.getCorreo(), otroParticipante.getNombre());
+		nombres.put(otroParticipante.getNombre(), otroParticipante);
+		correos.put(otroParticipante.getCorreo(), otroParticipante);
 	}
-	
-	public String getNombreOtroParticipante(String correo) {
-		return correos.get(correo);
-	}
-	
-	public String getCorreoOtroParticipante(String nombre) {
+
+	public Participante getParticipantePorNombre(String nombre) {
 		return nombres.get(nombre);
 	}
+	
+	public Participante getParticipantePorCorreo(String correo) {
+		return correos.get(correo);
+	}
+
+	public boolean isParticipantePorNombre(String nombre) {
+		return nombres.containsKey(nombre);
+	}
+	
+	public boolean isParticipantePorCorreo(String correo) {
+		return correos.containsKey(correo);
+	}
+	
 	
 	//************************************************************************************
 	// Metodos para almacenar actividades a una instancia de Proyecto
 	//************************************************************************************
 	
 	public void addActividad(Actividad actividad) {
-		actividades.put(actividad.getNombre(), actividad);
+		arregloActividades = new ArrayList<Actividad>();
+		arregloActividades.add(actividad);
+		actividades.put(actividad.getParticipanteActividad().getCorreo(), arregloActividades);
 	}
 	
-	public Actividad getActividad(String nombreActividad) {
-		return actividades.get(nombreActividad);
+	public void addDiaActividadPorParticipante(Actividad actividad) {
+		HashMap<LocalDate, ArrayList<Actividad>> localDate = new HashMap<LocalDate, ArrayList<Actividad>>();
+		arregloActividades = new ArrayList<Actividad>();
+		arregloActividades.add(actividad);
+		localDate.put(actividad.getFecha(), arregloActividades);
+		diaActividadPorParticipante.put(actividad.getParticipanteActividad().getCorreo(), localDate);
+	}
+	
+	public void addTipoActividadesPorParticipante(Actividad actividad) {
+		HashMap<String, ArrayList<Actividad>> tipo = new HashMap<String, ArrayList<Actividad>>();
+		arregloActividades = new ArrayList<Actividad>();
+		arregloActividades.add(actividad);
+		tipo.put(actividad.getTipo(), arregloActividades);
+		tipoActividadesPorParticipante.put(actividad.getParticipanteActividad().getCorreo(), tipo);
+		
 	}
 }

@@ -1,6 +1,7 @@
 package interfaz_usuario;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import modelo.Participante;
 import modelo.Proyecto;
@@ -36,8 +37,8 @@ public class Registro {
 		return participante;
 	}
 	
-	public static Actividad nuevaActividad(String nombre, String descripcion, String tipo, LocalDate fecha) {
-		Actividad actividad = new Actividad(nombre, descripcion, tipo, fecha);
+	public static Actividad nuevaActividad(String nombre, String descripcion, String tipo, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Participante participante) {
+		Actividad actividad = new Actividad(nombre, descripcion, tipo, fecha, horaInicio, horaFin, participante);
 		return actividad;
 	}
 
