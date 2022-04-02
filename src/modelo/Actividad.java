@@ -1,5 +1,6 @@
 package modelo;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -35,7 +36,7 @@ public class Actividad {
 	/**
 	 * El tiempo total invertido en esta actividad.
 	 */
-	private LocalTime tiempoTotal;
+	private long tiempoTotal;
 	
 	//******************************************************************
 	// Constructor
@@ -76,6 +77,19 @@ public class Actividad {
 		return participante;
 	}
 	
+	public LocalTime getHoraInicio() {
+		return horaInicio;
+	}
+
+	public LocalTime getHoraFin() {
+		return horaFin;
+	}
+	
+	public long getTiempoTotal() {
+		tiempoTotal = Duration.between(horaInicio, horaFin).toMinutes();
+		return tiempoTotal;
+	}
+	
 	//******************************************************************
 	// Otros metodos
 	//******************************************************************
@@ -91,6 +105,7 @@ public class Actividad {
 	public void setHoraFin(LocalTime horaFin) {
 		this.horaFin = horaFin;
 	}
+	
 	
 	
 }

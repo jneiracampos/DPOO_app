@@ -17,6 +17,7 @@ public class Registro {
 	 * HashMap que almacena las parejas (nombreProyecto: proyecto)
 	 */
 	private static HashMap<String, Proyecto> proyectos = new HashMap<String, Proyecto>();
+	private static HashMap<String, Actividad> actividades = new HashMap<String, Actividad>();
 
 	//***************************************************************************************
 	// Constructores
@@ -39,6 +40,7 @@ public class Registro {
 	
 	public static Actividad nuevaActividad(String nombre, String descripcion, String tipo, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Participante participante) {
 		Actividad actividad = new Actividad(nombre, descripcion, tipo, fecha, horaInicio, horaFin, participante);
+		actividades.put(nombre, actividad);
 		return actividad;
 	}
 
@@ -53,5 +55,9 @@ public class Registro {
 	
 	public static Proyecto getProyecto(String nombreProyecto) {
 		return proyectos.get(nombreProyecto);
-	}	
+	}
+	
+	public static Actividad getActividad(String nombreActividad) {
+		return actividades.get(nombreActividad);
+	}
 }

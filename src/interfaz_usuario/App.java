@@ -85,9 +85,10 @@ public class App {
 					//Fecha de inicio del proyecto
 					LocalDate fechaInicio = LocalDate.now();
 					//Fecha de fin del proyecto
-					anio = Integer.parseInt(input("Ingrese el año de fin del proyecto"));
-					mes = Integer.parseInt(input("Ingrese el mes de fin del proyecto"));
-					dia = Integer.parseInt(input("Ingrese el dia de fin del proyecto"));
+					System.out.println("Ingrese una fecha aproximada del fin del proyecto:");
+					dia = Integer.parseInt(input("Dia"));
+					mes = Integer.parseInt(input("Mes"));
+					anio = Integer.parseInt(input("Año"));
 					LocalDate fechaFin = LocalDate.of(anio, mes, dia);
 					//Crear proyecto
 					if (fechaFin.isAfter(fechaInicio)) {
@@ -152,15 +153,64 @@ public class App {
 						System.out.println("\nSe añadió exitosamente al participante llamado " + proyecto.getParticipantePorCorreo(correoParticipante).getNombre() + ".");
 					}
 				}
+				
 				else if (opcion_seleccionada == 4) {
-					correoParticipante = input("\nIngrese el correo del participante que realizó la actividad");
-					if (proyecto.isParticipantePorCorreo(correoParticipante) || proyecto.getParticipante().getCorreo().equals(correoParticipante)) {
+					boolean seguir = true;
+					int propia = Integer.parseInt(input("\n¿Vas a registrar la actividad de otra persona? (1=Si, 2=No)"));
+					if (propia == 2) {
+						participante = proyecto.getParticipante();
+					}
+					else {
+						correoParticipante = input("\nIngrese el correo del participante que realizó la actividad");
 						if (proyecto.isParticipantePorCorreo(correoParticipante)) {
 							participante = proyecto.getParticipantePorCorreo(correoParticipante);
 						}
-						else if (proyecto.getParticipante().getCorreo().equals(correoParticipante)) {
-							participante = proyecto.getParticipante();
+						else {
+							System.out.println("\nNo existe un participante con este correo.");
+							seguir = false;
 						}
+					}
+					if (seguir == true) {
+						// Atributos de la actividad
+						String nombreActividad = input("Ingrese el nombre de la actividad");
+						String descripcion = input("Ingrese la descripcion de la actividad");
+						String tipo = input("Ingrese el tipo de actividad");
+						//Fecha de inicio de la atividad
+						LocalDate fecha = LocalDate.now();
+						//Hora de inicio de la actividad
+						LocalTime horaInicio = LocalTime.now();
+						//Hora de fin de la actividad
+						System.out.println("Ingrese una fecha aproximada del fin de la actividad:");
+						hora = Integer.parseInt(input("Hora"));
+						minuto = Integer.parseInt(input("Minuto"));
+						LocalTime horaFin = LocalTime.of(hora, minuto);
+						//Crear una actividad
+						Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcion, tipo, fecha, horaInicio, horaFin, participante);
+						//Almacenar la actividad
+						proyecto.addActividad(actividad);
+						proyecto.addDiaActividadPorParticipante(actividad);
+						proyecto.addTipoActividadesPorParticipante(actividad);
+						System.out.println("\n¡La actividad se registro con exito!");
+					}
+				}
+				
+				else if (opcion_seleccionada == 5) {
+					boolean seguir = true;
+					int propia = Integer.parseInt(input("\n¿Vas a registrar la actividad de otra persona? (1=Si, 2=No)"));
+					if (propia == 2) {
+						participante = proyecto.getParticipante();
+					}
+					else {
+						correoParticipante = input("\nIngrese el correo del participante que realizó la actividad");
+						if (proyecto.isParticipantePorCorreo(correoParticipante)) {
+							participante = proyecto.getParticipantePorCorreo(correoParticipante);
+						}
+						else {
+							System.out.println("\nNo existe un participante con este correo.");
+							seguir = false;
+						}
+					}
+					if (seguir == true) {
 						// Atributos de la actividad
 						String nombreActividad = input("Ingrese el nombre de la actividad");
 						String descripcion = input("Ingrese la descripcion de la actividad");
@@ -184,18 +234,23 @@ public class App {
 						proyecto.addActividad(actividad);
 						proyecto.addDiaActividadPorParticipante(actividad);
 						proyecto.addTipoActividadesPorParticipante(actividad);
+						System.out.println("\n¡La actividad se registro con exito!");
 					}
-					else {
-						System.out.println("\nNo existe un participante con este correo.");
-					}	
 				}
-				else if (opcion_seleccionada == 5) {
-					
-				}
+				
 				else if (opcion_seleccionada == 6) {
-					
+					String nombreActividad = input("Ingrese el nombre de la actividad que desea modificar");
+					Actividad actividad = Registro.getActividad(nombreActividad);
+					hora = Integer.parseInt(input("Hora"));
+					minuto = Integer.parseInt(input("Minuto"));
+					LocalTime horaFin = LocalTime.of(hora, minuto);
+					actividad.setHoraFin(horaFin);
+					System.out.println("\nSe actualizó exitosamente la hora de fin de la actividad a " + actividad.getHoraFin() + ".");
 				}
 				else if (opcion_seleccionada == 7) {
+					
+				}
+				else if (opcion_seleccionada == 8) {
 					System.out.println("\nVolviendo al anterior menu...");
 					continuar = false;
 				}
@@ -222,10 +277,11 @@ public class App {
 		System.out.println("1. Cambiar la descripcion del proyecto");
 		System.out.println("2. Cambiar la fecha de fin del proyecto");
 		System.out.println("3. Registrar un participante");
-		System.out.println("4. Registar una actividad pasada");
-		System.out.println("5. Realizar una actividad");
-		System.out.println("6. Consultar reporte de un participante");
-		System.out.println("7. Volver al anterior menu");
+		System.out.println("4. Registrar una actividad");
+		System.out.println("5. Registar una actividad pasada");
+		System.out.println("6. Cambiar la hora de fin una actividad");		
+		System.out.println("7. Consultar reporte de un participante");
+		System.out.println("8. Volver al anterior menu");
 	}
 	
 
