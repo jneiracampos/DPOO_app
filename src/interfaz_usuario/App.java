@@ -63,20 +63,24 @@ public class App {
 	 */
 
 	private void ejecutaraplicacion() {
+		
+		System.out.println("Por favor ingrese los siguientes datos para iniciar a la aplicacion\n");
+		nombreParticipante = input("Nombre");
+		correoParticipante = input("Correo");
+		usuario = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
+		
 		boolean continuar = true;
 		while(continuar) {
 			try {
-	
-				System.out.println("Por favor ingrese los siguientes datos para ingresar a la aplicacion\n");
-				nombreParticipante = input("Nombre");
-				correoParticipante = input("Correo");
-				usuario = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
-				
 				mostrarMenu1();
 				int opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));				
 				if (opcion_seleccionada == 1) {
 					//Nombre y descripcion del proyecto
 					String nombreProyecto = input("Ingrese el nombre del proyecto");
+					while (Registro.isProyecto(nombreProyecto)) {
+						System.out.println("\nExiste un proyecto con este nombre.\n");
+						nombreProyecto = input("Ingrese el nombre del proyecto");
+					}
 					String descripcionProyecto = input("Ingrese la descripcion del proyecto");
 					//Fecha de inicio del proyecto
 					LocalDate fechaInicio = LocalDate.now();
