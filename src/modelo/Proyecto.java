@@ -49,6 +49,14 @@ public class Proyecto {
 	 * HashMap que almacena las parejas (nombreParticipante: HashMap(tipoActividad: ArrayList(Actividad)))
 	 */
 	private HashMap<String, HashMap<String, ArrayList<Actividad>>> tipoActividadesPorParticipante;
+	/**
+	 * HashMap que almacena las parejas (fechaActividad: arrayList(Actividad))
+	 */
+	private HashMap<LocalDate, ArrayList<Actividad>> localDate;
+	/**
+	 * HashMap que almacena las parejas (tipoActividad: arrayList(Actividad))
+	 */
+	private HashMap<String, ArrayList<Actividad>> tipo;
 	
 	
 	//******************************************************************
@@ -141,26 +149,57 @@ public class Proyecto {
 	// Metodos para almacenar actividades a una instancia de Proyecto
 	//************************************************************************************
 	
-	public void addActividad(Actividad actividad) {
-		arregloActividades = new ArrayList<Actividad>();
-		arregloActividades.add(actividad);
-		actividades.put(actividad.getParticipanteActividad().getCorreo(), arregloActividades);
+	public void addActividadPorParticipante(Actividad actividad) {
+		if(actividades.containsKey(actividad.getParticipanteActividad().getCorreo())) {
+			arregloActividades = actividades.get(actividad.getParticipanteActividad().getCorreo());
+			arregloActividades.add(actividad);				
+		}
+		else {
+			arregloActividades = new ArrayList<Actividad>();
+			arregloActividades.add(actividad);
+			actividades.put(actividad.getParticipanteActividad().getCorreo(), arregloActividades);
+		}
 	}
 	
 	public void addDiaActividadPorParticipante(Actividad actividad) {
-		HashMap<LocalDate, ArrayList<Actividad>> localDate = new HashMap<LocalDate, ArrayList<Actividad>>();
-		arregloActividades = new ArrayList<Actividad>();
-		arregloActividades.add(actividad);
-		localDate.put(actividad.getFecha(), arregloActividades);
-		diaActividadPorParticipante.put(actividad.getParticipanteActividad().getCorreo(), localDate);
+		if(diaActividadPorParticipante.containsKey(actividad.getParticipanteActividad().getCorreo())) {
+			if(localDate.containsKey(actividad.getFecha())) {
+				arregloActividades = localDate.get(actividad.getFecha());
+				arregloActividades.add(actividad);
+			}
+			else {
+				arregloActividades = new ArrayList<Actividad>();
+				arregloActividades.add(actividad);
+				localDate.put(actividad.getFecha(), arregloActividades);
+			}
+		}
+		else {
+			localDate = new HashMap<LocalDate, ArrayList<Actividad>>();
+			arregloActividades = new ArrayList<Actividad>();
+			arregloActividades.add(actividad);
+			diaActividadPorParticipante.put(actividad.getParticipanteActividad().getCorreo(), localDate);
+			localDate.put(actividad.getFecha(), arregloActividades);
+		}
 	}
 	
 	public void addTipoActividadesPorParticipante(Actividad actividad) {
-		HashMap<String, ArrayList<Actividad>> tipo = new HashMap<String, ArrayList<Actividad>>();
-		arregloActividades = new ArrayList<Actividad>();
-		arregloActividades.add(actividad);
-		tipo.put(actividad.getTipo(), arregloActividades);
-		tipoActividadesPorParticipante.put(actividad.getParticipanteActividad().getCorreo(), tipo);
-		
+		if(tipoActividadesPorParticipante.containsKey(actividad.getParticipanteActividad().getCorreo())) {
+			if(tipo.containsKey(actividad.getTipo())) {
+				arregloActividades = tipo.get(actividad.getTipo());
+				arregloActividades.add(actividad);
+			}
+			else {
+				arregloActividades = new ArrayList<Actividad>();
+				arregloActividades.add(actividad);
+				tipo.put(actividad.getTipo(), arregloActividades);
+			}
+		}
+		else {
+			tipo = new HashMap<String, ArrayList<Actividad>>();
+			arregloActividades = new ArrayList<Actividad>();
+			arregloActividades.add(actividad);
+			tipoActividadesPorParticipante.put(actividad.getParticipanteActividad().getCorreo(), tipo);
+			tipo.put(actividad.getTipo(), arregloActividades);
+		}
 	}
 }

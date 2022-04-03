@@ -60,4 +60,8 @@ public class Registro {
 	public static Actividad getActividad(String nombreActividad) {
 		return actividades.get(nombreActividad);
 	}
+	
+	public static boolean isActividad(String nombreActividad) {
+		return actividades.containsKey(nombreActividad);
+	}
 }

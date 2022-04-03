@@ -24,6 +24,10 @@ public class App {
 	 */
 	private Proyecto proyecto;
 	/**
+	 * Actividad
+	 */
+	private Actividad actividad;
+	/**
 	 * Anio
 	 */
 	private int anio;
@@ -156,12 +160,12 @@ public class App {
 				
 				else if (opcion_seleccionada == 4) {
 					boolean seguir = true;
-					int propia = Integer.parseInt(input("\n¿Vas a registrar la actividad de otra persona? (1=Si, 2=No)"));
+					int propia = Integer.parseInt(input("\n¿Otro usuario va a realizar la actividad? (1=Si, 2=No)"));
 					if (propia == 2) {
-						participante = proyecto.getParticipante();
+						participante = usuario;
 					}
 					else {
-						correoParticipante = input("\nIngrese el correo del participante que realizó la actividad");
+						correoParticipante = input("\nIngrese el correo del participante que va a realizar la actividad");
 						if (proyecto.isParticipantePorCorreo(correoParticipante)) {
 							participante = proyecto.getParticipantePorCorreo(correoParticipante);
 						}
@@ -174,23 +178,71 @@ public class App {
 						// Atributos de la actividad
 						String nombreActividad = input("Ingrese el nombre de la actividad");
 						String descripcion = input("Ingrese la descripcion de la actividad");
-						String tipo = input("Ingrese el tipo de actividad");
+						//Tipo de actividad
+						String tipo = null;
+						mostrarTipoActividades();
+						int tipoActividad = Integer.parseInt(input("Ingrese el tipo de actividad"));
+						try {
+							if (tipoActividad == 1) {
+								tipo = "Documentacion";
+							}
+							else if (tipoActividad == 2) {
+								tipo = "Implementacion";
+							}
+							else if (tipoActividad == 3) {
+								tipo = "Pruebas";
+							}
+							else if (tipoActividad == 4) {
+								tipo = "Investigacion";
+							}
+							else if (tipoActividad == 5) {
+								tipo = "Diseño";
+							}
+							else if (tipoActividad == 6) {
+								tipo = "Analisis";
+							}
+							else if (tipoActividad == 7) {
+								tipo = input("Ingrese el tipo de actividad");
+							}
+						}
+						catch (NumberFormatException e) {
+							System.out.println("\nDebe seleccionar uno de las opciones");
+						}
 						//Fecha de inicio de la atividad
 						LocalDate fecha = LocalDate.now();
 						//Hora de inicio de la actividad
 						LocalTime horaInicio = LocalTime.now();
 						//Hora de fin de la actividad
-						System.out.println("Ingrese una fecha aproximada del fin de la actividad:");
-						hora = Integer.parseInt(input("Hora"));
-						minuto = Integer.parseInt(input("Minuto"));
-						LocalTime horaFin = LocalTime.of(hora, minuto);
+						LocalTime horaFin = null;
+						//Crea una instancia de Actividad con la horaFinal = null, que despues será reemplazada
+						actividad = Registro.nuevaActividad(nombreActividad, descripcion, tipo, fecha, horaInicio, horaFin, participante);
+						//Trabajar en la actividad
+						System.out.println("\nYa puede trabajar en su actividad...\n");
+						boolean condicion = true;
+						while (condicion) {
+							String comando = input("Oprima el boton 'P' para pausar la actividad o oprima el boton 'F' para finalizar la actividad");
+							if (comando.equals("P")) {
+								actividad.addTiempo(horaInicio, LocalTime.now());
+								comando = input("Oprima el boton 'R' para reanudar la actividad");
+							}
+							else if (comando.equals("F")) {
+								horaFin = LocalTime.now();
+								actividad.addTiempo(horaInicio, horaFin);
+								actividad.setHoraFin(horaFin);
+								condicion = false;
+							}
+						}
+						
 						//Crear una actividad
-						Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcion, tipo, fecha, horaInicio, horaFin, participante);
+						
 						//Almacenar la actividad
-						proyecto.addActividad(actividad);
+						proyecto.addActividadPorParticipante(actividad);
 						proyecto.addDiaActividadPorParticipante(actividad);
 						proyecto.addTipoActividadesPorParticipante(actividad);
 						System.out.println("\n¡La actividad se registro con exito!");
+						//Imprimir tiempo
+						System.out.println("¡Usted trabajó en esta actividad un total de " + actividad.getTiempoTotal() + " minutos!");
+						
 					}
 				}
 				
@@ -198,7 +250,7 @@ public class App {
 					boolean seguir = true;
 					int propia = Integer.parseInt(input("\n¿Vas a registrar la actividad de otra persona? (1=Si, 2=No)"));
 					if (propia == 2) {
-						participante = proyecto.getParticipante();
+						participante = usuario;
 					}
 					else {
 						correoParticipante = input("\nIngrese el correo del participante que realizó la actividad");
@@ -214,38 +266,88 @@ public class App {
 						// Atributos de la actividad
 						String nombreActividad = input("Ingrese el nombre de la actividad");
 						String descripcion = input("Ingrese la descripcion de la actividad");
-						String tipo = input("Ingrese el tipo de actividad");
+						//Tipo de actividades
+						String tipo = null;
+						mostrarTipoActividades();
+						int tipoActividad = Integer.parseInt(input("Ingrese el tipo de actividad"));
+						try {
+							if (tipoActividad == 1) {
+								tipo = "Documentacion";
+							}
+							else if (tipoActividad == 2) {
+								tipo = "Implementacion";
+							}
+							else if (tipoActividad == 3) {
+								tipo = "Pruebas";
+							}
+							else if (tipoActividad == 4) {
+								tipo = "Investigacion";
+							}
+							else if (tipoActividad == 5) {
+								tipo = "Diseño";
+							}
+							else if (tipoActividad == 6) {
+								tipo = "Analisis";
+							}
+							else if (tipoActividad == 7) {
+								tipo = input("Ingrese el tipo de actividad");
+							}
+						}
+						catch (NumberFormatException e) {
+							System.out.println("\nDebe seleccionar uno de las opciones");
+						}
 						//Fecha en la que se realizó la actividad
 						anio = Integer.parseInt(input("Ingrese el año de la actividad"));
 						mes = Integer.parseInt(input("Ingrese el mes de la actividad"));
 						dia = Integer.parseInt(input("Ingrese el dia de la actividad"));
 						LocalDate fecha = LocalDate.of(anio, mes, dia);
+						while (fecha.isAfter(LocalDate.now())) {
+							System.out.println("Por favor ingrese una fecha anterior a " + LocalDate.now() + ".");
+							anio = Integer.parseInt(input("Ingrese el año de la actividad"));
+							mes = Integer.parseInt(input("Ingrese el mes de la actividad"));
+							dia = Integer.parseInt(input("Ingrese el dia de la actividad"));
+							fecha = LocalDate.of(anio, mes, dia);
+						}
 						//Hora de inicio de la actividad
-						hora = Integer.parseInt(input("Ingrese la hora de inicio de la actividad"));
+						hora = Integer.parseInt(input("Ingrese la hora de inicio de la actividad (0:00-23:59)"));
 						minuto = Integer.parseInt(input("Ingrese el minuto de inicio de la actividad"));
 						LocalTime horaInicio = LocalTime.of(hora, minuto);
 						//Hora de fin de la actividad
-						hora = Integer.parseInt(input("Ingrese la hora de fin de la actividad"));
+						hora = Integer.parseInt(input("Ingrese la hora de fin de la actividad (0:00-23:59)"));
 						minuto = Integer.parseInt(input("Ingrese el minuto de fin de la actividad"));
 						LocalTime horaFin = LocalTime.of(hora, minuto);
+						while (horaFin.isBefore(horaInicio)) {
+							System.out.println("Por favor ingrese una hora posterior a " + horaInicio + ".");
+							hora = Integer.parseInt(input("Ingrese la hora de fin de la actividad (0:00-23:59)"));
+							minuto = Integer.parseInt(input("Ingrese el minuto de fin de la actividad"));
+							horaFin = LocalTime.of(hora, minuto);
+						}
 						//Crear una actividad
 						Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcion, tipo, fecha, horaInicio, horaFin, participante);
 						//Almacenar la actividad
-						proyecto.addActividad(actividad);
+						proyecto.addActividadPorParticipante(actividad);
 						proyecto.addDiaActividadPorParticipante(actividad);
 						proyecto.addTipoActividadesPorParticipante(actividad);
 						System.out.println("\n¡La actividad se registro con exito!");
+						//Imprimir tiempo
+						actividad.addTiempo(horaInicio, horaFin);
+						System.out.println("¡Usted trabajó en esta actividad un total de " + actividad.getTiempoTotal() + " minutos!");
 					}
 				}
 				
 				else if (opcion_seleccionada == 6) {
 					String nombreActividad = input("Ingrese el nombre de la actividad que desea modificar");
-					Actividad actividad = Registro.getActividad(nombreActividad);
-					hora = Integer.parseInt(input("Hora"));
-					minuto = Integer.parseInt(input("Minuto"));
-					LocalTime horaFin = LocalTime.of(hora, minuto);
-					actividad.setHoraFin(horaFin);
-					System.out.println("\nSe actualizó exitosamente la hora de fin de la actividad a " + actividad.getHoraFin() + ".");
+					if (Registro.isActividad(nombreActividad)) {
+						Actividad actividad = Registro.getActividad(nombreActividad);
+						hora = Integer.parseInt(input("Hora"));
+						minuto = Integer.parseInt(input("Minuto"));
+						LocalTime horaFin = LocalTime.of(hora, minuto);
+						actividad.setHoraFin(horaFin);
+						System.out.println("\nSe actualizó exitosamente la hora de fin de la actividad a " + actividad.getHoraFin() + ".");
+					}
+					else {
+						System.out.println("No existe una actividad con este nombre");
+					}
 				}
 				else if (opcion_seleccionada == 7) {
 					
@@ -277,13 +379,23 @@ public class App {
 		System.out.println("1. Cambiar la descripcion del proyecto");
 		System.out.println("2. Cambiar la fecha de fin del proyecto");
 		System.out.println("3. Registrar un participante");
-		System.out.println("4. Registrar una actividad");
+		System.out.println("4. Realizar una actividad");
 		System.out.println("5. Registar una actividad pasada");
 		System.out.println("6. Cambiar la hora de fin una actividad");		
 		System.out.println("7. Consultar reporte de un participante");
 		System.out.println("8. Volver al anterior menu");
 	}
 	
+	private void mostrarTipoActividades() {
+		System.out.println("Seleccione un tipo de actividad");
+		System.out.println("1. Documentacion");
+		System.out.println("2. Implementacion");
+		System.out.println("3. Pruebas");
+		System.out.println("4. Investigacion");
+		System.out.println("5. Diseño");
+		System.out.println("6. Analisis");
+		System.out.println("7. Otra");
+	}
 
 	/**
 	 * Este metodo sirve para imprimir un mensaje en la consola pidiendole

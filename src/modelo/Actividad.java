@@ -3,6 +3,7 @@ package modelo;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class Actividad {
 	/**
@@ -34,9 +35,14 @@ public class Actividad {
 	 */
 	private LocalTime horaFin;
 	/**
-	 * El tiempo total invertido en esta actividad.
+	 * ArrayList que almacena el tiempo que se invirtió en la actividad. 
+	 * Este se crea, ya que pueden existir pausas al realizar una actividad.
 	 */
-	private long tiempoTotal;
+	private ArrayList<Long> tiempoTotal = new ArrayList<Long>();
+	/**
+	 * Tiempo de la actividad
+	 */
+	private Long tiempo;
 	
 	//******************************************************************
 	// Constructor
@@ -86,8 +92,10 @@ public class Actividad {
 	}
 	
 	public long getTiempoTotal() {
-		tiempoTotal = Duration.between(horaInicio, horaFin).toMinutes();
-		return tiempoTotal;
+		for (int i = 0; i < tiempoTotal.size(); i++) {
+			tiempo = tiempoTotal.get(i);
+		}
+		return tiempo;
 	}
 	
 	//******************************************************************
@@ -106,6 +114,10 @@ public class Actividad {
 		this.horaFin = horaFin;
 	}
 	
+	public void addTiempo(LocalTime horaInicio, LocalTime horaFin) {
+		tiempo = Duration.between(horaInicio, horaFin).toMinutes();
+		tiempoTotal.add(tiempo);
+	}
 	
 	
 }
