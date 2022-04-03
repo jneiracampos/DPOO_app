@@ -330,9 +330,9 @@ public class App {
 						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadActividades) + " actividades.");
 						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTotal) + " minutos.");
 						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadTipoActividad) + " actividades de tipo " + tipo + ".");
-						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTipoActividad) + ".");
+						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTipoActividad) + " minutos.");
 						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadDiaActividad) + " actividades en la fecha " + fecha + ".");
-						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoDiaActividad) + ".");
+						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoDiaActividad) + " minutos.");
 					}
 				}
 				else if (opcion_seleccionada == 8) {
