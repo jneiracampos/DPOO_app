@@ -202,4 +202,20 @@ public class Proyecto {
 			tipo.put(actividad.getTipo(), arregloActividades);
 		}
 	}
+	
+	//************************************************************************************
+	// Metodos para consultar las estructuras de datos
+	//************************************************************************************
+	
+	public ArrayList<Actividad> getActividadPorParticipante(String correoParticipante) {
+		return actividades.get(correoParticipante);
+	}
+	
+	public ArrayList<Actividad> getDiaActividadPorParticipante(String correoParticipante, LocalDate fechaActividad) {
+		return diaActividadPorParticipante.get(correoParticipante).get(fechaActividad);
+	}
+	
+	public ArrayList<Actividad> getTipoActividadesPorParticipante(String correoParticipante, String tipoActividad) {
+		return tipoActividadesPorParticipante.get(correoParticipante).get(tipoActividad);
+	}
 }

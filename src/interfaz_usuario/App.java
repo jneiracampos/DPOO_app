@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import modelo.Actividad;
 import modelo.Participante;
 import modelo.Proyecto;
+import procesamiento.Reporte;
 
 public class App {
 	/**
@@ -179,35 +180,7 @@ public class App {
 						String nombreActividad = input("Ingrese el nombre de la actividad");
 						String descripcion = input("Ingrese la descripcion de la actividad");
 						//Tipo de actividad
-						String tipo = null;
-						mostrarTipoActividades();
-						int tipoActividad = Integer.parseInt(input("Ingrese el tipo de actividad"));
-						try {
-							if (tipoActividad == 1) {
-								tipo = "Documentacion";
-							}
-							else if (tipoActividad == 2) {
-								tipo = "Implementacion";
-							}
-							else if (tipoActividad == 3) {
-								tipo = "Pruebas";
-							}
-							else if (tipoActividad == 4) {
-								tipo = "Investigacion";
-							}
-							else if (tipoActividad == 5) {
-								tipo = "Diseño";
-							}
-							else if (tipoActividad == 6) {
-								tipo = "Analisis";
-							}
-							else if (tipoActividad == 7) {
-								tipo = input("Ingrese el tipo de actividad");
-							}
-						}
-						catch (NumberFormatException e) {
-							System.out.println("\nDebe seleccionar uno de las opciones");
-						}
+						String tipo = tipo();
 						//Fecha de inicio de la atividad
 						LocalDate fecha = LocalDate.now();
 						//Hora de inicio de la actividad
@@ -241,8 +214,7 @@ public class App {
 						proyecto.addTipoActividadesPorParticipante(actividad);
 						System.out.println("\n¡La actividad se registro con exito!");
 						//Imprimir tiempo
-						System.out.println("¡Usted trabajó en esta actividad un total de " + actividad.getTiempoTotal() + " minutos!");
-						
+						System.out.println("¡" + participante.getNombre()  + " trabajó en esta actividad un total de " + actividad.getTiempoTotal() + " minutos!");						
 					}
 				}
 				
@@ -267,39 +239,11 @@ public class App {
 						String nombreActividad = input("Ingrese el nombre de la actividad");
 						String descripcion = input("Ingrese la descripcion de la actividad");
 						//Tipo de actividades
-						String tipo = null;
-						mostrarTipoActividades();
-						int tipoActividad = Integer.parseInt(input("Ingrese el tipo de actividad"));
-						try {
-							if (tipoActividad == 1) {
-								tipo = "Documentacion";
-							}
-							else if (tipoActividad == 2) {
-								tipo = "Implementacion";
-							}
-							else if (tipoActividad == 3) {
-								tipo = "Pruebas";
-							}
-							else if (tipoActividad == 4) {
-								tipo = "Investigacion";
-							}
-							else if (tipoActividad == 5) {
-								tipo = "Diseño";
-							}
-							else if (tipoActividad == 6) {
-								tipo = "Analisis";
-							}
-							else if (tipoActividad == 7) {
-								tipo = input("Ingrese el tipo de actividad");
-							}
-						}
-						catch (NumberFormatException e) {
-							System.out.println("\nDebe seleccionar uno de las opciones");
-						}
+						String tipo = tipo();
 						//Fecha en la que se realizó la actividad
-						anio = Integer.parseInt(input("Ingrese el año de la actividad"));
-						mes = Integer.parseInt(input("Ingrese el mes de la actividad"));
 						dia = Integer.parseInt(input("Ingrese el dia de la actividad"));
+						mes = Integer.parseInt(input("Ingrese el mes de la actividad"));
+						anio = Integer.parseInt(input("Ingrese el año de la actividad"));
 						LocalDate fecha = LocalDate.of(anio, mes, dia);
 						while (fecha.isAfter(LocalDate.now())) {
 							System.out.println("Por favor ingrese una fecha anterior a " + LocalDate.now() + ".");
@@ -331,7 +275,7 @@ public class App {
 						System.out.println("\n¡La actividad se registro con exito!");
 						//Imprimir tiempo
 						actividad.addTiempo(horaInicio, horaFin);
-						System.out.println("¡Usted trabajó en esta actividad un total de " + actividad.getTiempoTotal() + " minutos!");
+						System.out.println("¡" + participante.getNombre()  + " trabajó en esta actividad un total de " + actividad.getTiempoTotal() + " minutos!");
 					}
 				}
 				
@@ -350,7 +294,46 @@ public class App {
 					}
 				}
 				else if (opcion_seleccionada == 7) {
-					
+					boolean seguir = true;
+					int propia = Integer.parseInt(input("\n¿Necesitas el reporte de otro participante? (1=Si, 2=No)"));
+					if (propia == 2) {
+						participante = usuario;
+					}
+					else {
+						correoParticipante = input("\nIngrese el correo del participante");
+						if (proyecto.isParticipantePorCorreo(correoParticipante)) {
+							participante = proyecto.getParticipantePorCorreo(correoParticipante);
+						}
+						else {
+							System.out.println("\nNo existe un participante con este correo.");
+							seguir = false;
+						}
+					}
+					if (seguir == true) {
+						//Tipo actividad
+						String tipo = tipo();
+						//Fecha de consulta
+						System.out.println("Ingrese la fecha que desea consultar en el reporte:");
+						dia = Integer.parseInt(input("Dia"));
+						mes = Integer.parseInt(input("Mes"));
+						anio = Integer.parseInt(input("Año"));
+						LocalDate fecha = LocalDate.of(anio, mes, dia);
+						//Reporte
+						long tiempoTotal = Reporte.getTiempoTotal(proyecto, participante.getCorreo());
+						int cantidadActividades = Reporte.getSizeTiempoTotal(proyecto, participante.getCorreo());
+						long tiempoTipoActividad = Reporte.getTiempoTipoActividad(proyecto, participante.getCorreo(), tipo);
+						int cantidadTipoActividad = Reporte.getSizeTiempoTipoActividad(proyecto, participante.getCorreo(), tipo);
+						long tiempoDiaActividad = Reporte.getTiempoDiaActividad(proyecto, participante.getCorreo(), fecha);
+						int cantidadDiaActividad = Reporte.getSizeTiempoDiaActividad(proyecto, participante.getCorreo(), fecha);
+						//Imprimir
+						System.out.println("\nSe le generó al participante llamado " + participante.getNombre() + " el siguiente reporte:");
+						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadActividades) + " actividades.");
+						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTotal) + " minutos.");
+						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadTipoActividad) + " actividades de tipo " + tipo + ".");
+						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTipoActividad) + ".");
+						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadDiaActividad) + " actividades en la fecha " + fecha + ".");
+						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoDiaActividad) + ".");
+					}
 				}
 				else if (opcion_seleccionada == 8) {
 					System.out.println("\nVolviendo al anterior menu...");
@@ -415,6 +398,43 @@ public class App {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	//*************************************************************************************************
+	// Funciones auxiliares
+	//*************************************************************************************************
+	
+	private String tipo() {
+		String tipo = null;
+		mostrarTipoActividades();
+		int tipoActividad = Integer.parseInt(input("Ingrese el tipo de actividad"));
+		try {
+			if (tipoActividad == 1) {
+				tipo = "Documentacion";
+			}
+			else if (tipoActividad == 2) {
+				tipo = "Implementacion";
+			}
+			else if (tipoActividad == 3) {
+				tipo = "Pruebas";
+			}
+			else if (tipoActividad == 4) {
+				tipo = "Investigacion";
+			}
+			else if (tipoActividad == 5) {
+				tipo = "Diseño";
+			}
+			else if (tipoActividad == 6) {
+				tipo = "Analisis";
+			}
+			else if (tipoActividad == 7) {
+				tipo = input("Ingrese el tipo de actividad");
+			}
+		}
+		catch (NumberFormatException e) {
+			System.out.println("\nDebe seleccionar uno de las opciones");
+		}
+		return tipo;
 	}
 
 	/**
