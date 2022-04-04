@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-import interfaz_usuario.Registro;
-
 public class Actividad {
 	/**
 	 * El nombre de la actividad.

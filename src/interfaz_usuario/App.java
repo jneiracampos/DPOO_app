@@ -65,6 +65,7 @@ public class App {
 	/**
 	 * Le muestra el menu al usuario, le solicita que ingrese una opcion y ejecuta esta opcion. 
 	 * Este proceso se repite hasta que el usuario seleccione la opcion de abandonar la aplicacion.
+	 * @throws IOException 
 	 */
 
 private void ejecutaraplicacion() {
@@ -102,6 +103,12 @@ private void ejecutaraplicacion() {
 							if (fechaFin.isAfter(fechaInicio)) {
 								proyecto = Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, usuario);
 								System.out.println("\n¡" + proyecto.getParticipante().getNombre() + "! Creaste exitosamente el proyecto llamado " + proyecto.getNombre() + ".");
+								try {
+									administradorDatos.generarArchivo(proyecto);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								ejecutarMenu();
 								continuar1 = false;
 							}
