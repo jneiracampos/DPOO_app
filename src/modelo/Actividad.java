@@ -119,7 +119,6 @@ public class Actividad {
 	public void addTiempo(LocalTime horaInicio, LocalTime horaFin) {
 		tiempo = Duration.between(horaInicio, horaFin).toMinutes();
 		tiempoTotal.add(tiempo);
-		Registro.tiempoTot += tiempo;
 	}
 	
 	
