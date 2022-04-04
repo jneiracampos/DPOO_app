@@ -69,7 +69,7 @@ public class App {
 
 	private void ejecutaraplicacion() {
 		
-		System.out.println("Por favor ingrese los siguientes datos para iniciar a la aplicacion\n");
+		System.out.println("Por favor ingresa los siguientes datos para iniciar a la aplicacion\n");
 		nombreParticipante = input("Nombre");
 		correoParticipante = input("Correo");
 		usuario = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
@@ -78,35 +78,44 @@ public class App {
 		while(continuar) {
 			try {
 				mostrarMenu1();
-				int opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));				
+				int opcion_seleccionada = Integer.parseInt(input("\nPor favor selecciona una opcion"));				
 				if (opcion_seleccionada == 1) {
 					//Nombre y descripcion del proyecto
-					String nombreProyecto = input("Ingrese el nombre del proyecto");
+					String nombreProyecto = input("Ingresa el nombre del proyecto");
 					while (Registro.isProyecto(nombreProyecto)) {
-						System.out.println("\nExiste un proyecto con este nombre.\n");
-						nombreProyecto = input("Ingrese el nombre del proyecto");
+						System.out.println("\nYa existe un proyecto con este nombre, por favor usa uno diferente.\n");
+						nombreProyecto = input("Ingresa el nombre del proyecto");
 					}
-					String descripcionProyecto = input("Ingrese la descripcion del proyecto");
+					String descripcionProyecto = input("Ingresa la descripcion del proyecto");
 					//Fecha de inicio del proyecto
 					LocalDate fechaInicio = LocalDate.now();
 					//Fecha de fin del proyecto
-					System.out.println("Ingrese una fecha aproximada del fin del proyecto:");
-					dia = Integer.parseInt(input("Dia"));
-					mes = Integer.parseInt(input("Mes"));
-					anio = Integer.parseInt(input("Año"));
-					LocalDate fechaFin = LocalDate.of(anio, mes, dia);
-					//Crear proyecto
-					if (fechaFin.isAfter(fechaInicio)) {
-						proyecto = Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, usuario);
-						System.out.println("\n¡" + proyecto.getParticipante().getNombre() + "! Creaste exitosamente el proyecto llamado " + proyecto.getNombre() + ".");
-						ejecutarMenu();
-					}
-					else {
-						System.out.println("\nIngrese una fecha de fin que sea posterior a la fecha de inicio " + fechaInicio + "\n");
+					boolean continuar1 = true;
+					while (continuar1) {
+						try {
+							System.out.println("Ingresa una fecha aproximada del fin del proyecto:");
+							dia = Integer.parseInt(input("Dia"));
+							mes = Integer.parseInt(input("Mes"));
+							anio = Integer.parseInt(input("Año"));
+							LocalDate fechaFin = LocalDate.of(anio, mes, dia);
+							//Crear proyecto
+							if (fechaFin.isAfter(fechaInicio)) {
+								proyecto = Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, usuario);
+								System.out.println("\n¡" + proyecto.getParticipante().getNombre() + "! Creaste exitosamente el proyecto llamado " + proyecto.getNombre() + ".");
+								ejecutarMenu();
+								continuar1 = false;
+							}
+							else {
+								System.out.println("\nIngresa una fecha de fin que sea posterior a la fecha de inicio " + fechaInicio + " (hoy)\n");
+							}
+						}
+						catch (NumberFormatException e) {
+							System.out.println("\nPor favor ingresa un valor valido.\n");
+						}
 					}
 				}
 				else if (opcion_seleccionada == 2) {
-					String nombreProyecto = input("\nIngrese el nombre del proyecto que desea abrir");
+					String nombreProyecto = input("\nIngresa el nombre del proyecto que desea abrir");
 					if (Registro.isProyecto(nombreProyecto)) {
 						proyecto = Registro.getProyecto(nombreProyecto);
 						System.out.println("\nSe abrió exitosamente el proyecto llamado " + proyecto.getNombre() + ".\n");
@@ -122,7 +131,7 @@ public class App {
 				}
 			}
 			catch (NumberFormatException e) {
-				System.out.println("\nDebe seleccionar uno de las opciones");
+				System.out.println("\nPor favor selecciona una opcion valida");
 			}
 		}
 	}
@@ -132,23 +141,38 @@ public class App {
 		while(continuar) {
 			try {	
 				mostrarMenu2();
-				int opcion_seleccionada = Integer.parseInt(input("\nPor favor seleccione una opcion"));
+				int opcion_seleccionada = Integer.parseInt(input("\nPor favor selecciona una opcion"));
 				if (opcion_seleccionada == 1) {
-					String descripcionProyecto = input("\nIngrese la nueva descripcion del proyecto");
+					String descripcionProyecto = input("\nIngresa la nueva descripcion del proyecto");
 					proyecto.setDescripcion(descripcionProyecto);
 					System.out.println("Se actualizó exitosamente la descripción del proyecto " + proyecto.getNombre() + ".");
 				}
 				else if (opcion_seleccionada == 2) {
-					anio = Integer.parseInt(input("\nIngrese el año de fin del proyecto"));
-					mes = Integer.parseInt(input("Ingrese el mes de fin del proyecto"));
-					dia = Integer.parseInt(input("Ingrese el dia de fin del proyecto"));
-					LocalDate fechaFin = LocalDate.of(anio, mes, dia);
-					proyecto.setFechaFin(fechaFin);
-					System.out.println("\nSe actualizó exitosamente la fecha de fin del proyecto a " + proyecto.getFechaFin() + ".");
+					boolean continuar2 = true;
+					while (continuar2) {
+						try {
+							System.out.println("Ingresa la nueva fecha aproximada del fin del proyecto:");
+							dia = Integer.parseInt(input("Dia"));
+							mes = Integer.parseInt(input("Mes"));
+							anio = Integer.parseInt(input("Año"));
+							LocalDate fechaFin = LocalDate.of(anio, mes, dia);
+							if (fechaFin.isAfter(LocalDate.now())) {
+								proyecto.setFechaFin(fechaFin);
+								System.out.println("\nSe actualizó exitosamente la fecha de fin del proyecto a " + proyecto.getFechaFin() + ".");
+								continuar2 = false;
+							}
+							else {
+								System.out.println("\nIngresa una fecha de fin que sea posterior a la fecha de inicio " + LocalDate.now() + "\n");
+							}
+						}
+						catch (NumberFormatException e) {
+							System.out.println("\nPor favor ingresa un valor valido.\n");
+						}
+					}
 				}
 				else if (opcion_seleccionada == 3) {
-					nombreParticipante = input("\nIngrese el nombre del participante que desea añadir al proyecto");
-					correoParticipante = input("Ingrese el correo del participante que desea añadir al proyecto");
+					nombreParticipante = input("\nIngresa el nombre del participante que desea añadir al proyecto");
+					correoParticipante = input("Ingresa el correo del participante que desea añadir al proyecto");
 					if (proyecto.isParticipantePorCorreo(correoParticipante) || proyecto.getParticipante().getCorreo().equals(correoParticipante)) {
 						System.out.println("\nYa existe un participante con este correo.");
 					}
@@ -161,24 +185,40 @@ public class App {
 				
 				else if (opcion_seleccionada == 4) {
 					boolean seguir = true;
-					int propia = Integer.parseInt(input("\n¿Otro usuario va a realizar la actividad? (1=Si, 2=No)"));
+					boolean continuar4 = true;
+					int propia = 0;
+					while (continuar4) {
+						try {
+							propia = Integer.parseInt(input("\n¿Otro usuario va a realizar la actividad? (1=Si, 2=No)"));
+							if (propia == 1 || propia == 2)
+								continuar4 = false;
+							else
+								System.out.println("\nPor favor ingresa una opcion valida.\n");
+						}
+						catch (NumberFormatException e){
+							System.out.println("\nPor favor ingresa un valor valido.\n");
+						}
+					}
 					if (propia == 2) {
 						participante = usuario;
 					}
 					else {
-						correoParticipante = input("\nIngrese el correo del participante que va a realizar la actividad");
-						if (proyecto.isParticipantePorCorreo(correoParticipante)) {
-							participante = proyecto.getParticipantePorCorreo(correoParticipante);
-						}
-						else {
-							System.out.println("\nNo existe un participante con este correo.");
-							seguir = false;
+						boolean continuar40 = true;
+						while (continuar40) {
+							correoParticipante = input("\nIngresa el correo del participante que va a realizar la actividad");
+							if (proyecto.isParticipantePorCorreo(correoParticipante)) {
+								participante = proyecto.getParticipantePorCorreo(correoParticipante);
+								continuar40 = false;
+							}
+							else {
+								System.out.println("\nNo existe un participante con este correo.");
+							}
 						}
 					}
 					if (seguir == true) {
 						// Atributos de la actividad
-						String nombreActividad = input("Ingrese el nombre de la actividad");
-						String descripcion = input("Ingrese la descripcion de la actividad");
+						String nombreActividad = input("Ingresa el nombre de la actividad");
+						String descripcion = input("Ingresa la descripcion de la actividad");
 						//Tipo de actividad
 						String tipo = tipo();
 						//Fecha de inicio de la atividad
@@ -194,11 +234,11 @@ public class App {
 						boolean condicion = true;
 						while (condicion) {
 							String comando = input("Oprima el boton 'P' para pausar la actividad o oprima el boton 'F' para finalizar la actividad");
-							if (comando.equals("P")) {
+							if (comando.equals("P") || comando.equals("p")) {
 								actividad.addTiempo(horaInicio, LocalTime.now());
 								comando = input("Oprima el boton 'R' para reanudar la actividad");
 							}
-							else if (comando.equals("F")) {
+							else if (comando.equals("F") || comando.equals("f")) {
 								horaFin = LocalTime.now();
 								actividad.addTiempo(horaInicio, horaFin);
 								actividad.setHoraFin(horaFin);
@@ -219,75 +259,114 @@ public class App {
 				}
 				
 				else if (opcion_seleccionada == 5) {
-					boolean seguir = true;
 					int propia = Integer.parseInt(input("\n¿Vas a registrar la actividad de otra persona? (1=Si, 2=No)"));
 					if (propia == 2) {
 						participante = usuario;
 					}
 					else {
-						correoParticipante = input("\nIngrese el correo del participante que realizó la actividad");
-						if (proyecto.isParticipantePorCorreo(correoParticipante)) {
-							participante = proyecto.getParticipantePorCorreo(correoParticipante);
-						}
-						else {
-							System.out.println("\nNo existe un participante con este correo.");
-							seguir = false;
+						boolean continuar5 = true;
+						while (continuar5) {
+							correoParticipante = input("\nIngresa el correo del participante que realizó la actividad");
+							if (proyecto.isParticipantePorCorreo(correoParticipante)) {
+								participante = proyecto.getParticipantePorCorreo(correoParticipante);
+								continuar5 = false;
+							}
+							else {
+								System.out.println("\nNo existe un participante registrado con este correo.");
+							}
 						}
 					}
-					if (seguir == true) {
-						// Atributos de la actividad
-						String nombreActividad = input("Ingrese el nombre de la actividad");
-						String descripcion = input("Ingrese la descripcion de la actividad");
-						//Tipo de actividades
-						String tipo = tipo();
-						//Fecha en la que se realizó la actividad
-						dia = Integer.parseInt(input("Ingrese el dia de la actividad"));
-						mes = Integer.parseInt(input("Ingrese el mes de la actividad"));
-						anio = Integer.parseInt(input("Ingrese el año de la actividad"));
-						LocalDate fecha = LocalDate.of(anio, mes, dia);
-						while (fecha.isAfter(LocalDate.now())) {
-							System.out.println("Por favor ingrese una fecha anterior a " + LocalDate.now() + ".");
-							anio = Integer.parseInt(input("Ingrese el año de la actividad"));
-							mes = Integer.parseInt(input("Ingrese el mes de la actividad"));
-							dia = Integer.parseInt(input("Ingrese el dia de la actividad"));
+					// Atributos de la actividad
+					String nombreActividad = input("Ingresa el nombre de la actividad");
+					String descripcion = input("Ingresa la descripcion de la actividad");
+					//Tipo de actividades
+					String tipo = tipo();
+					//Fecha en la que se realizó la actividad
+					boolean continuar50 = true;
+					LocalDate fecha = null;
+					LocalTime horaFin = null;
+					while (continuar50) {
+						try {
+							System.out.println("Ingresa la fecha en la que se realizo la actividad");
+							dia = Integer.parseInt(input("Dia"));
+							mes = Integer.parseInt(input("Mes"));
+							anio = Integer.parseInt(input("Año"));
 							fecha = LocalDate.of(anio, mes, dia);
+							if (fecha.isAfter(LocalDate.now())) {
+								System.out.println("Por favor ingresa una fecha anterior a " + LocalDate.now() + ".");
+							}
+							else{
+								continuar50 = false;
+							}
 						}
-						//Hora de inicio de la actividad
-						hora = Integer.parseInt(input("Ingrese la hora de inicio de la actividad (0:00-23:59)"));
-						minuto = Integer.parseInt(input("Ingrese el minuto de inicio de la actividad"));
-						LocalTime horaInicio = LocalTime.of(hora, minuto);
-						//Hora de fin de la actividad
-						hora = Integer.parseInt(input("Ingrese la hora de fin de la actividad (0:00-23:59)"));
-						minuto = Integer.parseInt(input("Ingrese el minuto de fin de la actividad"));
-						LocalTime horaFin = LocalTime.of(hora, minuto);
-						while (horaFin.isBefore(horaInicio)) {
-							System.out.println("Por favor ingrese una hora posterior a " + horaInicio + ".");
-							hora = Integer.parseInt(input("Ingrese la hora de fin de la actividad (0:00-23:59)"));
-							minuto = Integer.parseInt(input("Ingrese el minuto de fin de la actividad"));
-							horaFin = LocalTime.of(hora, minuto);
+						catch (NumberFormatException e){
+							System.out.println("\nPor favor ingresa un valor valido.\n");
 						}
-						//Crear una actividad
-						Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcion, tipo, fecha, horaInicio, horaFin, participante);
-						//Almacenar la actividad
-						proyecto.addActividadPorParticipante(actividad);
-						proyecto.addDiaActividadPorParticipante(actividad);
-						proyecto.addTipoActividadesPorParticipante(actividad);
-						System.out.println("\n¡La actividad se registro con exito!");
-						//Imprimir tiempo
-						actividad.addTiempo(horaInicio, horaFin);
-						System.out.println("¡" + participante.getNombre()  + " trabajó en esta actividad un total de " + actividad.getTiempoTotal() + " minutos!");
-					}
+					}							
+					//Hora de inicio de la actividad
+					System.out.println("Ingresa la hora de inicio de la actividad (0:00-23:59)");
+					boolean continuar51 = true;
+					while (continuar51) {
+						try {
+							hora = Integer.parseInt(input("Hora"));
+							minuto = Integer.parseInt(input("Minuto"));
+							LocalTime horaInicio = LocalTime.of(hora, minuto);
+							//Hora de fin de la actividad
+							boolean continuar52 = true;
+							while (continuar52) {
+								System.out.println("Ingresa la hora de fin de la actividad (0:00-23:59)");
+								hora = Integer.parseInt(input("Hora"));
+								minuto = Integer.parseInt(input("Minuto"));
+								horaFin = LocalTime.of(hora, minuto);
+								if (horaFin.isBefore(horaInicio)) {
+									System.out.println("Por favor ingresa una hora posterior a " + horaInicio + ".");
+								}
+								else
+									continuar52 = false;
+							}
+							continuar51 = false;
+							//Crear una actividad
+							Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcion, tipo, fecha, horaInicio, horaFin, participante);
+							//Almacenar la actividad
+							proyecto.addActividadPorParticipante(actividad);
+							proyecto.addDiaActividadPorParticipante(actividad);
+							proyecto.addTipoActividadesPorParticipante(actividad);
+							System.out.println("\n¡La actividad se registro con exito!");
+							//Imprimir tiempo
+							actividad.addTiempo(horaInicio, horaFin);
+							System.out.println("¡" + participante.getNombre()  + " trabajó en esta actividad un total de " + actividad.getTiempoTotal() + " minutos!");
+							
+						}
+						catch (NumberFormatException e){
+							System.out.println("\nPor favor ingresa un valor valido.\n");
+						}
+					}		
 				}
-				
+			
 				else if (opcion_seleccionada == 6) {
-					String nombreActividad = input("Ingrese el nombre de la actividad que desea modificar");
+					String nombreActividad = input("Ingresa el nombre de la actividad que desea modificar");
 					if (Registro.isActividad(nombreActividad)) {
 						Actividad actividad = Registro.getActividad(nombreActividad);
-						hora = Integer.parseInt(input("Hora"));
-						minuto = Integer.parseInt(input("Minuto"));
-						LocalTime horaFin = LocalTime.of(hora, minuto);
-						actividad.setHoraFin(horaFin);
-						System.out.println("\nSe actualizó exitosamente la hora de fin de la actividad a " + actividad.getHoraFin() + ".");
+						boolean continuar60 = true;
+						while (continuar60) {
+							try {
+								System.out.println("Ingresa la nueva hora de fin de la actividad (0:00-23:59)");
+								hora = Integer.parseInt(input("Hora"));
+								minuto = Integer.parseInt(input("Minuto"));
+								LocalTime horaFin = LocalTime.of(hora, minuto);
+								LocalTime horaInicio = actividad.getHoraInicio();
+								if (horaFin.isBefore(horaInicio)) {
+									System.out.println("Por favor ingresa una hora posterior a " + horaInicio + ".");
+								}
+								else
+									continuar60 = false;
+									actividad.setHoraFin(horaFin);
+									System.out.println("\nSe actualizó exitosamente la hora de fin de la actividad a " + actividad.getHoraFin() + ".");
+							}
+							catch (NumberFormatException e){
+								System.out.println("\nPor favor ingresa un valor valido.\n");
+							}
+						}
 					}
 					else {
 						System.out.println("No existe una actividad con este nombre");
@@ -300,26 +379,30 @@ public class App {
 						participante = usuario;
 					}
 					else {
-						correoParticipante = input("\nIngrese el correo del participante");
-						if (proyecto.isParticipantePorCorreo(correoParticipante)) {
-							participante = proyecto.getParticipantePorCorreo(correoParticipante);
-						}
-						else {
-							System.out.println("\nNo existe un participante con este correo.");
-							seguir = false;
+						boolean continuar7 = true;
+						while (continuar7) {
+							correoParticipante = input("\nIngresa el correo del participante");
+							if (proyecto.isParticipantePorCorreo(correoParticipante)) {
+								participante = proyecto.getParticipantePorCorreo(correoParticipante);
+								continuar7 = false;
+							}
+							else {
+								System.out.println("\nNo existe un participante con este correo.");
+							}
 						}
 					}
 					if (seguir == true) {
 						//Tipo actividad
 						String tipo = tipo();
 						//Fecha de consulta
-						System.out.println("Ingrese la fecha que desea consultar en el reporte:");
+						System.out.println("Ingresa la fecha que desea consultar en el reporte:");
 						dia = Integer.parseInt(input("Dia"));
 						mes = Integer.parseInt(input("Mes"));
 						anio = Integer.parseInt(input("Año"));
 						LocalDate fecha = LocalDate.of(anio, mes, dia);
 						//Reporte
 						long tiempoTotal = Reporte.getTiempoTotal(proyecto, participante.getCorreo());
+						double tiempoPromedio = Reporte.getTiempoPromedio(proyecto, participante.getCorreo());
 						int cantidadActividades = Reporte.getSizeTiempoTotal(proyecto, participante.getCorreo());
 						long tiempoTipoActividad = Reporte.getTiempoTipoActividad(proyecto, participante.getCorreo(), tipo);
 						int cantidadTipoActividad = Reporte.getSizeTiempoTipoActividad(proyecto, participante.getCorreo(), tipo);
@@ -329,6 +412,7 @@ public class App {
 						System.out.println("\nSe le generó al participante llamado " + participante.getNombre() + " el siguiente reporte:");
 						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadActividades) + " actividades.");
 						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTotal) + " minutos.");
+						System.out.println("El tiempo promedio en realizar las actividades fue " + String.valueOf(tiempoPromedio) + " minutos.");
 						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadTipoActividad) + " actividades de tipo " + tipo + ".");
 						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTipoActividad) + " minutos.");
 						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadDiaActividad) + " actividades en la fecha " + fecha + ".");
@@ -341,7 +425,7 @@ public class App {
 				}
 			}
 			catch (NumberFormatException e) {
-				System.out.println("Debe seleccionar uno de las opciones");
+				System.out.println("Por favor selecciona una opcion valida");
 			}	
 		}
 	}
@@ -370,7 +454,7 @@ public class App {
 	}
 	
 	private void mostrarTipoActividades() {
-		System.out.println("Seleccione un tipo de actividad");
+		System.out.println("Selecciona un tipo de actividad");
 		System.out.println("1. Documentacion");
 		System.out.println("2. Implementacion");
 		System.out.println("3. Pruebas");
@@ -405,34 +489,38 @@ public class App {
 	//*************************************************************************************************
 	
 	private String tipo() {
+		boolean continuar = true;
 		String tipo = null;
-		mostrarTipoActividades();
-		int tipoActividad = Integer.parseInt(input("Ingrese el tipo de actividad"));
-		try {
-			if (tipoActividad == 1) {
-				tipo = "Documentacion";
+		while (continuar) {
+			mostrarTipoActividades();
+			int tipoActividad = Integer.parseInt(input("Ingresa el tipo de actividad"));
+			try {
+				if (tipoActividad == 1) {
+					tipo = "Documentacion";
+				}
+				else if (tipoActividad == 2) {
+					tipo = "Implementacion";
+				}
+				else if (tipoActividad == 3) {
+					tipo = "Pruebas";
+				}
+				else if (tipoActividad == 4) {
+					tipo = "Investigacion";
+				}
+				else if (tipoActividad == 5) {
+					tipo = "Diseño";
+				}
+				else if (tipoActividad == 6) {
+					tipo = "Analisis";
+				}
+				else if (tipoActividad == 7) {
+					tipo = input("Ingresa el tipo de actividad");
+				}
+				continuar = false;
 			}
-			else if (tipoActividad == 2) {
-				tipo = "Implementacion";
+			catch (NumberFormatException e) {
+				System.out.println("\nPor favor selecciona una de las opciones");
 			}
-			else if (tipoActividad == 3) {
-				tipo = "Pruebas";
-			}
-			else if (tipoActividad == 4) {
-				tipo = "Investigacion";
-			}
-			else if (tipoActividad == 5) {
-				tipo = "Diseño";
-			}
-			else if (tipoActividad == 6) {
-				tipo = "Analisis";
-			}
-			else if (tipoActividad == 7) {
-				tipo = input("Ingrese el tipo de actividad");
-			}
-		}
-		catch (NumberFormatException e) {
-			System.out.println("\nDebe seleccionar uno de las opciones");
 		}
 		return tipo;
 	}

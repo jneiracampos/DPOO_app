@@ -51,6 +51,11 @@ public class Reporte {
 		return cantidad;
 	}
 	
+	public static double getTiempoPromedio(Proyecto proyecto, String correoParticipante) {
+		int cantidad = getSizeTiempoTotal(proyecto, correoParticipante);
+		return tiempoTotal/cantidad;
+	}
+	
 	public static long getTiempoDiaActividad(Proyecto proyecto, String correoParticipante, LocalDate fechaActividad) {
 		try {
 			ArrayList<Actividad> actividades = proyecto.getDiaActividadPorParticipante(correoParticipante, fechaActividad);
