@@ -117,12 +117,6 @@ private void ejecutaraplicacion() {
 							if (fechaFin.isAfter(fechaInicio)) {
 								proyecto = Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, usuario);
 								System.out.println("\n¡" + proyecto.getParticipante().getNombre() + "! Creaste exitosamente el proyecto llamado " + proyecto.getNombre() + ".");
-								try {
-									administradorDatos.generarArchivo(proyecto);
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
 								ejecutarMenu();
 								continuar1 = false;
 							}
@@ -163,6 +157,16 @@ private void ejecutaraplicacion() {
 			try {	
 				mostrarMenu2();
 				int opcion_seleccionada = Integer.parseInt(input("\nPor favor selecciona una opcion"));
+				if (opcion_seleccionada == 0) {
+					try {
+						administradorDatos.generarArchivo(proyecto);
+						System.out.println("Se guardó exitosamente el proyecto.");
+						continuar = false;
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				if (opcion_seleccionada == 1) {
 					String descripcionProyecto = input("\nIngresa la nueva descripcion del proyecto");
 					proyecto.setDescripcion(descripcionProyecto);
@@ -270,9 +274,7 @@ private void ejecutaraplicacion() {
 						//Crear una actividad
 						
 						//Almacenar la actividad
-						proyecto.addActividadPorParticipante(actividad);
-						proyecto.addDiaActividadPorParticipante(actividad);
-						proyecto.addTipoActividadesPorParticipante(actividad);
+						proyecto.addActividad(actividad);
 						System.out.println("\n¡La actividad se registro con exito!");
 						//Imprimir tiempo
 						System.out.println("¡" + participante.getNombre()  + " trabajó en esta actividad un total de " + actividad.getTiempoTotal() + " minutos!");						
@@ -349,9 +351,7 @@ private void ejecutaraplicacion() {
 							//Crear una actividad
 							Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcion, tipo, fecha, horaInicio, horaFin, participante);
 							//Almacenar la actividad
-							proyecto.addActividadPorParticipante(actividad);
-							proyecto.addDiaActividadPorParticipante(actividad);
-							proyecto.addTipoActividadesPorParticipante(actividad);
+							proyecto.addActividad(actividad);
 							System.out.println("\n¡La actividad se registro con exito!");
 							//Imprimir tiempo
 							actividad.addTiempo(horaInicio, horaFin);
@@ -443,14 +443,15 @@ private void ejecutaraplicacion() {
 	
 	private void mostrarMenu1() {
 		System.out.println("\nOpciones de la aplicacion\n");
-		System.out.println("0. Cargar un proyecto");
+		System.out.println("0. Cargar un proyecto del disco local");
 		System.out.println("1. Crear proyecto");
-		System.out.println("2. Abrir proyecto");
+		System.out.println("2. Buscar proyecto");
 		System.out.println("3. Salir de la aplicacion");
 	}
 	
 	private void mostrarMenu2() {
 		System.out.println("\nOpciones de la aplicacion\n");
+		System.out.println("0. Guardar proyecto en el disco local");
 		System.out.println("1. Cambiar la descripcion del proyecto");
 		System.out.println("2. Cambiar la fecha de fin del proyecto");
 		System.out.println("3. Registrar un participante");

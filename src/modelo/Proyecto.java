@@ -34,13 +34,22 @@ public class Proyecto {
 	 */
 	private HashMap<String, Participante> correos;
 	/**
-	 * ArrayList que almacena objetos de tipo Actividad
+	 * ArrayList que almacena objetos de tipo Actividad para introducirlo 
+	 * en las estructuras de datos
 	 */
 	private ArrayList<Actividad> arregloActividades;
 	/**
 	 * HashMap que almacena las parejas (nombreActividad: ArrayList(Actividad))
 	 */
 	private HashMap<String, ArrayList<Actividad>> actividades;
+	/**
+	 * ArrayList con las actividades para administradorDatos
+	 */
+	private ArrayList<Actividad> actividadesAlmacenamiento;
+	/**
+	 * ArrayList con los participantes para administradorDatos
+	 */
+	private ArrayList<Participante> participantesAlmacenamiento;
 	/**
 	 * HashMap que almacena las parejas (nombreParticipante: HashMap(diaActividad: ArrayList(Actividad)))
 	 */
@@ -82,6 +91,8 @@ public class Proyecto {
 		this.participante = participanteInicial;
 		this.nombres = new HashMap<String, Participante>();
 		this.correos = new HashMap<String, Participante>();
+		this.actividadesAlmacenamiento = new ArrayList<Actividad>();
+		this.participantesAlmacenamiento = new ArrayList<Participante>();
 		this.actividades = new HashMap<String, ArrayList<Actividad>>();
 		this.diaActividadPorParticipante = new HashMap<String, HashMap<LocalDate, ArrayList<Actividad>>>();
 		this.tipoActividadesPorParticipante = new HashMap<String, HashMap<String, ArrayList<Actividad>>>();
@@ -119,6 +130,14 @@ public class Proyecto {
 		this.fechaFin = fechaFin;
 	}
 	
+	public ArrayList<Actividad> getActividadesAlmacenamiento() {
+		return actividadesAlmacenamiento;
+	}
+	
+	public ArrayList<Participante> getParticipanteAlmacenamiento() {
+		return participantesAlmacenamiento;
+	}
+	
 	//************************************************************************************
 	// Metodos para almacenar otros participantes a una instancia de Proyecto
 	//************************************************************************************
@@ -126,6 +145,7 @@ public class Proyecto {
 	public void addOtroParticipante(Participante otroParticipante) {
 		nombres.put(otroParticipante.getNombre(), otroParticipante);
 		correos.put(otroParticipante.getCorreo(), otroParticipante);
+		participantesAlmacenamiento.add(otroParticipante);
 	}
 
 	public Participante getParticipantePorNombre(String nombre) {
@@ -149,7 +169,7 @@ public class Proyecto {
 	// Metodos para almacenar actividades a una instancia de Proyecto
 	//************************************************************************************
 	
-	public void addActividadPorParticipante(Actividad actividad) {
+	private void addActividadPorParticipante(Actividad actividad) {
 		if(actividades.containsKey(actividad.getParticipanteActividad().getCorreo())) {
 			arregloActividades = actividades.get(actividad.getParticipanteActividad().getCorreo());
 			arregloActividades.add(actividad);				
@@ -159,9 +179,10 @@ public class Proyecto {
 			arregloActividades.add(actividad);
 			actividades.put(actividad.getParticipanteActividad().getCorreo(), arregloActividades);
 		}
+		actividadesAlmacenamiento.add(actividad);
 	}
 	
-	public void addDiaActividadPorParticipante(Actividad actividad) {
+	private void addDiaActividadPorParticipante(Actividad actividad) {
 		if(diaActividadPorParticipante.containsKey(actividad.getParticipanteActividad().getCorreo())) {
 			if(localDate.containsKey(actividad.getFecha())) {
 				arregloActividades = localDate.get(actividad.getFecha());
@@ -182,7 +203,7 @@ public class Proyecto {
 		}
 	}
 	
-	public void addTipoActividadesPorParticipante(Actividad actividad) {
+	private void addTipoActividadesPorParticipante(Actividad actividad) {
 		if(tipoActividadesPorParticipante.containsKey(actividad.getParticipanteActividad().getCorreo())) {
 			if(tipo.containsKey(actividad.getTipo())) {
 				arregloActividades = tipo.get(actividad.getTipo());
@@ -201,6 +222,12 @@ public class Proyecto {
 			tipoActividadesPorParticipante.put(actividad.getParticipanteActividad().getCorreo(), tipo);
 			tipo.put(actividad.getTipo(), arregloActividades);
 		}
+	}
+	
+	public void addActividad(Actividad actividad) {
+		addActividadPorParticipante(actividad);
+		addDiaActividadPorParticipante(actividad);
+		addTipoActividadesPorParticipante(actividad);
 	}
 	
 	//************************************************************************************
