@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import modelo.Actividad;
+import modelo.Participante;
 import modelo.Proyecto;
 
 public class Reporte {
@@ -25,7 +26,7 @@ public class Reporte {
 	// Generar las estadisticas de un participante
 	//************************************************************************************************
 	
-	public static long getTiempoTotal(Proyecto proyecto, String correoParticipante) {
+	private static long getTiempoTotal(Proyecto proyecto, String correoParticipante) {
 		try {
 			ArrayList<Actividad> actividades = proyecto.getActividadPorParticipante(correoParticipante);
 			for (int i = 0; i < actividades.size(); i++) {
@@ -39,7 +40,7 @@ public class Reporte {
 		return tiempoTotal;
 	}
 	
-	public static int getSizeTiempoTotal(Proyecto proyecto, String correoParticipante) {
+	private static int getSizeTiempoTotal(Proyecto proyecto, String correoParticipante) {
 		int cantidad;
 		try {
 			ArrayList<Actividad> actividades = proyecto.getActividadPorParticipante(correoParticipante);
@@ -51,12 +52,12 @@ public class Reporte {
 		return cantidad;
 	}
 	
-	public static double getTiempoPromedio(Proyecto proyecto, String correoParticipante) {
-		int cantidad = getSizeTiempoTotal(proyecto, correoParticipante);
-		return tiempoTotal/cantidad;
+	private static double getTiempoPromedio(Proyecto proyecto, Participante participante) {
+		int cantidad = getSizeTiempoTotal(proyecto, participante.getCorreo());
+		return (tiempoTotal/cantidad);
 	}
 	
-	public static long getTiempoDiaActividad(Proyecto proyecto, String correoParticipante, LocalDate fechaActividad) {
+	private static long getTiempoDiaActividad(Proyecto proyecto, String correoParticipante, LocalDate fechaActividad) {
 		try {
 			ArrayList<Actividad> actividades = proyecto.getDiaActividadPorParticipante(correoParticipante, fechaActividad);
 			for (int i = 0; i < actividades.size(); i++) {
@@ -70,7 +71,7 @@ public class Reporte {
 		return tiempoTipoActividad;
 	}
 	
-	public static int getSizeTiempoDiaActividad(Proyecto proyecto, String correoParticipante, LocalDate fechaActividad) {
+	private static int getSizeTiempoDiaActividad(Proyecto proyecto, String correoParticipante, LocalDate fechaActividad) {
 		int cantidad;
 		try {
 			ArrayList<Actividad> actividades = proyecto.getDiaActividadPorParticipante(correoParticipante, fechaActividad);
@@ -82,7 +83,7 @@ public class Reporte {
 		return cantidad;
 	}
 	
-	public static long getTiempoTipoActividad(Proyecto proyecto, String correoParticipante, String tipoActividad) {
+	private static long getTiempoTipoActividad(Proyecto proyecto, String correoParticipante, String tipoActividad) {
 		try {
 			ArrayList<Actividad> actividades = proyecto.getTipoActividadesPorParticipante(correoParticipante, tipoActividad);
 			for (int i = 0; i < actividades.size(); i++) {
@@ -95,7 +96,7 @@ public class Reporte {
 		return tiempoDiaActividad;
 	}
 	
-	public static int getSizeTiempoTipoActividad(Proyecto proyecto, String correoParticipante, String tipoActividad) {
+	private static int getSizeTiempoTipoActividad(Proyecto proyecto, String correoParticipante, String tipoActividad) {
 		int cantidad;
 		try {
 			ArrayList<Actividad> actividades = proyecto.getTipoActividadesPorParticipante(correoParticipante, tipoActividad);
@@ -105,5 +106,24 @@ public class Reporte {
 			cantidad = 0;
 		}
 		return cantidad;
+	}
+	
+	public static void getReporte(Proyecto proyecto, Participante participante, String tipo, LocalDate fecha) {
+		long tiempoTotal = getTiempoTotal(proyecto, participante.getCorreo());
+		int cantidadActividades = getSizeTiempoTotal(proyecto, participante.getCorreo());
+		long tiempoTipoActividad = getTiempoTipoActividad(proyecto, participante.getCorreo(), tipo);
+		int cantidadTipoActividad = getSizeTiempoTipoActividad(proyecto, participante.getCorreo(), tipo);
+		long tiempoDiaActividad = getTiempoDiaActividad(proyecto, participante.getCorreo(), fecha);
+		int cantidadDiaActividad = getSizeTiempoDiaActividad(proyecto, participante.getCorreo(), fecha);
+		double tiempoPromedio = getTiempoPromedio(proyecto, participante);
+		//Imprimir
+		System.out.println("\nSe le generó al participante llamado " + participante.getNombre() + " el siguiente reporte:");
+		System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadActividades) + " actividades.");
+		System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTotal) + " minutos.");
+		System.out.println("Realizar estas actividades le tomó en promedio " + String.valueOf(tiempoPromedio) + " minutos.");
+		System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadTipoActividad) + " actividades de tipo " + tipo + ".");
+		System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTipoActividad) + " minutos.");
+		System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadDiaActividad) + " actividades en la fecha " + fecha + ".");
+		System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoDiaActividad) + " minutos.");
 	}
 }
