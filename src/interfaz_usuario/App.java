@@ -120,6 +120,9 @@ public class App {
 					System.out.println("\nSaliendo de la aplicacion...");
 					continuar = false;
 				}
+				else {
+					System.out.println("Por favor seleccione una opcion valida");
+				}
 			}
 			catch (NumberFormatException e) {
 				System.out.println("\nDebe seleccionar uno de las opciones");
@@ -326,6 +329,9 @@ public class App {
 					System.out.println("\nVolviendo al anterior menu...");
 					continuar = false;
 				}
+				else {
+					System.out.println("Por favor seleccione una opcion valida");
+				}
 			}
 			catch (NumberFormatException e) {
 				System.out.println("Debe seleccionar uno de las opciones");
@@ -395,31 +401,44 @@ public class App {
 		String tipo = null;
 		mostrarTipoActividades();
 		int tipoActividad = Integer.parseInt(input("Ingrese el tipo de actividad"));
-		try {
-			if (tipoActividad == 1) {
-				tipo = "Documentacion";
+		boolean continuar = true;
+		while(continuar) {
+			try {
+				if (tipoActividad == 1) {
+					tipo = "Documentacion";
+					continuar = false;
+				}
+				else if (tipoActividad == 2) {
+					tipo = "Implementacion";
+					continuar = false;
+				}
+				else if (tipoActividad == 3) {
+					tipo = "Pruebas";
+					continuar = false;
+				}
+				else if (tipoActividad == 4) {
+					tipo = "Investigacion";
+					continuar = false;
+				}
+				else if (tipoActividad == 5) {
+					tipo = "Diseño";
+					continuar = false;
+				}
+				else if (tipoActividad == 6) {
+					tipo = "Analisis";
+					continuar = false;
+				}
+				else if (tipoActividad == 7) {
+					tipo = input("Ingrese el tipo de actividad");
+					continuar = false;
+				}
+				else {
+					System.out.println("Por favor seleccione una opcion valida");
+				}
 			}
-			else if (tipoActividad == 2) {
-				tipo = "Implementacion";
+			catch (NumberFormatException e) {
+				System.out.println("\nDebe seleccionar uno de las opciones");
 			}
-			else if (tipoActividad == 3) {
-				tipo = "Pruebas";
-			}
-			else if (tipoActividad == 4) {
-				tipo = "Investigacion";
-			}
-			else if (tipoActividad == 5) {
-				tipo = "Diseño";
-			}
-			else if (tipoActividad == 6) {
-				tipo = "Analisis";
-			}
-			else if (tipoActividad == 7) {
-				tipo = input("Ingrese el tipo de actividad");
-			}
-		}
-		catch (NumberFormatException e) {
-			System.out.println("\nDebe seleccionar uno de las opciones");
 		}
 		return tipo;
 	}
