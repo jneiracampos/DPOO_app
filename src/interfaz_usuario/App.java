@@ -319,20 +319,7 @@ public class App {
 						anio = Integer.parseInt(input("Año"));
 						LocalDate fecha = LocalDate.of(anio, mes, dia);
 						//Reporte
-						long tiempoTotal = Reporte.getTiempoTotal(proyecto, participante.getCorreo());
-						int cantidadActividades = Reporte.getSizeTiempoTotal(proyecto, participante.getCorreo());
-						long tiempoTipoActividad = Reporte.getTiempoTipoActividad(proyecto, participante.getCorreo(), tipo);
-						int cantidadTipoActividad = Reporte.getSizeTiempoTipoActividad(proyecto, participante.getCorreo(), tipo);
-						long tiempoDiaActividad = Reporte.getTiempoDiaActividad(proyecto, participante.getCorreo(), fecha);
-						int cantidadDiaActividad = Reporte.getSizeTiempoDiaActividad(proyecto, participante.getCorreo(), fecha);
-						//Imprimir
-						System.out.println("\nSe le generó al participante llamado " + participante.getNombre() + " el siguiente reporte:");
-						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadActividades) + " actividades.");
-						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTotal) + " minutos.");
-						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadTipoActividad) + " actividades de tipo " + tipo + ".");
-						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTipoActividad) + " minutos.");
-						System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadDiaActividad) + " actividades en la fecha " + fecha + ".");
-						System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoDiaActividad) + " minutos.");
+						Reporte.getReporte(proyecto, participante, tipo, fecha);
 					}
 				}
 				else if (opcion_seleccionada == 8) {
