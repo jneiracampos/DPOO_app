@@ -15,7 +15,9 @@ public class administradorDatos {
 	private static String nombreArchivo;
 	
 	
-	public static Proyecto cargarDatos() throws Throwable {
+	public static Proyecto cargarDatos(String nombreproyecto) throws Throwable {
+		
+			nombreArchivo = nombreproyecto;
 		
 		 	BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo));
 			String nombreProyecto = reader.readLine();

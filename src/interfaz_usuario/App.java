@@ -79,7 +79,21 @@ private void ejecutaraplicacion() {
 		while(continuar) {
 			try {
 				mostrarMenu1();
-				int opcion_seleccionada = Integer.parseInt(input("\nPor favor selecciona una opcion"));				
+				int opcion_seleccionada = Integer.parseInt(input("\nPor favor selecciona una opcion"));	
+				if (opcion_seleccionada == 0) {
+					String nombreProyecto = input("Ingresa el nombre del proyecto que desea cargar");
+					while (Registro.isProyecto(nombreProyecto)) {
+						System.out.println("\nYa existe un proyecto con este nombre, por favor usa uno diferente.\n");
+						nombreProyecto = input("Ingresa el nombre del proyecto que desea cargar");
+					}
+					try {
+						proyecto = administradorDatos.cargarDatos(nombreProyecto);
+						ejecutarMenu();
+					} catch (Throwable e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				if (opcion_seleccionada == 1) {
 					//Nombre y descripcion del proyecto
 					String nombreProyecto = input("Ingresa el nombre del proyecto");
@@ -429,6 +443,7 @@ private void ejecutaraplicacion() {
 	
 	private void mostrarMenu1() {
 		System.out.println("\nOpciones de la aplicacion\n");
+		System.out.println("0. Cargar un proyecto");
 		System.out.println("1. Crear proyecto");
 		System.out.println("2. Abrir proyecto");
 		System.out.println("3. Salir de la aplicacion");
