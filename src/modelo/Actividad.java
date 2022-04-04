@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+import interfaz_usuario.Registro;
+
 public class Actividad {
 	/**
 	 * El nombre de la actividad.
@@ -117,6 +119,7 @@ public class Actividad {
 	public void addTiempo(LocalTime horaInicio, LocalTime horaFin) {
 		tiempo = Duration.between(horaInicio, horaFin).toMinutes();
 		tiempoTotal.add(tiempo);
+		Registro.tiempoTot += tiempo;
 	}
 	
 	
