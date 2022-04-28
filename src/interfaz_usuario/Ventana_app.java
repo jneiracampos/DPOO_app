@@ -19,6 +19,7 @@ public class Ventana_app extends JFrame {
 		setVisible(true);
 	}
 	
+	
 	public static void main(String[] args) {
 		new Ventana_app();
 	}

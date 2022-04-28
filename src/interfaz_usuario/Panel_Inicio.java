@@ -24,7 +24,6 @@ public class Panel_Inicio extends JPanel implements ActionListener {
 		addNorthLabel();
 		addTextField();
 		addBottons();
-		
 	}
 	
 	private void addNorthLabel() {
@@ -64,7 +63,6 @@ public class Panel_Inicio extends JPanel implements ActionListener {
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtNombre).addComponent(txtFieldNombre));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtCorreo).addComponent(txtFieldCorreo));
 		layout.setVerticalGroup(vGroup);
-
 	}
 	
 	private void addBottons() {
