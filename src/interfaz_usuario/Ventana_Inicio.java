@@ -6,37 +6,51 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import modelo.Participante;
+
 @SuppressWarnings("serial")
-public class Panel_Inicio extends JPanel implements ActionListener {
+public class Ventana_Inicio extends JFrame implements ActionListener {
 	
-	private Ventana_app ventana_app;
 	private JTextField txtFieldNombre;
 	private JTextField txtFieldCorreo;
 	private JButton btnAceptar;
 	private JButton btnBorrar;
-	
-	public Panel_Inicio(Ventana_app padre) {
-		ventana_app = padre;
+	private String nombreParticipante;
+	private String correoParticipante;
+	private JPanel panelNorte;
+	private JPanel panelSur;
+	private JPanel panelCentro;
+	private Participante usuario;
+
+	public Ventana_Inicio() {
 		addNorthLabel();
 		addTextField();
 		addBottons();
+		
+		setSize(500, 500);
+		setTitle("Administrador de proyectos");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
 	}
 	
 	private void addNorthLabel() {
-		JPanel panelNorte = new JPanel();
+		panelNorte = new JPanel();
 		panelNorte.setOpaque(true);
-		ventana_app.add(panelNorte, BorderLayout.NORTH);
+		add(panelNorte, BorderLayout.NORTH);
 		
 		JLabel txtBienvenida = new JLabel("¡Bienvenido a la aplicación!");
 		panelNorte.add(txtBienvenida);
 	}
 	
 	private void addTextField() {
-		ventana_app.add(this, BorderLayout.CENTER);
+		panelCentro = new JPanel();
+		panelCentro.setOpaque(true);
+		add(panelCentro, BorderLayout.CENTER);
 		
 		JLabel txtSolicitar = new JLabel("Por favor ingrese los siguientes datos:");
 		JLabel txtnull = new JLabel();
@@ -46,10 +60,9 @@ public class Panel_Inicio extends JPanel implements ActionListener {
 		JLabel txtCorreo = new JLabel("Correo:");
 		txtFieldNombre = new JTextField();
 		txtFieldCorreo = new JTextField();
-		add(txtSolicitar);
 
-		GroupLayout layout = new GroupLayout(this);
-		setLayout(layout);
+		GroupLayout layout = new GroupLayout(panelCentro);
+		panelCentro.setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 		
@@ -66,9 +79,9 @@ public class Panel_Inicio extends JPanel implements ActionListener {
 	}
 	
 	private void addBottons() {
-		JPanel panelSur = new JPanel();
+		panelSur = new JPanel();
 		panelSur.setOpaque(true);
-		ventana_app.add(panelSur, BorderLayout.SOUTH);
+		add(panelSur, BorderLayout.SOUTH);
 		
 		btnAceptar = new JButton("Aceptar");
 		btnBorrar = new JButton("Borrar");
@@ -85,14 +98,25 @@ public class Panel_Inicio extends JPanel implements ActionListener {
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Aceptar")) {
-			String nombre = btnAceptar.getText();
-			String correo = btnAceptar.getText();
+			nombreParticipante = txtFieldNombre.getText();
+			correoParticipante = txtFieldCorreo.getText();
+			usuario = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
+			setVisible(false);
+			new Ventana_Menu_Principal(this);
+			
 		}
 		else if (comando.equals("Borrar")){
 			txtFieldNombre.setText(" ");
 			txtFieldCorreo.setText(" ");
 		}
-		
 	}
 	
+	public Participante getUsuario() {
+		return usuario;
+	}
+		
+	public static void main(String[] args) {
+		new Ventana_Inicio();
+	}
+
 }
