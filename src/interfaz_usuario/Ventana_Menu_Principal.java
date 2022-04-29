@@ -1,25 +1,35 @@
 package interfaz_usuario;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.GroupLayout.*;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 	
 	private JPanel panelCentro;
 	private JPanel panelNorte;
+	private JPanel panelW;
+	private JPanel panelE;
+	private JPanel panelS;
+	
 	
 	public Ventana_Menu_Principal() {
+		
+		panelW = new JPanel();
+		panelW.setOpaque(true);
+		add(panelW, BorderLayout.WEST);
+		panelE = new JPanel();
+		panelE.setOpaque(true);
+		add(panelE, BorderLayout.EAST);
+		panelS = new JPanel();
+		panelS.setOpaque(true);
+		add(panelS, BorderLayout.SOUTH);
+		panelS.setPreferredSize(new Dimension(400,80));
 		addButtons();
 		addNorthLabel();
-		setSize(500, 500);
+		setSize(400, 400);
 		setTitle("Administrador de proyectos");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -29,7 +39,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		panelNorte = new JPanel();
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
-
+		panelNorte.setPreferredSize(new Dimension(400,40));
 		JLabel txt = new JLabel("Opciones de la aplicacion");
 		panelNorte.add(txt);
 	}
@@ -37,6 +47,8 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 	private void addButtons() {
 		panelCentro = new JPanel();
 		panelCentro.setOpaque(true);
+		panelCentro.setLayout(new GridLayout(5, 3, 0, 12));
+
 		add(panelCentro, BorderLayout.CENTER);
 
 		JButton btnCargar = new JButton("Cargar un proyecto del disco local");
@@ -44,33 +56,18 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		JButton btnBuscar = new JButton("Buscar proyecto");
 		JButton btnSalir = new JButton("Salir de la aplicacion");
 		JLabel txtUsuario = new JLabel("Por favor seleccione una de las siguientes opciones:");
-		JLabel txtnull = new JLabel();
-		txtnull.setVisible(false);
 		
-		GroupLayout layout = new GroupLayout(panelCentro);
-		panelCentro.setLayout(layout);
-		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
-		
-		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtUsuario).addComponent(btnCargar).addComponent(btnCrear).addComponent(btnBuscar).addComponent(btnSalir));
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtnull).addComponent(txtnull).addComponent(txtnull).addComponent(txtnull).addComponent(txtnull));
-		layout.setHorizontalGroup(hGroup);
-		
-		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtUsuario).addComponent(txtnull));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnCargar).addComponent(txtnull));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnCrear).addComponent(txtnull));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnBuscar).addComponent(txtnull));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnSalir).addComponent(txtnull));
-		layout.setVerticalGroup(vGroup);
+		panelCentro.add(txtUsuario);
+		panelCentro.add(btnCargar);
+		panelCentro.add(btnCrear);
+		panelCentro.add(btnBuscar);
+		panelCentro.add(btnSalir);
 		
 		btnCargar.addActionListener(this);
 		btnCrear.addActionListener(this);
 		btnBuscar.addActionListener(this);
 		btnSalir.addActionListener(this);
 	}
-	
 	
 	
 	@Override
