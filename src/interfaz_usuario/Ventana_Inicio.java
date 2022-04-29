@@ -76,8 +76,8 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		JButton btnAceptar = new JButton("Aceptar");
 		JButton btnBorrar = new JButton("Borrar");
 		
-		panelSur.add(btnAceptar);
 		panelSur.add(btnBorrar);
+		panelSur.add(btnAceptar);
 		
 		btnAceptar.addActionListener(this);
 		btnBorrar.addActionListener(this);
@@ -97,7 +97,7 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 			else {
 				usuario = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
 				setVisible(false);
-				new Ventana_Menu_Principal();
+				new Ventana_Menu_Principal(this);
 			}	
 		}
 		else if (comando.equals("Borrar")){

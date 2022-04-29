@@ -2,21 +2,29 @@ package interfaz_usuario;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+
 import javax.swing.*;
 import javax.swing.GroupLayout.*;
+
+import modelo.Participante;
 import modelo.Proyecto;
 
 @SuppressWarnings("serial")
 public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 	
+	private Ventana_Inicio ventanaInicio;
 	private Ventana_Menu_Principal ventanaMenuPrincipal;
 	
 	private Proyecto proyecto;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
+	private JTextField txtNombreProyecto;
+	private JTextField txtDescProyecto;	
 	
-	public Ventana_Crear_Proyecto(Ventana_Menu_Principal padre) {
+	public Ventana_Crear_Proyecto(Ventana_Inicio padre1, Ventana_Menu_Principal padre) {
+		ventanaInicio = padre1;
 		ventanaMenuPrincipal = padre;
 		addTextField();
 		addButtons();
@@ -41,12 +49,10 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		panelCentro.setOpaque(true);
 		add(panelCentro, BorderLayout.CENTER);
 		
-		JLabel txtNombre = new JLabel("Nombre del proyecto:");
-		JLabel txtDescripcion = new JLabel("Descripcion del proyecto:");
-		JLabel txtnull = new JLabel();
-		JTextField txtFieldNombreProyecto = new JTextField();
-		JTextField txtFieldDescripcionProyecto = new JTextField();
-		txtnull.setVisible(false);
+		JLabel nombre = new JLabel("Nombre del proyecto:");
+		JLabel descripcion = new JLabel("Descripcion del proyecto:");
+		txtNombreProyecto = new JTextField();
+		txtDescProyecto = new JTextField();
 
 		GroupLayout layout = new GroupLayout(panelCentro);
 		panelCentro.setLayout(layout);
@@ -54,13 +60,13 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		layout.setAutoCreateContainerGaps(true);
 		
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtNombre).addComponent(txtDescripcion));
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldNombreProyecto).addComponent(txtFieldDescripcionProyecto));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(nombre).addComponent(descripcion));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtNombreProyecto).addComponent(txtDescProyecto));
 		layout.setHorizontalGroup(hGroup);
 		
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtNombre).addComponent(txtFieldNombreProyecto));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtDescripcion).addComponent(txtFieldDescripcionProyecto));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(nombre).addComponent(txtNombreProyecto));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(descripcion).addComponent(txtDescProyecto));
 		layout.setVerticalGroup(vGroup);
 	}
 	
@@ -85,8 +91,20 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Crear")) {
-			setVisible(false);
-			new Ventana_Opciones(ventanaMenuPrincipal);
+			String nombreProyecto = txtNombreProyecto.getText();
+			String descProyecto = txtDescProyecto.getText();
+			if (nombreProyecto.equals("") || descProyecto.equals("")) {
+				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre y la descripcion", "Aviso",
+				JOptionPane.INFORMATION_MESSAGE);
+			}
+			else {
+				setVisible(false);
+				new Ventana_Opciones(ventanaMenuPrincipal);
+				Participante usuario = ventanaInicio.getUsuario();
+				LocalDate fechaFin = null;
+				LocalDate fechaInicio = null;
+				proyecto = Registro.nuevoProyecto(nombreProyecto, descProyecto, fechaInicio, fechaFin, usuario);
+			}
 		}
 		else if (comando.equals("Volver")) {
 			setVisible(false);

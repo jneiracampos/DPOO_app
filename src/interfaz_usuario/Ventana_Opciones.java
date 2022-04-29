@@ -18,7 +18,6 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 	private JPanel panelE;
 	private JPanel panelS;
 	
-	
 	public Ventana_Opciones(Ventana_Menu_Principal padre) {
 		ventanaMenuPrincipal = padre;
 		
@@ -87,14 +86,13 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		volver.addActionListener(this);
 	}
 	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Cambiar descripcion")) {
 			setVisible(false);
-			
+			new Ventana_Descripcion(this);
 		}
 		else if (comando.equals("Cambiar fecha final")){
 			setVisible(false);

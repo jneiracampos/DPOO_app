@@ -1,22 +1,32 @@
 package interfaz_usuario;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.GroupLayout.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-@SuppressWarnings("serial")
-public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import modelo.Proyecto;
+
+import javax.swing.GroupLayout.Alignment;
+
+public class Ventana_Descripcion extends JFrame implements ActionListener {
 	
-	private Ventana_Menu_Principal ventanaMenuPrincipal;
+	private Ventana_Opciones ventanaOpciones;
 	
 	private JPanel panelNorte;
 	private JPanel panel1;
 	private JPanel panel2;
+	private JTextField txtDescProyecto;
 	
-	public Ventana_Cargar_Proyecto(Ventana_Menu_Principal padre) {
-		//
-		ventanaMenuPrincipal = padre;
+	public Ventana_Descripcion(Ventana_Opciones padre) {
+		ventanaOpciones = padre;
 		
 		//crear y agregar paneles
 		addPanelNorte();
@@ -35,7 +45,7 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setPreferredSize(new Dimension(400,40));
-		JLabel txt = new JLabel("Cargar un proyecto");
+		JLabel txt = new JLabel("Cambiar descripcion");
 		panelNorte.add(txt);
 		
 	}
@@ -45,10 +55,10 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		add(panel1, BorderLayout.CENTER);
 		
 		//agregar elementos al panel
-		JLabel nombre = new JLabel("Nombre del proyecto:");
-		JTextField txtNombre = new JTextField(10);
-		panel1.add(nombre);
-		panel1.add(txtNombre);
+		JLabel descProyecto = new JLabel("Nueva descripcion del proyecto:");
+		txtDescProyecto = new JTextField(10);
+		panel1.add(descProyecto);
+		panel1.add(txtDescProyecto);
 		
 		//Ajustar Layout del panel
 		GroupLayout layout = new GroupLayout(panel1);
@@ -57,12 +67,12 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		layout.setAutoCreateContainerGaps(true);
 		
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		hGroup.addGroup(layout.createParallelGroup().addComponent(nombre));
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtNombre));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(descProyecto));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtDescProyecto));
 		layout.setHorizontalGroup(hGroup);
 		
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(nombre).addComponent(txtNombre));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(descProyecto).addComponent(txtDescProyecto));
 		layout.setVerticalGroup(vGroup);
 		
 	}
@@ -74,11 +84,11 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		
 		//agregar elementos al panel
 		JButton volver = new JButton("Volver");
-		JButton cargar = new JButton("Cargar");
+		JButton actualizar = new JButton("Actualizar");
 		panel2.add(volver);
-		panel2.add(cargar);
+		panel2.add(actualizar);
 		volver.addActionListener(this);
-		cargar.addActionListener(this);
+		actualizar.addActionListener(this);
 		
 	}
 	
@@ -87,9 +97,11 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		String comando = e.getActionCommand();
 		if (comando.equals("Volver")) {
 			setVisible(false);
-			ventanaMenuPrincipal.setVisible(true);
+			ventanaOpciones.setVisible(true);
 		}
-		else if (comando.equals("Cargar")){
+		else if (comando.equals("Actualizar")){
+			String descProyecto = txtDescProyecto.getText();
+			//Proyecto.setDescripcion(descProyecto);
 			setVisible(false);
 		}
 	}

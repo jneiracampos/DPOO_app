@@ -13,8 +13,10 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 	private JPanel panelE;
 	private JPanel panelS;
 	
+	private Ventana_Inicio ventanaInicio;
 	
-	public Ventana_Menu_Principal() {
+	public Ventana_Menu_Principal(Ventana_Inicio padre) {
+		ventanaInicio = padre;
 		
 		panelW = new JPanel();
 		panelW.setOpaque(true);
@@ -84,7 +86,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Crear proyecto")){
 			setVisible(false);
-			new Ventana_Crear_Proyecto(this);
+			new Ventana_Crear_Proyecto(ventanaInicio, this);
 		}
 		else if (comando.equals("Buscar proyecto")) {
 			setVisible(false);
