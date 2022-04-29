@@ -83,6 +83,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Crear proyecto")){
 			setVisible(false);
+			new Ventana_Crear_Proyecto(this);
 		}
 		else if (comando.equals("Buscar proyecto")) {
 			setVisible(false);
