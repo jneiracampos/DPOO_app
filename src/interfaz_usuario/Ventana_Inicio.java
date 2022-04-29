@@ -31,7 +31,7 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		addTextField();
 		addButtons();
 		
-		setSize(500, 500);
+		setSize(400, 400);
 		setTitle("Administrador de proyectos");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);

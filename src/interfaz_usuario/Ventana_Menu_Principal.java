@@ -1,13 +1,8 @@
 package interfaz_usuario;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Ventana_Menu_Principal extends JFrame implements ActionListener {
@@ -18,7 +13,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 	public Ventana_Menu_Principal() {
 		addButtons();
 		addNorthLabel();
-		setSize(500, 500);
+		setSize(400,400);
 		setTitle("Administrador de proyectos");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -37,7 +32,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		panelCentro = new JPanel();
 		panelCentro.setOpaque(true);
 		add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+		panelCentro.setLayout(new GridLayout(5,1));
 
 		JButton btnCargar = new JButton("Cargar un proyecto del disco local");
 		JButton btnCrear = new JButton("Crear proyecto");
@@ -57,14 +52,13 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		btnSalir.addActionListener(this);
 	}
 	
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Cargar un proyecto del disco local")) {
-			setVisible(false);
+			
+			new Ventana_Cargar_Proyecto(this);
 		}
 		else if (comando.equals("Crear proyecto")){
 			setVisible(false);
