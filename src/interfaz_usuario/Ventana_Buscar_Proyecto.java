@@ -75,16 +75,13 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 		panelSur.setOpaque(true);
 		add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnAceptar = new JButton("Aceptar");
-		JButton btnBorrar = new JButton("Borrar");
+		JButton btnAceptar = new JButton("Buscar");
 		JButton btnVolver = new JButton("Volver");
 		
-		panelSur.add(btnAceptar);
-		panelSur.add(btnBorrar);
 		panelSur.add(btnVolver);
+		panelSur.add(btnAceptar);
 		
 		btnAceptar.addActionListener(this);
-		btnBorrar.addActionListener(this);
 		btnVolver.addActionListener(this);
 	}
 
@@ -93,7 +90,7 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
 		
-		if (comando.equals("Aceptar")) {
+		if (comando.equals("Buscar")) {
 			String nombreProyecto = txtFieldNombreProyecto.getText();
 			if (Registro.isProyecto(nombreProyecto)) {
 				proyecto = Registro.getProyecto(nombreProyecto);
@@ -103,9 +100,6 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "No se tiene registro de este proyecto", "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);
 			}	
-		}
-		else if (comando.equals("Borrar")){
-			txtFieldNombreProyecto.setText(" ");
 		}
 		else if (comando.equals("Volver")) {
 			setVisible(false);
