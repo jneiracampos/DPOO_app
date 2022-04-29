@@ -3,11 +3,12 @@ package interfaz_usuario;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.GroupLayout.Alignment;
 
 @SuppressWarnings("serial")
 public class Ventana_Menu_Principal extends JFrame implements ActionListener {
@@ -37,19 +38,32 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		panelCentro = new JPanel();
 		panelCentro.setOpaque(true);
 		add(panelCentro, BorderLayout.CENTER);
-		panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
 
 		JButton btnCargar = new JButton("Cargar un proyecto del disco local");
 		JButton btnCrear = new JButton("Crear proyecto");
 		JButton btnBuscar = new JButton("Buscar proyecto");
 		JButton btnSalir = new JButton("Salir de la aplicacion");
 		JLabel txtUsuario = new JLabel("Por favor seleccione una de las siguientes opciones:");
+		JLabel txtnull = new JLabel();
+		txtnull.setVisible(false);
 		
-		panelCentro.add(txtUsuario);
-		panelCentro.add(btnCargar);
-		panelCentro.add(btnCrear);
-		panelCentro.add(btnBuscar);
-		panelCentro.add(btnSalir);
+		GroupLayout layout = new GroupLayout(panelCentro);
+		panelCentro.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		
+		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtUsuario).addComponent(btnCargar).addComponent(btnCrear).addComponent(btnBuscar).addComponent(btnSalir));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtnull).addComponent(txtnull).addComponent(txtnull).addComponent(txtnull).addComponent(txtnull));
+		layout.setHorizontalGroup(hGroup);
+		
+		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtUsuario).addComponent(txtnull));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnCargar).addComponent(txtnull));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnCrear).addComponent(txtnull));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnBuscar).addComponent(txtnull));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnSalir).addComponent(txtnull));
+		layout.setVerticalGroup(vGroup);
 		
 		btnCargar.addActionListener(this);
 		btnCrear.addActionListener(this);
@@ -71,6 +85,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Buscar proyecto")) {
 			setVisible(false);
+			new Ventana_Buscar_Proyecto();
 		}
 		else if (comando.equals("Salir de la aplicacion")) {
 			System.exit(0);
