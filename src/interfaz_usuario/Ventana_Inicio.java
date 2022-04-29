@@ -19,8 +19,6 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 	
 	private JTextField txtFieldNombre;
 	private JTextField txtFieldCorreo;	
-	private String nombreParticipante;
-	private String correoParticipante;
 	private JPanel panelNorte;
 	private JPanel panelSur;
 	private JPanel panelCentro;
@@ -97,8 +95,8 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Aceptar")) {
-			nombreParticipante = txtFieldNombre.getText();
-			correoParticipante = txtFieldCorreo.getText();
+			String nombreParticipante = txtFieldNombre.getText();
+			String correoParticipante = txtFieldCorreo.getText();
 			if (nombreParticipante.equals("") && correoParticipante.equals("")) {
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar su nombre y correo", "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);
