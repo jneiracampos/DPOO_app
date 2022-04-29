@@ -40,7 +40,6 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setPreferredSize(new Dimension(400,40));
-		
 		JLabel txt = new JLabel("Opciones de la aplicacion");
 		panelNorte.add(txt);
 	}
@@ -58,26 +57,17 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		JButton btnSalir = new JButton("Salir de la aplicacion");
 		JLabel txtUsuario = new JLabel("Por favor seleccione una de las siguientes opciones:");
 		
-		
-		
 		panelCentro.add(txtUsuario);
 		panelCentro.add(btnCargar);
-		
-		
 		panelCentro.add(btnCrear);
-		
-		
 		panelCentro.add(btnBuscar);
-		
 		panelCentro.add(btnSalir);
-		
 		
 		btnCargar.addActionListener(this);
 		btnCrear.addActionListener(this);
 		btnBuscar.addActionListener(this);
 		btnSalir.addActionListener(this);
 	}
-	
 	
 	
 	@Override

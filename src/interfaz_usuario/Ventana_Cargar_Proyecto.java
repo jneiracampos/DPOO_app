@@ -1,6 +1,7 @@
 package interfaz_usuario;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -10,6 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 	
 	private Ventana_Menu_Principal ventanaMenuPrincipal;
+	private JPanel panelNorte;
 	private JPanel panel1;
 	private JPanel panel2;
 	
@@ -18,23 +20,33 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		ventanaMenuPrincipal = padre;
 		
 		//crear y agregar paneles
+		addPanelNorte();
 		addPanel1();
 		addPanel2();
 		
 		//set ventana
-		setSize(400,400);
+		setSize(400,200);
 		setTitle("Cargar Proyecto");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 	
+	private void addPanelNorte() {
+		panelNorte = new JPanel();
+		panelNorte.setOpaque(true);
+		add(panelNorte, BorderLayout.NORTH);
+		panelNorte.setPreferredSize(new Dimension(400,40));
+		JLabel txt = new JLabel("Cargar un proyecto");
+		panelNorte.add(txt);
+		
+	}
 	private void addPanel1() {
 		panel1 = new JPanel();
 		panel1.setOpaque(true);
-		add(panel1, BorderLayout.NORTH);
+		add(panel1, BorderLayout.CENTER);
 		
 		//agregar elementos al panel
-		JLabel nombre = new JLabel("Nombre del proyecto: ");
+		JLabel nombre = new JLabel("Nombre del proyecto:");
 		JTextField txtNombre = new JTextField(10);
 		panel1.add(nombre);
 		panel1.add(txtNombre);

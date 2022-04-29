@@ -29,7 +29,7 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 		addTextField();
 		addButtons();
 		addNorthLabel();
-		setSize(500, 500);
+		setSize(400, 200);
 		setTitle("Administrador de proyectos");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
