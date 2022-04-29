@@ -1,32 +1,80 @@
 package interfaz_usuario;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 	
-	private Ventana_Inicio panelInicio;
+	private JPanel panelCentro;
+	private JPanel panelNorte;
 	
-	
-	public Ventana_Menu_Principal(Ventana_Inicio padre) {
-		panelInicio = padre;
-		
-		System.out.println(panelInicio.getUsuario().getCorreo());
-		
+	public Ventana_Menu_Principal() {
+		addButtons();
+		addNorthLabel();
 		setSize(500, 500);
 		setTitle("Administrador de proyectos");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 	
+	private void addNorthLabel() {
+		panelNorte = new JPanel();
+		panelNorte.setOpaque(true);
+		add(panelNorte, BorderLayout.NORTH);
+
+		JLabel txt = new JLabel("Opciones de la aplicacion");
+		panelNorte.add(txt);
+	}
+	
+	private void addButtons() {
+		panelCentro = new JPanel();
+		panelCentro.setOpaque(true);
+		add(panelCentro, BorderLayout.CENTER);
+		panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+
+		JButton btnCargar = new JButton("Cargar un proyecto del disco local");
+		JButton btnCrear = new JButton("Crear proyecto");
+		JButton btnBuscar = new JButton("Buscar proyecto");
+		JButton btnSalir = new JButton("Salir de la aplicacion");
+		JLabel txtUsuario = new JLabel("Por favor seleccione una de las siguientes opciones:");
+		
+		panelCentro.add(txtUsuario);
+		panelCentro.add(btnCargar);
+		panelCentro.add(btnCrear);
+		panelCentro.add(btnBuscar);
+		panelCentro.add(btnSalir);
+		
+		btnCargar.addActionListener(this);
+		btnCrear.addActionListener(this);
+		btnBuscar.addActionListener(this);
+		btnSalir.addActionListener(this);
+	}
+	
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		String comando = e.getActionCommand();
 		
+		if (comando.equals("Cargar un proyecto del disco local")) {
+			setVisible(false);
+		}
+		else if (comando.equals("Crear proyecto")){
+			setVisible(false);
+		}
+		else if (comando.equals("Buscar proyecto")) {
+			setVisible(false);
+		}
+		else if (comando.equals("Salir de la aplicacion")) {
+			System.exit(0);
+		}
 	}
 
 }

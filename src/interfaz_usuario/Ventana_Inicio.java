@@ -8,6 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -17,9 +18,7 @@ import modelo.Participante;
 public class Ventana_Inicio extends JFrame implements ActionListener {
 	
 	private JTextField txtFieldNombre;
-	private JTextField txtFieldCorreo;
-	private JButton btnAceptar;
-	private JButton btnBorrar;
+	private JTextField txtFieldCorreo;	
 	private String nombreParticipante;
 	private String correoParticipante;
 	private JPanel panelNorte;
@@ -30,7 +29,7 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 	public Ventana_Inicio() {
 		addNorthLabel();
 		addTextField();
-		addBottons();
+		addButtons();
 		
 		setSize(500, 500);
 		setTitle("Administrador de proyectos");
@@ -42,7 +41,7 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		panelNorte = new JPanel();
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
-		
+
 		JLabel txtBienvenida = new JLabel("¡Bienvenido a la aplicación!");
 		panelNorte.add(txtBienvenida);
 	}
@@ -78,13 +77,13 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		layout.setVerticalGroup(vGroup);
 	}
 	
-	private void addBottons() {
+	private void addButtons() {
 		panelSur = new JPanel();
 		panelSur.setOpaque(true);
 		add(panelSur, BorderLayout.SOUTH);
 		
-		btnAceptar = new JButton("Aceptar");
-		btnBorrar = new JButton("Borrar");
+		JButton btnAceptar = new JButton("Aceptar");
+		JButton btnBorrar = new JButton("Borrar");
 		
 		panelSur.add(btnAceptar);
 		panelSur.add(btnBorrar);
@@ -100,10 +99,15 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		if (comando.equals("Aceptar")) {
 			nombreParticipante = txtFieldNombre.getText();
 			correoParticipante = txtFieldCorreo.getText();
-			usuario = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
-			setVisible(false);
-			new Ventana_Menu_Principal(this);
-			
+			if (nombreParticipante.equals("") && correoParticipante.equals("")) {
+				JOptionPane.showMessageDialog(this, "Recuerde ingresar su nombre y correo", "Aviso",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			else {
+				usuario = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
+				setVisible(false);
+				new Ventana_Menu_Principal();
+			}	
 		}
 		else if (comando.equals("Borrar")){
 			txtFieldNombre.setText(" ");
