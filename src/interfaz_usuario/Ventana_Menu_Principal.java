@@ -79,6 +79,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		
 		if (comando.equals("Cargar un proyecto del disco local")) {
 			setVisible(false);
+			new Ventana_Cargar_Proyecto(this);
 		}
 		else if (comando.equals("Crear proyecto")){
 			setVisible(false);

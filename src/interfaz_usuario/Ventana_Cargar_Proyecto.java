@@ -76,6 +76,7 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		String comando = e.getActionCommand();
 		if (comando.equals("Volver")) {
 			setVisible(false);
+			ventanaMenuPrincipal.setVisible(true);
 		}
 		else if (comando.equals("Cargar")){
 			setVisible(false);
