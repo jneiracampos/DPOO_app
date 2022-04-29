@@ -1,16 +1,15 @@
 package interfaz_usuario;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout.*;
 
 @SuppressWarnings("serial")
 public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 	
 	private Ventana_Menu_Principal ventanaMenuPrincipal;
+	
 	private JPanel panelNorte;
 	private JPanel panel1;
 	private JPanel panel2;

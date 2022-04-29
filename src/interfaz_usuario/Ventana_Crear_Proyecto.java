@@ -1,36 +1,27 @@
 package interfaz_usuario;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.GroupLayout.Alignment;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.GroupLayout.*;
 import modelo.Proyecto;
 
 @SuppressWarnings("serial")
 public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 	
 	private Ventana_Menu_Principal ventanaMenuPrincipal;
+	
 	private Proyecto proyecto;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
-	private JTextField txtFieldNombreProyecto;
-	private JTextField txtFieldDescripcionProyecto;
-
 	
 	public Ventana_Crear_Proyecto(Ventana_Menu_Principal padre) {
 		ventanaMenuPrincipal = padre;
 		addTextField();
 		addButtons();
 		addNorthLabel();
-		setSize(500, 500);
+		setSize(400, 300);
 		setTitle("Administrador de proyectos");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -51,10 +42,10 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		add(panelCentro, BorderLayout.CENTER);
 		
 		JLabel txtNombre = new JLabel("Nombre del proyecto:");
-		JLabel txtDescripcion = new JLabel("Descripción del proyecto:");
+		JLabel txtDescripcion = new JLabel("Descripcion del proyecto:");
 		JLabel txtnull = new JLabel();
-		txtFieldNombreProyecto = new JTextField();
-		txtFieldDescripcionProyecto = new JTextField();
+		JTextField txtFieldNombreProyecto = new JTextField();
+		JTextField txtFieldDescripcionProyecto = new JTextField();
 		txtnull.setVisible(false);
 
 		GroupLayout layout = new GroupLayout(panelCentro);
@@ -94,7 +85,8 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Crear")) {
-			
+			setVisible(false);
+			new Ventana_Opciones(ventanaMenuPrincipal);
 		}
 		else if (comando.equals("Volver")) {
 			setVisible(false);
@@ -107,6 +99,3 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 	}
 	
 }
-
-
-

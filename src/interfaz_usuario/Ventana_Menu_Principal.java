@@ -2,7 +2,6 @@ package interfaz_usuario;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.GroupLayout.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -20,15 +19,19 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		panelW = new JPanel();
 		panelW.setOpaque(true);
 		add(panelW, BorderLayout.WEST);
+		
 		panelE = new JPanel();
 		panelE.setOpaque(true);
 		add(panelE, BorderLayout.EAST);
+		
 		panelS = new JPanel();
 		panelS.setOpaque(true);
 		add(panelS, BorderLayout.SOUTH);
 		panelS.setPreferredSize(new Dimension(400,80));
+		
 		addButtons();
 		addNorthLabel();
+		
 		setSize(400, 400);
 		setTitle("Administrador de proyectos");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -40,6 +43,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setPreferredSize(new Dimension(400,40));
+		
 		JLabel txt = new JLabel("Opciones de la aplicacion");
 		panelNorte.add(txt);
 	}
@@ -47,7 +51,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 	private void addButtons() {
 		panelCentro = new JPanel();
 		panelCentro.setOpaque(true);
-		panelCentro.setLayout(new GridLayout(5, 3, 0, 12));
+		panelCentro.setLayout(new GridLayout(5, 1, 0, 12));
 
 		add(panelCentro, BorderLayout.CENTER);
 

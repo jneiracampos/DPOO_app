@@ -1,16 +1,9 @@
 package interfaz_usuario;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.GroupLayout.*;
 
 import modelo.Participante;
 
@@ -40,7 +33,7 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
 
-		JLabel txtBienvenida = new JLabel("¡Bienvenido a la aplicación!");
+		JLabel txtBienvenida = new JLabel("Bienvenido a la aplicacion!");
 		panelNorte.add(txtBienvenida);
 	}
 	
@@ -97,7 +90,7 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		if (comando.equals("Aceptar")) {
 			String nombreParticipante = txtFieldNombre.getText();
 			String correoParticipante = txtFieldCorreo.getText();
-			if (nombreParticipante.equals("") && correoParticipante.equals("")) {
+			if (nombreParticipante.equals("") || correoParticipante.equals("")) {
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar su nombre y correo", "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
