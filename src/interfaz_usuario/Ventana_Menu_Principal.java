@@ -86,7 +86,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Buscar proyecto")) {
 			setVisible(false);
-			new Ventana_Buscar_Proyecto();
+			new Ventana_Buscar_Proyecto(this);
 		}
 		else if (comando.equals("Salir de la aplicacion")) {
 			System.exit(0);

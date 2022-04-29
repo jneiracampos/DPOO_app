@@ -16,6 +16,7 @@ import modelo.Proyecto;
 @SuppressWarnings("serial")
 public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 	
+	private Ventana_Menu_Principal ventanaMenuPrincipal;
 	private Proyecto proyecto;
 	private JPanel panelCentro;
 	private JPanel panelSur;
@@ -23,7 +24,8 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 	private JTextField txtFieldNombreProyecto;	
 
 	
-	public Ventana_Buscar_Proyecto() {
+	public Ventana_Buscar_Proyecto(Ventana_Menu_Principal padre) {
+		ventanaMenuPrincipal = padre;
 		addTextField();
 		addButtons();
 		addNorthLabel();
@@ -75,12 +77,15 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		JButton btnBorrar = new JButton("Borrar");
+		JButton btnVolver = new JButton("Volver");
 		
 		panelSur.add(btnAceptar);
 		panelSur.add(btnBorrar);
+		panelSur.add(btnVolver);
 		
 		btnAceptar.addActionListener(this);
 		btnBorrar.addActionListener(this);
+		btnVolver.addActionListener(this);
 	}
 
 	
@@ -101,6 +106,10 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Borrar")){
 			txtFieldNombreProyecto.setText(" ");
+		}
+		else if (comando.equals("Volver")) {
+			setVisible(false);
+			ventanaMenuPrincipal.setVisible(true);
 		}
 	}
 	

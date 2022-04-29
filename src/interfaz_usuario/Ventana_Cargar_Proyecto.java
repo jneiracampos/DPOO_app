@@ -3,10 +3,10 @@ package interfaz_usuario;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 
+@SuppressWarnings("serial")
 public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 	
 	private Ventana_Menu_Principal ventanaMenuPrincipal;
