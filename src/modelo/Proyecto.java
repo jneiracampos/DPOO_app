@@ -96,6 +96,7 @@ public class Proyecto {
 		this.actividades = new HashMap<String, ArrayList<Actividad>>();
 		this.diaActividadPorParticipante = new HashMap<String, HashMap<LocalDate, ArrayList<Actividad>>>();
 		this.tipoActividadesPorParticipante = new HashMap<String, HashMap<String, ArrayList<Actividad>>>();
+		addOtroParticipante(participanteInicial);
 	}
 	
 	//************************************************************************************
