@@ -99,12 +99,12 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 				JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				new Ventana_Opciones(ventanaMenuPrincipal);
 				Participante usuario = ventanaInicio.getUsuario();
 				LocalDate fechaFin = null;
 				LocalDate fechaInicio = LocalDate.now();
 				proyecto = Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, usuario);
 				setVisible(false);
+				new Ventana_Opciones(ventanaMenuPrincipal);
 			}
 		}
 		else if (comando.equals("Volver")) {

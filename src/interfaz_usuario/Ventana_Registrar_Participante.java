@@ -8,16 +8,20 @@ import javax.swing.GroupLayout.*;
 import modelo.Participante;
 
 @SuppressWarnings("serial")
-public class Ventana_Inicio extends JFrame implements ActionListener {
+public class Ventana_Registrar_Participante extends JFrame implements ActionListener {
+	
+	private Ventana_Opciones ventanaOpciones;
 	
 	private JTextField txtFieldNombre;
 	private JTextField txtFieldCorreo;	
 	private JPanel panelNorte;
 	private JPanel panelSur;
 	private JPanel panelCentro;
-	private Participante usuario;
+	private Participante participante;
 
-	public Ventana_Inicio() {
+	public Ventana_Registrar_Participante(Ventana_Opciones padre) {
+		ventanaOpciones = padre;
+		
 		addNorthLabel();
 		addTextField();
 		addButtons();
@@ -33,7 +37,7 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
 
-		JLabel txtBienvenida = new JLabel("Bienvenido a la aplicacion!");
+		JLabel txtBienvenida = new JLabel("Registrar un participante");
 		panelNorte.add(txtBienvenida);
 	}
 	
@@ -42,7 +46,7 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		panelCentro.setOpaque(true);
 		add(panelCentro, BorderLayout.CENTER);
 		
-		JLabel txtSolicitar = new JLabel("Por favor ingresa los siguientes datos:");
+		JLabel txtSolicitar = new JLabel("Ingresa los datos del nuevo participante:");
 		JLabel txtnull = new JLabel();
 		txtnull.setVisible(false);
 
@@ -73,45 +77,45 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 		panelSur.setOpaque(true);
 		add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnAceptar = new JButton("Aceptar");
+		JButton btnVolver = new JButton("Volver");
 		JButton btnBorrar = new JButton("Borrar");
+		JButton btnRegistrar = new JButton("Registrar");
 		
+		panelSur.add(btnVolver);
 		panelSur.add(btnBorrar);
-		panelSur.add(btnAceptar);
+		panelSur.add(btnRegistrar);
 		
-		btnAceptar.addActionListener(this);
+		btnVolver.addActionListener(this);
 		btnBorrar.addActionListener(this);
+		btnRegistrar.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
 		
-		if (comando.equals("Aceptar")) {
+		if (comando.equals("Registrar")) {
 			String nombreParticipante = txtFieldNombre.getText();
 			String correoParticipante = txtFieldCorreo.getText();
 			if (nombreParticipante.equals("") || correoParticipante.equals("")) {
-				JOptionPane.showMessageDialog(this, "Recuerda ingresar su nombre y correo", "Aviso",
+				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre y correo del participante", "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				usuario = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
+				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
+				Registro.addOtroParticipante(participante);
 				setVisible(false);
-				new Ventana_Menu_Principal(this);
+				ventanaOpciones.setVisible(true);
 			}	
 		}
 		else if (comando.equals("Borrar")){
 			txtFieldNombre.setText(" ");
 			txtFieldCorreo.setText(" ");
 		}
+		else if (comando.equals("Volver")) {
+			setVisible(false);
+			ventanaOpciones.setVisible(true);
+		}
 	}
 	
-	public Participante getUsuario() {
-		return usuario;
-	}
-		
-	public static void main(String[] args) {
-		new Ventana_Inicio();
-	}
-
 }

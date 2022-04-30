@@ -65,6 +65,14 @@ public class Registro {
 	public static boolean isActividad(String nombreActividad) {
 		return actividades.containsKey(nombreActividad);
 	}
+	
+	//metodos proyecto
+	public static String getNombre() {
+		return proyecto.getNombre();
+	}
+	public static void addOtroParticipante(Participante otroParticipante) {
+		proyecto.addOtroParticipante(otroParticipante);
+	}
 	public static void setDescripcion(String descripcion) {
 		proyecto.setDescripcion(descripcion);
 	}

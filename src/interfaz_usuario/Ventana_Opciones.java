@@ -41,12 +41,13 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 	}
 	
 	private void addNorthLabel() {
+		String nombreProyecto = Registro.getNombre();
 		panelNorte = new JPanel();
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setPreferredSize(new Dimension(400,40));
-		JLabel txt = new JLabel("Acciones sobre el proyecto");
-		panelNorte.add(txt);
+		JLabel nombre = new JLabel(nombreProyecto);
+		panelNorte.add(nombre);
 	}
 	
 	private void addButtons() {
@@ -97,7 +98,7 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Registrar participante")) {
 			setVisible(false);
-			
+			new Ventana_Registrar_Participante(this);
 		}
 		else if (comando.equals("Realizar actividad")){
 			setVisible(false);
