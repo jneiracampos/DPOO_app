@@ -15,7 +15,6 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 	private JPanel panel2;
 	
 	public Ventana_Cargar_Proyecto(Ventana_Menu_Principal padre) {
-		//
 		ventanaMenuPrincipal = padre;
 		
 		//crear y agregar paneles
@@ -25,7 +24,7 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		
 		//set ventana
 		setSize(400,200);
-		setTitle("Administrador de proyectos");
+		setTitle("Cargar un proyecto");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}

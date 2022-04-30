@@ -35,7 +35,7 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		addNorthLabel();
 		
 		setSize(400, 400);
-		setTitle("Administrador de proyectos");
+		setTitle("Menu principal");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}

@@ -3,10 +3,8 @@ package interfaz_usuario;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
-
 import javax.swing.*;
 import javax.swing.GroupLayout.*;
-
 import modelo.Participante;
 import modelo.Proyecto;
 
@@ -15,7 +13,6 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 	
 	private Ventana_Inicio ventanaInicio;
 	private Ventana_Menu_Principal ventanaMenuPrincipal;
-	
 	private Proyecto proyecto;
 	private JPanel panelCentro;
 	private JPanel panelSur;
@@ -30,7 +27,7 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		addButtons();
 		addNorthLabel();
 		setSize(400, 300);
-		setTitle("Administrador de proyectos");
+		setTitle("Crear un proyecto");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -92,18 +89,18 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		
 		if (comando.equals("Crear")) {
 			String nombreProyecto = txtNombreProyecto.getText();
-			String descProyecto = txtDescProyecto.getText();
-			if (nombreProyecto.equals("") || descProyecto.equals("")) {
+			String descripcionProyecto = txtDescProyecto.getText();
+			if (nombreProyecto.equals("") || descripcionProyecto.equals("")) {
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre y la descripcion", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				setVisible(false);
-				new Ventana_Opciones(ventanaMenuPrincipal);
+				//new Ventana_Opciones(ventanaMenuPrincipal);
 				Participante usuario = ventanaInicio.getUsuario();
 				LocalDate fechaFin = null;
 				LocalDate fechaInicio = null;
-				proyecto = Registro.nuevoProyecto(nombreProyecto, descProyecto, fechaInicio, fechaFin, usuario);
+				proyecto = Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, usuario);
+				setVisible(false);
 			}
 		}
 		else if (comando.equals("Volver")) {

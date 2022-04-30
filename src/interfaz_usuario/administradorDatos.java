@@ -8,63 +8,65 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
 import modelo.Actividad;
 import modelo.Participante;
 import modelo.Proyecto;
 
 public class administradorDatos {
 	
-	private static String nombreArchivo;
-	
-	private static Participante participante;
-	
-	
 	@SuppressWarnings("resource")
 	public static Proyecto cargarDatos(String nombreproyecto) throws Throwable {
 		
-		nombreArchivo = nombreproyecto;
-
+		String nombreArchivo = nombreproyecto;
 		BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo));
 		String nombreProyecto = reader.readLine();
 		String descripcionProyecto = reader.readLine();
-		String inicioProyecto = reader.readLine();
-		LocalDate fechaInicioProyecto = LocalDate.parse(inicioProyecto);
-		String finProyecto = reader.readLine();
-		LocalDate fechaFinProyecto = LocalDate.parse(finProyecto);
+		LocalDate fechaInicioProyecto = LocalDate.parse(reader.readLine());
+		LocalDate fechaFinProyecto = LocalDate.parse(reader.readLine());
 		String nombreParticipanteInicial = reader.readLine();
 		String correoParticipanteInicial = reader.readLine();
-		participante = Registro.nuevoParticipante(nombreParticipanteInicial, correoParticipanteInicial);
+		Participante participante = Registro.nuevoParticipante(nombreParticipanteInicial, correoParticipanteInicial);
 		Proyecto proyecto = Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicioProyecto, fechaFinProyecto, participante);
 		reader.readLine();
-		while (reader.readLine() != "--") {
-			String nombreActividad = reader.readLine();
-			String descripcionActividad = reader.readLine();
-			String tipoActividad = reader.readLine();
-			String fecha = reader.readLine();
-			LocalDate fechaActividad = LocalDate.parse(fecha);
-			String nombreParticipante = reader.readLine();
-			String correoParticipante = reader.readLine();
-			String horaInicio = reader.readLine();
-			LocalTime horaInicioActividad = LocalTime.parse(horaInicio);
-			String horaFin = reader.readLine();
-			LocalTime horaFinActividad = LocalTime.parse(horaFin);
-			participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
-			Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fechaActividad, horaInicioActividad, horaFinActividad, participante);
-			proyecto.addActividad(actividad);
+		int marcador = 0;
+		while (marcador == 0) {
+			String inicio = reader.readLine();
+			if (inicio.equals("--")) {
+				marcador = 1;
+			}
+			else {
+				String nombreActividad = inicio;
+				String descripcionActividad = reader.readLine();
+				String tipoActividad = reader.readLine();
+				LocalDate fechaActividad = LocalDate.parse(reader.readLine());
+				String nombreParticipante = reader.readLine();
+				String correoParticipante = reader.readLine();
+				LocalTime horaInicioActividad = LocalTime.parse(reader.readLine());
+				LocalTime horaFinActividad = LocalTime.parse(reader.readLine());
+				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
+				Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fechaActividad, horaInicioActividad, horaFinActividad, participante);
+				proyecto.addActividad(actividad);
+			}
 		}
 		reader.readLine();
-		while (reader.readLine() != "--") {
-			String nombreParticipante = reader.readLine();
-			String correoParticipante = reader.readLine();
-			participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
-			proyecto.addOtroParticipante(participante);
+		while (marcador == 1) {
+			String inicio = reader.readLine();
+			if (inicio.equals("--")) {
+				marcador = 0;
+			}
+			else {
+				String nombreParticipante = inicio;
+				String correoParticipante = reader.readLine();
+				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
+				proyecto.addOtroParticipante(participante);
+			}
 		}
+		
 		return proyecto;	
 	}
 	
 	public static void generarArchivo(Proyecto proyecto) throws IOException {
-		nombreArchivo = proyecto.getNombre();
+		String nombreArchivo = proyecto.getNombre();
 		BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo));
 		writer.write(proyecto.getNombre());
 		writer.newLine();
@@ -85,6 +87,8 @@ public class administradorDatos {
 			writer.write(actividades.get(i).getNombre());
 			writer.newLine();
 			writer.write(actividades.get(i).getDescripcion());
+			writer.newLine();
+			writer.write(actividades.get(i).getTipo());
 			writer.newLine();
 			writer.write(actividades.get(i).getFecha().toString());
 			writer.newLine();
