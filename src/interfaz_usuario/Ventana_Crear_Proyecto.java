@@ -17,12 +17,12 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
-	private JTextField txtNombreProyecto;
-	private JTextField txtDescProyecto;	
+	private JTextField txtFieldNombreProyecto;
+	private JTextField txtFieldDescripcionProyecto;
 	
-	public Ventana_Crear_Proyecto(Ventana_Inicio padre1, Ventana_Menu_Principal padre) {
-		ventanaInicio = padre1;
-		ventanaMenuPrincipal = padre;
+	public Ventana_Crear_Proyecto(Ventana_Inicio padre, Ventana_Menu_Principal menu) {
+		ventanaInicio = padre;
+		ventanaMenuPrincipal = menu;
 		addTextField();
 		addButtons();
 		addNorthLabel();
@@ -46,10 +46,13 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		panelCentro.setOpaque(true);
 		add(panelCentro, BorderLayout.CENTER);
 		
-		JLabel nombre = new JLabel("Nombre del proyecto:");
-		JLabel descripcion = new JLabel("Descripcion del proyecto:");
-		txtNombreProyecto = new JTextField();
-		txtDescProyecto = new JTextField();
+		JLabel txtnombre = new JLabel("Nombre del proyecto:");
+		JLabel txtdescripcion = new JLabel("Descripcion del proyecto:");
+		JLabel txtsolicitud = new JLabel("Ingrese la fecha de fin del proyecto:");
+		JLabel txtnull = new JLabel();
+		txtnull.setVisible(false);
+		txtFieldNombreProyecto = new JTextField();
+		txtFieldDescripcionProyecto = new JTextField();
 
 		GroupLayout layout = new GroupLayout(panelCentro);
 		panelCentro.setLayout(layout);
@@ -57,13 +60,14 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		layout.setAutoCreateContainerGaps(true);
 		
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		hGroup.addGroup(layout.createParallelGroup().addComponent(nombre).addComponent(descripcion));
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtNombreProyecto).addComponent(txtDescProyecto));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtnombre).addComponent(txtdescripcion).addComponent(txtsolicitud));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldNombreProyecto).addComponent(txtFieldDescripcionProyecto).addComponent(txtnull));
 		layout.setHorizontalGroup(hGroup);
 		
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(nombre).addComponent(txtNombreProyecto));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(descripcion).addComponent(txtDescProyecto));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtnombre).addComponent(txtFieldNombreProyecto));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtdescripcion).addComponent(txtFieldDescripcionProyecto));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtsolicitud).addComponent(txtnull));
 		layout.setVerticalGroup(vGroup);
 	}
 	
@@ -88,8 +92,8 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Crear")) {
-			String nombreProyecto = txtNombreProyecto.getText();
-			String descripcionProyecto = txtDescProyecto.getText();
+			String nombreProyecto = txtFieldNombreProyecto.getText();
+			String descripcionProyecto = txtFieldDescripcionProyecto.getText();
 			if (nombreProyecto.equals("") || descripcionProyecto.equals("")) {
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre y la descripcion", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
@@ -98,7 +102,7 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 				//new Ventana_Opciones(ventanaMenuPrincipal);
 				Participante usuario = ventanaInicio.getUsuario();
 				LocalDate fechaFin = null;
-				LocalDate fechaInicio = null;
+				LocalDate fechaInicio = LocalDate.now();
 				proyecto = Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, usuario);
 				setVisible(false);
 			}
