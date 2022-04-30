@@ -16,6 +16,7 @@ public class Registro {
 	/**
 	 * HashMap que almacena las parejas (nombreProyecto: proyecto)
 	 */
+	private static Proyecto proyecto;
 	private static HashMap<String, Proyecto> proyectos = new HashMap<String, Proyecto>();
 	private static HashMap<String, Actividad> actividades = new HashMap<String, Actividad>();
 
@@ -28,7 +29,7 @@ public class Registro {
 	 */
 	
 	public static Proyecto nuevoProyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Participante participanteInicial) {
-		Proyecto proyecto = new Proyecto(nombre, descripcion, fechaInicio, fechaFin, participanteInicial);
+		proyecto = new Proyecto(nombre, descripcion, fechaInicio, fechaFin, participanteInicial);
 		proyectos.put(nombre, proyecto);
 		return proyecto;
 	}
@@ -64,4 +65,8 @@ public class Registro {
 	public static boolean isActividad(String nombreActividad) {
 		return actividades.containsKey(nombreActividad);
 	}
+	public static void setDescripcion(String descripcion) {
+		proyecto.setDescripcion(descripcion);
+	}
 }
+

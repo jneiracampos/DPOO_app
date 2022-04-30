@@ -1,6 +1,3 @@
-/**
- * 
- */
 package interfaz_usuario;
 
 import java.awt.*;

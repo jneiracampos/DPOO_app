@@ -99,7 +99,7 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 				JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				//new Ventana_Opciones(ventanaMenuPrincipal);
+				new Ventana_Opciones(ventanaMenuPrincipal);
 				Participante usuario = ventanaInicio.getUsuario();
 				LocalDate fechaFin = null;
 				LocalDate fechaInicio = LocalDate.now();

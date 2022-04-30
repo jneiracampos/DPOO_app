@@ -1,5 +1,4 @@
 package interfaz_usuario;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -16,6 +15,7 @@ import modelo.Proyecto;
 
 import javax.swing.GroupLayout.Alignment;
 
+@SuppressWarnings("serial")
 public class Ventana_Descripcion extends JFrame implements ActionListener {
 	
 	private Ventana_Opciones ventanaOpciones;
@@ -101,7 +101,8 @@ public class Ventana_Descripcion extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Actualizar")){
 			String descProyecto = txtDescProyecto.getText();
-			//Proyecto.setDescripcion(descProyecto);
+			Registro.setDescripcion(descProyecto);
+			
 			setVisible(false);
 		}
 	}
