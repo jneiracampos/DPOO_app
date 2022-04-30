@@ -64,8 +64,8 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		JLabel txtUsuario = new JLabel("Por favor seleccione una de las siguientes opciones:");
 		
 		panelCentro.add(txtUsuario);
-		panelCentro.add(btnCargar);
 		panelCentro.add(btnCrear);
+		panelCentro.add(btnCargar);
 		panelCentro.add(btnBuscar);
 		panelCentro.add(btnSalir);
 		
