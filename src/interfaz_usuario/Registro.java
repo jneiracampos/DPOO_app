@@ -70,6 +70,11 @@ public class Registro {
 	public static String getNombre() {
 		return proyecto.getNombre();
 	}
+	
+	public static Participante getParticipantePorCorreo(String correo) {
+		return proyecto.getParticipante();
+	}
+	
 	public static void addOtroParticipante(Participante otroParticipante) {
 		proyecto.addOtroParticipante(otroParticipante);
 	}

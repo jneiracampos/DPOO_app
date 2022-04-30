@@ -98,8 +98,8 @@ public class Ventana_Descripcion extends JFrame implements ActionListener {
 		else if (comando.equals("Actualizar")){
 			String descProyecto = txtDescProyecto.getText();
 			Registro.setDescripcion(descProyecto);
-			setVisible(false);
 			ventanaOpciones.setVisible(true);
+			setVisible(false);
 		}
 	}
 }
