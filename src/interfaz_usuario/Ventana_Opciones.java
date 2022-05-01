@@ -2,6 +2,7 @@ package interfaz_usuario;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -34,8 +35,8 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		addButtons();
 		addNorthLabel();
 		
-		setSize(400, 400);
-		setTitle("Administrador de proyectos");
+		setSize(550, 500);
+		setTitle("Menu");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -53,16 +54,17 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 	private void addButtons() {
 		panelCentro = new JPanel();
 		panelCentro.setOpaque(true);
-		panelCentro.setLayout(new GridLayout(8, 1, 0, 8));
+		panelCentro.setLayout(new GridLayout(9, 1, 0, 9));
 		add(panelCentro, BorderLayout.CENTER);
 
-		JButton cambiarDesc = new JButton("Cambiar descripcion");
-		JButton cambiarFecha = new JButton("Cambiar fecha final");
-		JButton registrarPart = new JButton("Registrar participante");
-		JButton realizarAct = new JButton("Realizar actividad");
-		JButton registrarAct = new JButton("Registrar actividad pasada");
-		JButton cambiarHora = new JButton("Cambiar hora final de una actividad");
-		JButton reporte = new JButton("Consultar reporte de un participante");
+		JButton cambiarDesc = new JButton("Cambiar la descripcion del proyecto");
+		JButton cambiarFecha = new JButton("Cambiar fecha final del proyecto");
+		JButton registrarPart = new JButton("Registrar un participante");
+		JButton realizarAct = new JButton("Realizar una actividad");
+		JButton registrarAct = new JButton("Registrar una actividad pasada");
+		JButton cambiarHora = new JButton("Cambiar la hora final de una actividad");
+		JButton reporte = new JButton("Consultar el reporte de un participante");
+		JButton guardarProyecto = new JButton("Guardar este proyecto en el disco local");
 		JButton volver = new JButton("Volver al Menu Principal");
 		
 		panelCentro.add(cambiarDesc);
@@ -72,6 +74,7 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		panelCentro.add(registrarAct);
 		panelCentro.add(cambiarHora);
 		panelCentro.add(reporte);
+		panelCentro.add(guardarProyecto);
 		panelCentro.add(volver);
 		
 		cambiarDesc.addActionListener(this);
@@ -81,6 +84,7 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		registrarAct.addActionListener(this);
 		cambiarHora.addActionListener(this);
 		reporte.addActionListener(this);
+		guardarProyecto.addActionListener(this);
 		volver.addActionListener(this);
 	}
 	
@@ -88,33 +92,42 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
 		
-		if (comando.equals("Cambiar descripcion")) {
+		if (comando.equals("Cambiar la descripcion del proyecto")) {
 			setVisible(false);
 			new Ventana_Descripcion(this);
 		}
-		else if (comando.equals("Cambiar fecha final")){
+		else if (comando.equals("Cambiar fecha final del proyecto")){
 			setVisible(false);
-			
+			new Ventana_Cambiar_Fecha_Proyecto(this);
 		}
-		else if (comando.equals("Registrar participante")) {
+		else if (comando.equals("Registrar un participante")) {
 			setVisible(false);
 			new Ventana_Registrar_Participante(this);
 		}
-		else if (comando.equals("Realizar actividad")){
+		else if (comando.equals("Realizar una actividad")){
 			setVisible(false);
-			
 		}
-		else if (comando.equals("Registrar actividad pasada")) {
+		else if (comando.equals("Registrar una actividad pasada")) {
 			setVisible(false);
 			new Ventana_Registrar_Actividad(this);
 		}
-		else if (comando.equals("Cambiar hora final de una actividad")){
+		else if (comando.equals("Cambiar la hora final de una actividad")){
 			setVisible(false);
-			
+			new Ventana_Cambiar_Hora_Actividad(this);
 		}
-		else if (comando.equals("Consultar reporte de un participante")) {
+		else if (comando.equals("Consultar el reporte de un participante")) {
 			setVisible(false);
-			
+		}
+		else if (comando.equals("Guardar este proyecto en el disco local")) {
+			try {
+				administradorDatos.generarArchivo(Registro.getProyecto());
+				ventanaMenuPrincipal.setVisible(true);
+				setVisible(false);
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		else if (comando.equals("Volver al Menu Principal")) {
 			ventanaMenuPrincipal.setVisible(true);

@@ -15,7 +15,6 @@ import javax.swing.GroupLayout.Alignment;
 public class Ventana_Descripcion extends JFrame implements ActionListener {
 	
 	private Ventana_Opciones ventanaOpciones;
-	
 	private JPanel panelNorte;
 	private JPanel panel1;
 	private JPanel panel2;
@@ -24,14 +23,12 @@ public class Ventana_Descripcion extends JFrame implements ActionListener {
 	public Ventana_Descripcion(Ventana_Opciones padre) {
 		ventanaOpciones = padre;
 		
-		//crear y agregar paneles
 		addPanelNorte();
 		addPanel1();
 		addPanel2();
 		
-		//set ventana
 		setSize(400,200);
-		setTitle("Administrador de proyectos");
+		setTitle("Cambiar la descripcion del proyecto");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
