@@ -123,8 +123,6 @@ public class Ventana_Consultar_Reporte extends JFrame implements ActionListener 
 			else {
 				Participante participante = Registro.getProyecto().getParticipantePorCorreo(correo);
 				Reporte.getReporte(Registro.getProyecto(), participante, tipoActividad, fecha);
-				setVisible(false);
-				ventanaOpciones.setVisible(true);
 			}
 		}
 		else if (comando.equals("Volver")) {

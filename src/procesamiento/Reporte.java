@@ -3,6 +3,7 @@ package procesamiento;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import interfaz_usuario.Ventana_Mostrar_Reporte;
 import modelo.Actividad;
 import modelo.Participante;
 import modelo.Proyecto;
@@ -116,14 +117,7 @@ public class Reporte {
 		long tiempoDiaActividad = getTiempoDiaActividad(proyecto, participante.getCorreo(), fecha);
 		int cantidadDiaActividad = getSizeTiempoDiaActividad(proyecto, participante.getCorreo(), fecha);
 		double tiempoPromedio = getTiempoPromedio(proyecto, participante);
-		//Imprimir
-		System.out.println("\nSe le generó al participante llamado " + participante.getNombre() + " el siguiente reporte:");
-		System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadActividades) + " actividades.");
-		System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTotal) + " minutos.");
-		System.out.println("Realizar estas actividades le tomó en promedio " + String.valueOf(tiempoPromedio) + " minutos.");
-		System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadTipoActividad) + " actividades de tipo " + tipo + ".");
-		System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTipoActividad) + " minutos.");
-		System.out.println("\n" + participante.getNombre() + " realizó " + String.valueOf(cantidadDiaActividad) + " actividades en la fecha " + fecha + ".");
-		System.out.println("Realizar estas actividades le tomó en total " + String.valueOf(tiempoDiaActividad) + " minutos.");
+		
+		new Ventana_Mostrar_Reporte(tiempoTotal,cantidadActividades,tiempoTipoActividad,cantidadTipoActividad,tiempoDiaActividad,cantidadDiaActividad,tiempoPromedio,participante,tipo,fecha);
 	}
 }
