@@ -5,6 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.GroupLayout.*;
 
+import modelo.Proyecto;
+
 @SuppressWarnings("serial")
 public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 	
@@ -83,7 +85,8 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 		if (comando.equals("Buscar")) {
 			String nombreProyecto = txtFieldNombreProyecto.getText();
 			if (Registro.isProyecto(nombreProyecto)) {
-				Registro.getProyecto(nombreProyecto);
+				Proyecto proyecto = Registro.getProyecto(nombreProyecto);
+				Registro.setProyecto(proyecto);
 				setVisible(false);
 				new Ventana_Opciones(ventanaMenuPrincipal);
 			}

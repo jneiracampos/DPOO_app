@@ -89,5 +89,9 @@ public class Registro {
 	public static Proyecto getProyecto() {
 		return proyecto;
 	}
+	
+	public static void setProyecto(Proyecto nuevoProyecto) {
+		proyecto = nuevoProyecto;
+	}
 }
 

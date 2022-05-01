@@ -56,6 +56,7 @@ public class Actividad {
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
 		this.participante = participante;
+		addTiempo(horaInicio, horaFin);
 	}
 		
 	//******************************************************************

@@ -25,6 +25,8 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 	private JTextField txtFieldCorreoParticipante;
 	private TimePicker timeInicio;
 	private TimePicker timeFin;
+	private JComboBox<String> tipo;
+
 	
 	public Ventana_Registrar_Actividad(Ventana_Opciones padre) {
 		ventanaOpciones = padre;
@@ -60,7 +62,9 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		JLabel txtHoraInicio = new JLabel("Hora de inicio:");
 		JLabel txtHoraFin = new JLabel("Hora de fin:");
 		JLabel txtNull = new JLabel();
-		JLabel txtNull1 = new JLabel();
+		
+		String[] optionsToChoose = {"Documentacion", "Implementacion", "Pruebas", "Investigacion", "Diseño", "Analisis"};
+		tipo = new JComboBox<String>(optionsToChoose);
 		
 		txtFieldCorreoParticipante = new JTextField();
 		txtFieldNombre = new JTextField();
@@ -76,7 +80,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 		hGroup.addGroup(layout.createParallelGroup().addComponent(txtCorreoParticipante).addComponent(txtSolicitud).addComponent(txtNombre).addComponent(txtDescripcion).addComponent(txtTipo).addComponent(txtFecha).addComponent(txtHoraInicio).addComponent(txtHoraFin));
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldCorreoParticipante).addComponent(txtNull).addComponent(txtFieldNombre).addComponent(txtFieldDescripcion).addComponent(txtNull1).addComponent(calendario).addComponent(timeInicio).addComponent(timeFin));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldCorreoParticipante).addComponent(txtNull).addComponent(txtFieldNombre).addComponent(txtFieldDescripcion).addComponent(tipo).addComponent(calendario).addComponent(timeInicio).addComponent(timeFin));
 		layout.setHorizontalGroup(hGroup);
 		
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
@@ -84,7 +88,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtSolicitud).addComponent(txtNull));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtNombre).addComponent(txtFieldNombre));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtDescripcion).addComponent(txtFieldDescripcion));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtTipo).addComponent(txtNull1));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtTipo).addComponent(tipo));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtFecha).addComponent(calendario));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtHoraInicio).addComponent(timeInicio));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtHoraFin).addComponent(timeFin));
@@ -115,7 +119,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 			String correo = txtFieldCorreoParticipante.getText();
 			String nombreActividad = txtFieldNombre.getText();
 			String descripcionActividad = txtFieldDescripcion.getText();
-			String tipo = null;
+			String tipoActividad = (String) tipo.getSelectedItem();
 			LocalDate fecha = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();;
 			LocalTime horaInicio = timeInicio.getTime();
 			LocalTime horaFin = timeFin.getTime();
@@ -155,7 +159,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 					JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipo, fecha, horaInicio, horaFin, participante);
+					Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fecha, horaInicio, horaFin, participante);
 					Registro.getProyecto().addActividad(actividad);
 					setVisible(false);
 					ventanaOpciones.setVisible(true);
