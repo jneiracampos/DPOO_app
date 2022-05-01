@@ -101,6 +101,10 @@ public class Ventana_Registrar_Participante extends JFrame implements ActionList
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre y correo del participante", "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
+			else if (Registro.getProyecto().isParticipantePorCorreo(correoParticipante) || Registro.getProyecto().getParticipante().getCorreo().equals(correoParticipante)) {
+				JOptionPane.showMessageDialog(this, "Ya existe un participante con este correo", "Aviso",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
 			else {
 				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
 				Registro.addOtroParticipante(participante);

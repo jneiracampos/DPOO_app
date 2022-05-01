@@ -4,14 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.GroupLayout.*;
-import modelo.Proyecto;
 
 @SuppressWarnings("serial")
 public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 	
 	private Ventana_Menu_Principal ventanaMenuPrincipal;
-	
-	private Proyecto proyecto;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
@@ -86,8 +83,9 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 		if (comando.equals("Buscar")) {
 			String nombreProyecto = txtFieldNombreProyecto.getText();
 			if (Registro.isProyecto(nombreProyecto)) {
-				proyecto = Registro.getProyecto(nombreProyecto);
+				Registro.getProyecto(nombreProyecto);
 				setVisible(false);
+				new Ventana_Opciones(ventanaMenuPrincipal);
 			}
 			else {
 				JOptionPane.showMessageDialog(this, "No se tiene registro de este proyecto", "Aviso",
@@ -99,9 +97,4 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 			ventanaMenuPrincipal.setVisible(true);
 		}
 	}
-	
-	public Proyecto getProyecto() {
-		return proyecto;
-	}
-	
 }

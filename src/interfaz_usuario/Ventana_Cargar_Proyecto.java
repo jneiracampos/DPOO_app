@@ -9,10 +9,10 @@ import javax.swing.GroupLayout.*;
 public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 	
 	private Ventana_Menu_Principal ventanaMenuPrincipal;
-	
 	private JPanel panelNorte;
 	private JPanel panel1;
 	private JPanel panel2;
+	private JTextField txtNombre;
 	
 	public Ventana_Cargar_Proyecto(Ventana_Menu_Principal padre) {
 		ventanaMenuPrincipal = padre;
@@ -45,7 +45,7 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		
 		//agregar elementos al panel
 		JLabel nombre = new JLabel("Nombre del proyecto:");
-		JTextField txtNombre = new JTextField(10);
+		txtNombre = new JTextField(10);
 		panel1.add(nombre);
 		panel1.add(txtNombre);
 		
@@ -89,6 +89,14 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 			ventanaMenuPrincipal.setVisible(true);
 		}
 		else if (comando.equals("Cargar")){
+			try {
+				administradorDatos.cargarDatos(txtNombre.getText());
+				setVisible(false);
+				new Ventana_Opciones(ventanaMenuPrincipal);
+			} catch (Throwable e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			setVisible(false);
 		}
 	}

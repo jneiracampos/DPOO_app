@@ -66,7 +66,10 @@ public class Registro {
 		return actividades.containsKey(nombreActividad);
 	}
 	
-	//metodos proyecto
+	//***************************************************************************************
+	// Metodos de proyecto
+	//***************************************************************************************
+
 	public static String getNombre() {
 		return proyecto.getNombre();
 	}
@@ -78,8 +81,13 @@ public class Registro {
 	public static void addOtroParticipante(Participante otroParticipante) {
 		proyecto.addOtroParticipante(otroParticipante);
 	}
+	
 	public static void setDescripcion(String descripcion) {
 		proyecto.setDescripcion(descripcion);
+	}
+	
+	public static Proyecto getProyecto() {
+		return proyecto;
 	}
 }
 
