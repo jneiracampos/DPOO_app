@@ -3,27 +3,26 @@ package interfaz_usuario;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
-public class Ventana_Cambiar_Fecha_Proyecto extends JFrame implements ActionListener {
-
+public class Ventana_Consultar_Reporte extends JFrame implements ActionListener {
+	
 	private Ventana_Opciones ventanaOpciones;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
+	private JTextField txtFieldCorreoParticipante;
 	private JDateChooser calendario;
-	
-	public Ventana_Cambiar_Fecha_Proyecto(Ventana_Opciones padre) {
+
+	public Ventana_Consultar_Reporte(Ventana_Opciones padre) {
 		ventanaOpciones = padre;
 		
 		addNorthLabel();
@@ -31,7 +30,7 @@ public class Ventana_Cambiar_Fecha_Proyecto extends JFrame implements ActionList
 		addButtons();
 		
 		setSize(400,200);
-		setTitle("Cambiar la fecha de fin del proyecto");
+		setTitle("Consultar el reporte de un participante");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -41,7 +40,7 @@ public class Ventana_Cambiar_Fecha_Proyecto extends JFrame implements ActionList
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
 
-		JLabel txt = new JLabel("Cambiar la fecha de fin del proyecto");
+		JLabel txt = new JLabel("Consultar el reporte de un participante");
 		panelNorte.add(txt);
 	}
 	
@@ -50,21 +49,31 @@ public class Ventana_Cambiar_Fecha_Proyecto extends JFrame implements ActionList
 		panelCentro.setOpaque(true);
 		add(panelCentro, BorderLayout.CENTER);
 		
-		JLabel txtsolicitud = new JLabel("Nueva fecha:");
+		JLabel txtCorreoParticipante = new JLabel("Correo del participante:");
+		JLabel txtSolicitud = new JLabel("Ingrese los siguientes datos sobre la actividad...");
+		JLabel txtTipo = new JLabel("Tipo:");
+		JLabel txtFecha = new JLabel("Fecha de realizacion:");
+		JLabel txtNull = new JLabel();
+		JLabel txtNull1 = new JLabel();
+		
+		txtFieldCorreoParticipante = new JTextField();
 		calendario = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
-
+		
 		GroupLayout layout = new GroupLayout(panelCentro);
 		panelCentro.setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 		
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtsolicitud));
-		hGroup.addGroup(layout.createParallelGroup().addComponent(calendario));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtCorreoParticipante).addComponent(txtSolicitud).addComponent(txtTipo).addComponent(txtFecha));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldCorreoParticipante).addComponent(txtNull).addComponent(txtNull1).addComponent(calendario));
 		layout.setHorizontalGroup(hGroup);
 		
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtsolicitud).addComponent(calendario));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtCorreoParticipante).addComponent(txtFieldCorreoParticipante));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtSolicitud).addComponent(txtNull));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtTipo).addComponent(txtNull1));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtFecha).addComponent(calendario));
 		layout.setVerticalGroup(vGroup);
 		
 	}
@@ -74,37 +83,22 @@ public class Ventana_Cambiar_Fecha_Proyecto extends JFrame implements ActionList
 		panelSur.setOpaque(true);
 		add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnAceptar = new JButton("Actualizar");
 		JButton btnVolver = new JButton("Volver");
+		JButton btnAceptar = new JButton("Aceptar");
 		
 		panelSur.add(btnVolver);
 		panelSur.add(btnAceptar);
 		
-		btnAceptar.addActionListener(this);
 		btnVolver.addActionListener(this);
+		btnAceptar.addActionListener(this);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
 		
-		if (comando.equals("Actualizar")) {
-			if (calendario.getDate() == null) {
-				JOptionPane.showMessageDialog(this, "Recuerde ingresar la fecha de fin del proyecto", "Aviso",
-				JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
-				LocalDate fechaFin = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-				if (fechaFin.isAfter(LocalDate.now())) {
-					Registro.getProyecto().setFechaFin(fechaFin);
-					setVisible(false);
-					ventanaOpciones.setVisible(true);
-				}
-				else {
-					JOptionPane.showMessageDialog(this, "Ingresa una fecha de fin que sea posterior a " + LocalDate.now(), "Aviso",
-					JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
+		if (comando.equals("Aceptar")) {
+
 		}
 		else if (comando.equals("Volver")) {
 			setVisible(false);

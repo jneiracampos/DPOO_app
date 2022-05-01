@@ -2,7 +2,6 @@ package interfaz_usuario;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -64,7 +63,7 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		JButton registrarAct = new JButton("Registrar una actividad pasada");
 		JButton cambiarHora = new JButton("Cambiar la hora final de una actividad");
 		JButton reporte = new JButton("Consultar el reporte de un participante");
-		JButton guardarProyecto = new JButton("Guardar este proyecto en el disco local");
+		JButton guardarProyecto = new JButton("Consultar el estado de este proyecto");
 		JButton volver = new JButton("Volver al Menu Principal");
 		
 		panelCentro.add(cambiarDesc);
@@ -117,17 +116,11 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Consultar el reporte de un participante")) {
 			setVisible(false);
+			new Ventana_Consultar_Reporte(this);
 		}
-		else if (comando.equals("Guardar este proyecto en el disco local")) {
-			try {
-				administradorDatos.generarArchivo(Registro.getProyecto());
-				ventanaMenuPrincipal.setVisible(true);
-				setVisible(false);
-				
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		else if (comando.equals("Consultar el estado de este proyecto")) {
+			setVisible(false);
+			new Ventana_Estado_Proyecto(this);
 		}
 		else if (comando.equals("Volver al Menu Principal")) {
 			ventanaMenuPrincipal.setVisible(true);

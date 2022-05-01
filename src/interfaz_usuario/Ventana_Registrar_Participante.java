@@ -93,17 +93,17 @@ public class Ventana_Registrar_Participante extends JFrame implements ActionList
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
+		String nombreParticipante = txtFieldNombre.getText();
+		String correoParticipante = txtFieldCorreo.getText();
 		
 		if (comando.equals("Registrar")) {
-			String nombreParticipante = txtFieldNombre.getText();
-			String correoParticipante = txtFieldCorreo.getText();
 			if (nombreParticipante.equals("") || correoParticipante.equals("")) {
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre y correo del participante", "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			else if (Registro.getProyecto().isParticipantePorCorreo(correoParticipante) || Registro.getProyecto().getParticipante().getCorreo().equals(correoParticipante)) {
 				JOptionPane.showMessageDialog(this, "Ya existe un participante con este correo", "Aviso",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
 				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
@@ -113,8 +113,8 @@ public class Ventana_Registrar_Participante extends JFrame implements ActionList
 			}	
 		}
 		else if (comando.equals("Borrar")){
-			txtFieldNombre.setText(" ");
-			txtFieldCorreo.setText(" ");
+			txtFieldNombre.setText("");
+			txtFieldCorreo.setText("");
 		}
 		else if (comando.equals("Volver")) {
 			setVisible(false);
