@@ -27,7 +27,7 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		addTextField();
 		addButtons();
 		addNorthLabel();
-		setSize(400, 300);
+		setSize(400, 200);
 		setTitle("Crear un proyecto");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -43,8 +43,6 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 	}
 	
 	private void addTextField() {
-		//JCalendar calendar = new JCalendar();
-
 		panelCentro = new JPanel();
 		panelCentro.setOpaque(true);
 		add(panelCentro, BorderLayout.CENTER);
@@ -71,6 +69,7 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtdescripcion).addComponent(txtFieldDescripcionProyecto));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtsolicitud).addComponent(calendario));
 		layout.setVerticalGroup(vGroup);
+		
 	}
 	
 	private void addButtons() {

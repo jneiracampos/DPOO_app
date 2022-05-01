@@ -4,35 +4,34 @@ import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import java.time.ZoneId;
 import javax.swing.*;
 import javax.swing.GroupLayout.*;
-
+import com.github.lgooddatepicker.components.TimePicker;
+import com.toedter.calendar.JDateChooser;
 import modelo.Actividad;
 import modelo.Participante;
-import modelo.Proyecto;
 
 @SuppressWarnings("serial")
 public class Ventana_Registrar_Actividad extends JFrame implements ActionListener {
 	
 	private Ventana_Opciones ventanaOpciones;
-	
-	private Actividad actividad;
+	private JDateChooser calendario;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
-	private JTextField txtNombre;
-	private JTextField txtDescripcion;
-	private JTextField txtCorreoA;
-	
-	
+	private JTextField txtFieldNombre;
+	private JTextField txtFieldDescripcion;
+	private JTextField txtFieldCorreoParticipante;
+	private TimePicker timeInicio;
+	private TimePicker timeFin;
 	
 	public Ventana_Registrar_Actividad(Ventana_Opciones padre) {
 		ventanaOpciones = padre;
 		addTextField();
 		addButtons();
 		addNorthLabel();
-		setSize(400, 300);
+		setSize(500, 350);
 		setTitle("");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -52,41 +51,43 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		panelCentro.setOpaque(true);
 		add(panelCentro, BorderLayout.CENTER);
 		
-		JLabel correo = new JLabel("Correo del autor:");
-		JLabel nombre = new JLabel("Nombre Actividad:");
-		JLabel descripcion = new JLabel("Descripcion:");
-		JLabel tipo = new JLabel("Tipo:");
-		JLabel fecha = new JLabel("Fecha de realizacion:");
-		JLabel horaInicio = new JLabel("Hora de inicio:");
-		JLabel horaFin = new JLabel("Hora de fin:");
+		JLabel txtCorreoParticipante = new JLabel("Correo del participante:");
+		JLabel txtSolicitud = new JLabel("Ingrese los siguientes datos sobre la actividad...");
+		JLabel txtNombre = new JLabel("Nombre:");
+		JLabel txtDescripcion = new JLabel("Descripcion:");
+		JLabel txtTipo = new JLabel("Tipo:");
+		JLabel txtFecha = new JLabel("Fecha de realizacion:");
+		JLabel txtHoraInicio = new JLabel("Hora de inicio:");
+		JLabel txtHoraFin = new JLabel("Hora de fin:");
+		JLabel txtNull = new JLabel();
+		JLabel txtNull1 = new JLabel();
 		
-		JLabel txtnull = new JLabel();
-		JLabel txtnull1 = new JLabel();
-		JLabel txtnull2= new JLabel();
-		JLabel txtnull3 = new JLabel();
+		txtFieldCorreoParticipante = new JTextField();
+		txtFieldNombre = new JTextField();
+		txtFieldDescripcion = new JTextField();
+		calendario = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
+		timeInicio = new TimePicker();
+		timeFin = new TimePicker();
 		
-		txtCorreoA = new JTextField();
-		txtNombre = new JTextField();
-		txtDescripcion = new JTextField();
-
 		GroupLayout layout = new GroupLayout(panelCentro);
 		panelCentro.setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 		
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		hGroup.addGroup(layout.createParallelGroup().addComponent(correo).addComponent(nombre).addComponent(descripcion).addComponent(tipo).addComponent(fecha).addComponent(horaInicio).addComponent(horaFin));
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtCorreoA).addComponent(txtDescripcion).addComponent(txtNombre).addComponent(txtnull).addComponent(txtnull1).addComponent(txtnull2).addComponent(txtnull3));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtCorreoParticipante).addComponent(txtSolicitud).addComponent(txtNombre).addComponent(txtDescripcion).addComponent(txtTipo).addComponent(txtFecha).addComponent(txtHoraInicio).addComponent(txtHoraFin));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldCorreoParticipante).addComponent(txtNull).addComponent(txtFieldNombre).addComponent(txtFieldDescripcion).addComponent(txtNull1).addComponent(calendario).addComponent(timeInicio).addComponent(timeFin));
 		layout.setHorizontalGroup(hGroup);
 		
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(correo).addComponent(txtCorreoA));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(nombre).addComponent(txtNombre));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(descripcion).addComponent(txtDescripcion));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(tipo).addComponent(txtnull));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(fecha).addComponent(txtnull1));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(horaInicio).addComponent(txtnull2));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(horaFin).addComponent(txtnull3));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtCorreoParticipante).addComponent(txtFieldCorreoParticipante));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtSolicitud).addComponent(txtNull));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtNombre).addComponent(txtFieldNombre));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtDescripcion).addComponent(txtFieldDescripcion));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtTipo).addComponent(txtNull1));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtFecha).addComponent(calendario));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtHoraInicio).addComponent(timeInicio));
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtHoraFin).addComponent(timeFin));
 		layout.setVerticalGroup(vGroup);
 	}
 	
@@ -111,25 +112,54 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Registrar")) {
-			String correo = txtCorreoA.getText();
-			String nombreActividad = txtNombre.getText();
-			String descripcionActividad = txtDescripcion.getText();
+			String correo = txtFieldCorreoParticipante.getText();
+			String nombreActividad = txtFieldNombre.getText();
+			String descripcionActividad = txtFieldDescripcion.getText();
 			String tipo = null;
-			LocalDate fecha = null;
-			LocalTime horaInicio = null;
-			LocalTime horaFin = null;
-			
+			LocalDate fecha = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();;
+			LocalTime horaInicio = timeInicio.getTime();
+			LocalTime horaFin = timeFin.getTime();
 			Participante participante = Registro.getParticipantePorCorreo(correo);
 			
-			if (nombreActividad.equals("") || descripcionActividad.equals("")) {
-				JOptionPane.showMessageDialog(this, "Recuerde ingresar todos los datos", "Aviso",
+			if (nombreActividad.equals("")) {
+				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre de la actividad", "Aviso",
+				JOptionPane.INFORMATION_MESSAGE);
+			}
+			else if (descripcionActividad.equals("")) {
+				JOptionPane.showMessageDialog(this, "Recuerde ingresar la descripcion de la actividad", "Aviso",
+				JOptionPane.INFORMATION_MESSAGE);
+			}
+			else if (Registro.getProyecto().isParticipantePorCorreo(correo) == false) {
+				JOptionPane.showMessageDialog(this, "No se tiene registro de este participante", "Aviso",
+				JOptionPane.INFORMATION_MESSAGE);
+			}
+			else if (fecha == null) {
+				JOptionPane.showMessageDialog(this, "Recuerde ingresar la fecha de la actividad", "Aviso",
+				JOptionPane.INFORMATION_MESSAGE);
+			}
+			else if (horaInicio == null) {
+				JOptionPane.showMessageDialog(this, "Recuerde ingresar la hora de inicio de la actividad", "Aviso",
+				JOptionPane.INFORMATION_MESSAGE);
+			}
+			else if (horaFin == null) {
+				JOptionPane.showMessageDialog(this, "Recuerde ingresar la hora de fin de la actividad", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipo, fecha, horaInicio, horaFin, participante);
-				Registro.addOtroParticipante(participante);
-				setVisible(false);
-				ventanaOpciones.setVisible(true);
+				if (fecha.isAfter(LocalDate.now())) {
+					JOptionPane.showMessageDialog(this, "Ingrese una fecha anterior a " + LocalDate.now().toString(), "Aviso",
+					JOptionPane.INFORMATION_MESSAGE);
+				}
+				else if (horaInicio.isAfter(horaFin)) {
+					JOptionPane.showMessageDialog(this, "Ingrese una hora de fin anterior a " + horaInicio.toString(), "Aviso",
+					JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipo, fecha, horaInicio, horaFin, participante);
+					Registro.getProyecto().addActividad(actividad);
+					setVisible(false);
+					ventanaOpciones.setVisible(true);
+				}
 			}
 		}
 		else if (comando.equals("Volver")) {
