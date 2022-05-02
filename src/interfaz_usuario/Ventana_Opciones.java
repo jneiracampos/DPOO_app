@@ -105,6 +105,7 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Realizar una actividad")){
 			setVisible(false);
+			new Ventana_Realizar_Actividad(this);
 		}
 		else if (comando.equals("Registrar una actividad pasada")) {
 			setVisible(false);
