@@ -45,6 +45,7 @@ public class administradorDatos {
 				LocalTime horaFinActividad = LocalTime.parse(reader.readLine());
 				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
 				Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fechaActividad, horaInicioActividad, horaFinActividad, participante);
+				actividad.addTiempo(horaInicioActividad, horaFinActividad);
 				proyecto.addActividad(actividad);
 			}
 		}

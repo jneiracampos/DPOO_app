@@ -120,7 +120,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 			String nombreActividad = txtFieldNombre.getText();
 			String descripcionActividad = txtFieldDescripcion.getText();
 			String tipoActividad = (String) tipo.getSelectedItem();
-			LocalDate fecha = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();;
+			LocalDate fecha = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			LocalTime horaInicio = timeInicio.getTime();
 			LocalTime horaFin = timeFin.getTime();
 			Participante participante = Registro.getParticipantePorCorreo(correo);
@@ -160,7 +160,9 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 				}
 				else {
 					Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fecha, horaInicio, horaFin, participante);
+					actividad.addTiempo(horaInicio, horaFin);
 					Registro.getProyecto().addActividad(actividad);
+					
 					setVisible(false);
 					ventanaOpciones.setVisible(true);
 				}
