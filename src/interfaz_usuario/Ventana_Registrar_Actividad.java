@@ -123,7 +123,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 			LocalDate fecha = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			LocalTime horaInicio = timeInicio.getTime();
 			LocalTime horaFin = timeFin.getTime();
-			Participante participante = Registro.getParticipantePorCorreo(correo);
+			Participante participante = Registro.getProyecto().getParticipantePorCorreo(correo);
 			
 			if (nombreActividad.equals("")) {
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre de la actividad", "Aviso",

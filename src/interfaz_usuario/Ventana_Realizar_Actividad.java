@@ -118,7 +118,7 @@ import modelo.Participante;
 					JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					Participante participante = Registro.getParticipantePorCorreo(correo);
+					Participante participante = Registro.getProyecto().getParticipantePorCorreo(correo);
 					Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fecha, horaInicio, horaFin, participante);
 					new Ventana_Cronometro(actividad, ventanaOpciones);
 					setVisible(false);

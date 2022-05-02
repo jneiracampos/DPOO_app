@@ -92,7 +92,7 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 			}
 			else {
 				JOptionPane.showMessageDialog(this, "No se tiene registro de este proyecto", "Aviso",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.INFORMATION_MESSAGE);
 			}	
 		}
 		else if (comando.equals("Volver")) {

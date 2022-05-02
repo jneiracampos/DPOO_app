@@ -70,21 +70,6 @@ public class Registro {
 	// Metodos de proyecto
 	//***************************************************************************************
 
-	public static String getNombre() {
-		return proyecto.getNombre();
-	}
-	
-	public static Participante getParticipantePorCorreo(String correo) {
-		return proyecto.getParticipante();
-	}
-	
-	public static void addOtroParticipante(Participante otroParticipante) {
-		proyecto.addOtroParticipante(otroParticipante);
-	}
-	
-	public static void setDescripcion(String descripcion) {
-		proyecto.setDescripcion(descripcion);
-	}
 	
 	public static Proyecto getProyecto() {
 		return proyecto;

@@ -107,7 +107,7 @@ public class Ventana_Registrar_Participante extends JFrame implements ActionList
 			}
 			else {
 				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
-				Registro.addOtroParticipante(participante);
+				Registro.getProyecto().addOtroParticipante(participante);
 				setVisible(false);
 				ventanaOpciones.setVisible(true);
 			}	
