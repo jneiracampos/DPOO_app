@@ -97,8 +97,9 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 				setVisible(false);
 				new Ventana_Opciones(ventanaMenuPrincipal);
 			} catch (Throwable e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				//	e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "No se encontro el proyecto en el disco local", "Aviso",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			setVisible(false);
 		}

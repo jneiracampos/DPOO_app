@@ -81,7 +81,7 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
-		
+
 		if (comando.equals("Buscar")) {
 			String nombreProyecto = txtFieldNombreProyecto.getText();
 			if (Registro.isProyecto(nombreProyecto)) {
