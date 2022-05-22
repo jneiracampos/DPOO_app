@@ -18,7 +18,7 @@ import javax.swing.GroupLayout.Alignment;
 import com.toedter.calendar.JDateChooser;
 
 import modelo.Participante;
-import procesamiento.Reporte;
+import procesamiento.GeneradorReporte;
 
 @SuppressWarnings("serial")
 public class Ventana_Consultar_Reporte extends JFrame implements ActionListener {
@@ -122,7 +122,7 @@ public class Ventana_Consultar_Reporte extends JFrame implements ActionListener 
 			}
 			else {
 				Participante participante = Registro.getProyecto().getParticipantePorCorreo(correo);
-				Reporte.getReporte(Registro.getProyecto(), participante, tipoActividad, fecha);
+				GeneradorReporte.getReporte(Registro.getProyecto(), participante, tipoActividad, fecha);
 			}
 		}
 		else if (comando.equals("Volver")) {

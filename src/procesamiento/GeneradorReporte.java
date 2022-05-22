@@ -8,7 +8,7 @@ import modelo.Actividad;
 import modelo.Participante;
 import modelo.Proyecto;
 
-public class Reporte {
+public class GeneradorReporte {
 	/**
 	 * El tiempo total invertido en todas las actividades de un participante
 	 */
