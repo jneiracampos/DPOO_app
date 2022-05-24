@@ -113,13 +113,13 @@ import modelo.Participante;
 					JOptionPane.showMessageDialog(this, "Recuerde ingresar la descripcion de la actividad", "Aviso",
 					JOptionPane.INFORMATION_MESSAGE);
 				}
-				else if (Registro.getProyecto().isParticipantePorCorreo(correo) == false) {
+				else if (Enrutador.getProyecto().isParticipantePorCorreo(correo) == false) {
 					JOptionPane.showMessageDialog(this, "No se tiene registro de este participante", "Aviso",
 					JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					Participante participante = Registro.getProyecto().getParticipantePorCorreo(correo);
-					Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fecha, horaInicio, horaFin, participante);
+					Participante participante = Enrutador.getProyecto().getParticipantePorCorreo(correo);
+					Actividad actividad = Enrutador.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fecha, horaInicio, horaFin, participante);
 					new Ventana_Cronometro(actividad, ventanaOpciones);
 					setVisible(false);
 				}

@@ -11,7 +11,7 @@ import modelo.Actividad;
  * Los metodos y variables deben ser static porque no tiene sentido que haya una instancia de la clase Registro
  */
 
-public class Registro {
+public class Enrutador {
 	
 	/**
 	 * HashMap que almacena las parejas (nombreProyecto: proyecto)

@@ -94,7 +94,7 @@ public class Ventana_Descripcion extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Actualizar")){
 			String descProyecto = txtDescProyecto.getText();
-			Registro.getProyecto().setDescripcion(descProyecto);
+			Enrutador.getProyecto().setDescripcion(descProyecto);
 			ventanaOpciones.setVisible(true);
 			setVisible(false);
 		}

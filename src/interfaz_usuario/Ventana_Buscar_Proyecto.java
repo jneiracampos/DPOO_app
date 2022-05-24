@@ -84,9 +84,9 @@ public class Ventana_Buscar_Proyecto extends JFrame implements ActionListener {
 
 		if (comando.equals("Buscar")) {
 			String nombreProyecto = txtFieldNombreProyecto.getText();
-			if (Registro.isProyecto(nombreProyecto)) {
-				Proyecto proyecto = Registro.getProyecto(nombreProyecto);
-				Registro.setProyecto(proyecto);
+			if (Enrutador.isProyecto(nombreProyecto)) {
+				Proyecto proyecto = Enrutador.getProyecto(nombreProyecto);
+				Enrutador.setProyecto(proyecto);
 				setVisible(false);
 				new Ventana_Opciones(ventanaMenuPrincipal);
 			}

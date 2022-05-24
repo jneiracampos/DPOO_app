@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import procesamiento.AdministradorDatos;
+
 
 @SuppressWarnings("serial")
 public class Ventana_Estado_Proyecto extends JFrame implements ActionListener {
@@ -68,7 +70,7 @@ public class Ventana_Estado_Proyecto extends JFrame implements ActionListener {
 		
 		if (comando.equals("Guardar en disco local")) {
 			try {
-				administradorDatos.generarArchivo(Registro.getProyecto());
+				AdministradorDatos.generarArchivo(Enrutador.getProyecto());
 				ventanaOpciones.setVisible(true);
 				setVisible(false);
 				

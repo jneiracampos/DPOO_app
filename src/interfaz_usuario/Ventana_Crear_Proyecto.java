@@ -112,7 +112,7 @@ public class Ventana_Crear_Proyecto extends JFrame implements ActionListener {
 				LocalDate fechaInicio = LocalDate.now();
 				LocalDate fechaFin = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				if (fechaFin.isAfter(fechaInicio)) {
-					Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, usuario);
+					Enrutador.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, usuario);
 					setVisible(false);
 					new Ventana_Opciones(ventanaMenuPrincipal);
 				}

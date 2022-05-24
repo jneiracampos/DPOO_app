@@ -116,13 +116,13 @@ public class Ventana_Consultar_Reporte extends JFrame implements ActionListener 
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar la fecha de la actividad", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
 			}
-			else if (Registro.getProyecto().isParticipantePorCorreo(correo) == false) {
+			else if (Enrutador.getProyecto().isParticipantePorCorreo(correo) == false) {
 				JOptionPane.showMessageDialog(this, "No se tiene registro de este participante", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				Participante participante = Registro.getProyecto().getParticipantePorCorreo(correo);
-				GeneradorReporte.getReporte(Registro.getProyecto(), participante, tipoActividad, fecha);
+				Participante participante = Enrutador.getProyecto().getParticipantePorCorreo(correo);
+				GeneradorReporte.getReporte(Enrutador.getProyecto(), participante, tipoActividad, fecha);
 			}
 		}
 		else if (comando.equals("Volver")) {

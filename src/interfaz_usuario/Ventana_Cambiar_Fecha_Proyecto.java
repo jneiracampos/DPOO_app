@@ -96,7 +96,7 @@ public class Ventana_Cambiar_Fecha_Proyecto extends JFrame implements ActionList
 			else {
 				LocalDate fechaFin = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				if (fechaFin.isAfter(LocalDate.now())) {
-					Registro.getProyecto().setFechaFin(fechaFin);
+					Enrutador.getProyecto().setFechaFin(fechaFin);
 					setVisible(false);
 					ventanaOpciones.setVisible(true);
 				}

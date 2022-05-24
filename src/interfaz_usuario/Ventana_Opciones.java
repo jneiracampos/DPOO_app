@@ -41,7 +41,7 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 	}
 	
 	private void addNorthLabel() {
-		String nombreProyecto = Registro.getProyecto().getNombre();
+		String nombreProyecto = Enrutador.getProyecto().getNombre();
 		panelNorte = new JPanel();
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);

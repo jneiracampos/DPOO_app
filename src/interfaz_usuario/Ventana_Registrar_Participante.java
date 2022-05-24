@@ -101,13 +101,13 @@ public class Ventana_Registrar_Participante extends JFrame implements ActionList
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre y correo del participante", "Aviso",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
-			else if (Registro.getProyecto().isParticipantePorCorreo(correoParticipante) || Registro.getProyecto().getParticipante().getCorreo().equals(correoParticipante)) {
+			else if (Enrutador.getProyecto().isParticipantePorCorreo(correoParticipante) || Enrutador.getProyecto().getParticipante().getCorreo().equals(correoParticipante)) {
 				JOptionPane.showMessageDialog(this, "Ya existe un participante con este correo", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
-				Registro.getProyecto().addOtroParticipante(participante);
+				participante = Enrutador.nuevoParticipante(nombreParticipante, correoParticipante);
+				Enrutador.getProyecto().addOtroParticipante(participante);
 				setVisible(false);
 				ventanaOpciones.setVisible(true);
 			}	

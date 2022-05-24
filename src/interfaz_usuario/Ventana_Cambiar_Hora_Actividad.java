@@ -95,8 +95,8 @@ public class Ventana_Cambiar_Hora_Actividad extends JFrame implements ActionList
 		
 		if (comando.equals("Actualizar")) {
 			String nombreActividad = txtFieldNombreActividad.getText();
-			if (Registro.isActividad(nombreActividad)) {
-				Actividad actividad = Registro.getActividad(nombreActividad);
+			if (Enrutador.isActividad(nombreActividad)) {
+				Actividad actividad = Enrutador.getActividad(nombreActividad);
 				LocalTime horaInicio = actividad.getHoraInicio();
 				LocalTime horaFin = timeFin.getTime();
 				if (horaFin.isBefore(horaInicio)) {

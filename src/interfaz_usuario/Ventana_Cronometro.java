@@ -110,7 +110,7 @@ public class Ventana_Cronometro extends JFrame implements ActionListener {
 			timer.stop();
 			actividadUsuario.addTiempo(actividadUsuario.getHoraInicio(), LocalTime.now());
 			actividadUsuario.setHoraFin(LocalTime.now());
-			Registro.getProyecto().addActividad(actividadUsuario);
+			Enrutador.getProyecto().addActividad(actividadUsuario);
 			setVisible(false);
 			ventanaOpciones.setVisible(true);
 		}

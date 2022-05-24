@@ -1,4 +1,4 @@
-package interfaz_usuario;
+package procesamiento;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+
+import interfaz_usuario.Enrutador;
 import modelo.Actividad;
 import modelo.Participante;
 import modelo.Proyecto;
 
-public class administradorDatos {
+public class AdministradorDatos {
 	
 	@SuppressWarnings("resource")
 	public static Proyecto cargarDatos(String nombreproyecto) throws Throwable {
@@ -25,8 +27,8 @@ public class administradorDatos {
 		LocalDate fechaFinProyecto = LocalDate.parse(reader.readLine());
 		String nombreParticipanteInicial = reader.readLine();
 		String correoParticipanteInicial = reader.readLine();
-		Participante participante = Registro.nuevoParticipante(nombreParticipanteInicial, correoParticipanteInicial);
-		Proyecto proyecto = Registro.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicioProyecto, fechaFinProyecto, participante);
+		Participante participante = Enrutador.nuevoParticipante(nombreParticipanteInicial, correoParticipanteInicial);
+		Proyecto proyecto = Enrutador.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicioProyecto, fechaFinProyecto, participante);
 		reader.readLine();
 		int marcador = 0;
 		while (marcador == 0) {
@@ -43,8 +45,8 @@ public class administradorDatos {
 				String correoParticipante = reader.readLine();
 				LocalTime horaInicioActividad = LocalTime.parse(reader.readLine());
 				LocalTime horaFinActividad = LocalTime.parse(reader.readLine());
-				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
-				Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fechaActividad, horaInicioActividad, horaFinActividad, participante);
+				participante = Enrutador.nuevoParticipante(nombreParticipante, correoParticipante);
+				Actividad actividad = Enrutador.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fechaActividad, horaInicioActividad, horaFinActividad, participante);
 				actividad.addTiempo(horaInicioActividad, horaFinActividad);
 				proyecto.addActividad(actividad);
 			}
@@ -58,7 +60,7 @@ public class administradorDatos {
 			else {
 				String nombreParticipante = inicio;
 				String correoParticipante = reader.readLine();
-				participante = Registro.nuevoParticipante(nombreParticipante, correoParticipante);
+				participante = Enrutador.nuevoParticipante(nombreParticipante, correoParticipante);
 				proyecto.addOtroParticipante(participante);
 			}
 		}

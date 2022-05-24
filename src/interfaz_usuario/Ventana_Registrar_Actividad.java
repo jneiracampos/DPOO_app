@@ -123,7 +123,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 			LocalDate fecha = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			LocalTime horaInicio = timeInicio.getTime();
 			LocalTime horaFin = timeFin.getTime();
-			Participante participante = Registro.getProyecto().getParticipantePorCorreo(correo);
+			Participante participante = Enrutador.getProyecto().getParticipantePorCorreo(correo);
 			
 			if (nombreActividad.equals("")) {
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre de la actividad", "Aviso",
@@ -133,7 +133,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar la descripcion de la actividad", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
 			}
-			else if (Registro.getProyecto().isParticipantePorCorreo(correo) == false) {
+			else if (Enrutador.getProyecto().isParticipantePorCorreo(correo) == false) {
 				JOptionPane.showMessageDialog(this, "No se tiene registro de este participante", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -159,9 +159,9 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 					JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					Actividad actividad = Registro.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fecha, horaInicio, horaFin, participante);
+					Actividad actividad = Enrutador.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fecha, horaInicio, horaFin, participante);
 					actividad.addTiempo(horaInicio, horaFin);
-					Registro.getProyecto().addActividad(actividad);
+					Enrutador.getProyecto().addActividad(actividad);
 					
 					setVisible(false);
 					ventanaOpciones.setVisible(true);
