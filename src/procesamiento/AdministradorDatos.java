@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-import interfaz_usuario.Enrutador;
+import interfaz.Enrutador;
 import modelo.Actividad;
 import modelo.Participante;
 import modelo.Proyecto;

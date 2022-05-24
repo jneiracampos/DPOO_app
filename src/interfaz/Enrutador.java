@@ -1,4 +1,4 @@
-package interfaz_usuario;
+package interfaz;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

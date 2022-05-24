@@ -3,7 +3,7 @@ package procesamiento;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import interfaz_usuario.Ventana_Mostrar_Reporte;
+import interfaz.Ventana_Mostrar_Reporte;
 import modelo.Actividad;
 import modelo.Participante;
 import modelo.Proyecto;

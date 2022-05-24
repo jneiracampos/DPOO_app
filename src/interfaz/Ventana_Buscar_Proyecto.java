@@ -1,4 +1,4 @@
-package interfaz_usuario;
+package interfaz;
 
 import java.awt.*;
 import java.awt.event.*;
