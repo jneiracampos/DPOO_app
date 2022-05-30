@@ -16,8 +16,28 @@ import modelo.Proyecto;
 
 public class AdministradorDatos {
 	
+	//***************************************************************************************
+	// Patron de diseño Singleton
+	//***************************************************************************************
+	
+	private static AdministradorDatos single_instance = null;
+	
+	private AdministradorDatos() {
+		
+	}
+	
+	public static AdministradorDatos getInstance() {
+		if (single_instance == null)
+			single_instance = new AdministradorDatos();
+		return single_instance;
+	}
+	
+	//***************************************************************************************
+	// Persistencia
+	//***************************************************************************************
+	
 	@SuppressWarnings("resource")
-	public static Proyecto cargarDatos(String nombreproyecto) throws Throwable {
+	public Proyecto cargarArchivo(String nombreproyecto) throws Throwable {
 		
 		String nombreArchivo = nombreproyecto;
 		BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo));
@@ -61,14 +81,14 @@ public class AdministradorDatos {
 				String nombreParticipante = inicio;
 				String correoParticipante = reader.readLine();
 				participante = Enrutador.nuevoParticipante(nombreParticipante, correoParticipante);
-				proyecto.addOtroParticipante(participante);
+				proyecto.addParticipante(participante);
 			}
 		}
 		
 		return proyecto;	
 	}
 	
-	public static void generarArchivo(Proyecto proyecto) throws IOException {
+	public void generarArchivo(Proyecto proyecto) throws IOException {
 		String nombreArchivo = proyecto.getNombre();
 		BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo));
 		writer.write(proyecto.getNombre());
@@ -107,7 +127,7 @@ public class AdministradorDatos {
 		writer.write("--");
 		writer.newLine();
 		writer.write("Participantes:");
-		ArrayList<Participante> participantes = proyecto.getParticipanteAlmacenamiento();
+		ArrayList<Participante> participantes = proyecto.getParticipantes();
 		for (int i = 0; i < participantes.size(); i++) {
 			writer.newLine();
 			writer.write(participantes.get(i).getNombre());

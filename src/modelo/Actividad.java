@@ -35,8 +35,7 @@ public class Actividad {
 	 */
 	private LocalTime horaFin;
 	/**
-	 * ArrayList que almacena el tiempo que se invirtió en la actividad. 
-	 * Este se crea, ya que pueden existir pausas al realizar una actividad.
+	 * ArrayList que almacena el tiempo de una actividad. 
 	 */
 	private ArrayList<Long> tiempoTotal = new ArrayList<Long>();
 	/**
@@ -61,7 +60,6 @@ public class Actividad {
 	//******************************************************************
 	// Metodos para consultar los atributos
 	//******************************************************************
-
 
 	public String getNombre() {
 		return nombre;
@@ -92,9 +90,8 @@ public class Actividad {
 	}
 	
 	public long getTiempoTotal() {
-		for (int i = 0; i < tiempoTotal.size(); i++) {
+		for (int i = 0; i < tiempoTotal.size(); i++)
 			tiempo = tiempoTotal.get(i);
-		}
 		return tiempo;
 	}
 	
@@ -118,6 +115,5 @@ public class Actividad {
 		tiempo = Duration.between(horaInicio, horaFin).toMinutes();
 		tiempoTotal.add(tiempo);
 	}
-	
-	
+
 }

@@ -2,81 +2,117 @@ package interfaz;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import modelo.Participante;
 import modelo.Proyecto;
+import modelo.Tarea;
+import procesamiento.AdministradorDatos;
+import procesamiento.Reporte;
 import modelo.Actividad;
-
-/**
- * Los metodos y variables deben ser static porque no tiene sentido que haya una instancia de la clase Registro
- */
+import modelo.Paquete;
 
 public class Enrutador {
 	
 	/**
-	 * HashMap que almacena las parejas (nombreProyecto: proyecto)
+	 * Proyecto con el que se esta trabajando
 	 */
-	private static Proyecto proyecto;
-	private static HashMap<String, Proyecto> proyectos = new HashMap<String, Proyecto>();
-	private static HashMap<String, Actividad> actividades = new HashMap<String, Actividad>();
+	private Proyecto proyecto;
+	/**
+	 * ArrayList que almacena todos los proyectos
+	 */
+	private HashMap<String, Proyecto> proyectos = new HashMap<String, Proyecto>();
 
+	//***************************************************************************************
+	// Patron de diseño Singleton
+	//***************************************************************************************
+	
+	private static Enrutador single_instance = null;
+	
+	private Enrutador() {
+		
+	}
+	
+	public static Enrutador getInstance() {
+		if (single_instance == null)
+			single_instance = new Enrutador();
+		return single_instance;
+	}
+	
 	//***************************************************************************************
 	// Constructores
 	//***************************************************************************************
 	
-	/**
-	 * Estos metodos inicializan los constructores de las clases en el modelo.
-	 */
-	
-	public static Proyecto nuevoProyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Participante participanteInicial) {
-		proyecto = new Proyecto(nombre, descripcion, fechaInicio, fechaFin, participanteInicial);
-		proyectos.put(nombre, proyecto);
+	public Proyecto nuevoProyecto(String nombreProyecto, String descripcionProyecto, LocalDate fechaInicio, LocalDate fechaFin, String nombreParticipante, String correoParticipante, String nombrePaquete, String descripcionPaquete, ArrayList<String> tipos) {
+		Participante participante = new Participante(nombreParticipante, correoParticipante);
+		Paquete paquete = new Paquete(nombrePaquete, descripcionPaquete, tipos);
+		proyecto = new Proyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, participante, paquete);
+		proyectos.put(nombreProyecto, proyecto);
 		return proyecto;
 	}
 	
-	public static Participante nuevoParticipante(String nombre, String correo) {
+	public Participante nuevoParticipante(String nombre, String correo) {
 		Participante participante = new Participante(nombre, correo);
 		return participante;
 	}
 	
-	public static Actividad nuevaActividad(String nombre, String descripcion, String tipo, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Participante participante) {
+	public Paquete nuevoPaquete(String nombrePaquete, String descripcionPaquete, ArrayList<String> tipos) {
+		Paquete paquete = new Paquete(nombrePaquete, descripcionPaquete, tipos);
+		return paquete;
+	}
+	
+	public Tarea nuevaTarea(String nombreTarea, String descripcionTarea, String tipo, LocalDate fechaPlaneada, LocalTime tiempoPlaneado, String nombreParticipante, String correoParticipante) {
+		Participante participante = new Participante(nombreParticipante, correoParticipante);
+		Tarea tarea = new Tarea(nombreTarea, descripcionTarea, tipo, fechaPlaneada, tiempoPlaneado, participante);
+		return tarea;
+	}
+	
+	public Actividad nuevaActividad(String nombre, String descripcion, String tipo, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Participante participante) {
 		Actividad actividad = new Actividad(nombre, descripcion, tipo, fecha, horaInicio, horaFin, participante);
-		actividades.put(nombre, actividad);
 		return actividad;
 	}
-
 	
 	//***************************************************************************************
-	// Otros metodos
+	// Metodos para cargar o generar un archivo que almecena un proyecto
 	//***************************************************************************************
 	
-	public static boolean isProyecto(String nombreProyecto) {
-		return proyectos.containsKey(nombreProyecto);
+	public void cargarArchivo(String nombreProyecto) throws Throwable {
+		AdministradorDatos singleton = AdministradorDatos.getInstance();
+		proyecto = singleton.cargarArchivo(nombreProyecto);
 	}
 	
-	public static Proyecto getProyecto(String nombreProyecto) {
-		return proyectos.get(nombreProyecto);
+	public void generarArchivo(Proyecto proyecto) throws Throwable {
+		AdministradorDatos singleton = AdministradorDatos.getInstance();
+		singleton.generarArchivo(proyecto);
 	}
 	
-	public static Actividad getActividad(String nombreActividad) {
-		return actividades.get(nombreActividad);
-	}
+	//***************************************************************************************
+	// Metodo para generar el reporte de un participante
+	//***************************************************************************************
 	
-	public static boolean isActividad(String nombreActividad) {
-		return actividades.containsKey(nombreActividad);
+	public Reporte generarReporte(Proyecto proyecto, String correoParticipante, String nombrePaquete, String nombreTarea, String tipoActividad, LocalDate fechaActividad) {
+		Reporte reporte = new Reporte(proyecto, correoParticipante, nombrePaquete, nombreTarea, tipoActividad, fechaActividad);
+		return reporte;
 	}
 	
 	//***************************************************************************************
 	// Metodos de proyecto
 	//***************************************************************************************
 
-	
-	public static Proyecto getProyecto() {
+	public Proyecto getProyecto() {
 		return proyecto;
 	}
 	
-	public static void setProyecto(Proyecto nuevoProyecto) {
+	public void setProyecto(Proyecto nuevoProyecto) {
 		proyecto = nuevoProyecto;
+	}
+	
+	public boolean isProyecto(String nombreProyecto) {
+		return proyectos.containsKey(nombreProyecto);
+	}
+	
+	public Proyecto getProyecto(String nombreProyecto) {
+		return proyectos.get(nombreProyecto);
 	}
 }
 
