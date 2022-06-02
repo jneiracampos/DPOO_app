@@ -14,21 +14,21 @@ import modelo.Actividad;
 import modelo.Participante;
 import modelo.Proyecto;
 
-public class AdministradorDatos {
+public class Administrador_Datos {
 	
 	//***************************************************************************************
 	// Patron de diseño Singleton
 	//***************************************************************************************
 	
-	private static AdministradorDatos single_instance = null;
+	private static Administrador_Datos single_instance = null;
 	
-	private AdministradorDatos() {
+	private Administrador_Datos() {
 		
 	}
 	
-	public static AdministradorDatos getInstance() {
+	public static Administrador_Datos getInstance() {
 		if (single_instance == null)
-			single_instance = new AdministradorDatos();
+			single_instance = new Administrador_Datos();
 		return single_instance;
 	}
 	
@@ -39,6 +39,7 @@ public class AdministradorDatos {
 	@SuppressWarnings("resource")
 	public Proyecto cargarArchivo(String nombreproyecto) throws Throwable {
 		
+		Enrutador singleton = Enrutador.getInstance();
 		String nombreArchivo = nombreproyecto;
 		BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo));
 		String nombreProyecto = reader.readLine();
@@ -47,8 +48,7 @@ public class AdministradorDatos {
 		LocalDate fechaFinProyecto = LocalDate.parse(reader.readLine());
 		String nombreParticipanteInicial = reader.readLine();
 		String correoParticipanteInicial = reader.readLine();
-		Participante participante = Enrutador.nuevoParticipante(nombreParticipanteInicial, correoParticipanteInicial);
-		Proyecto proyecto = Enrutador.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicioProyecto, fechaFinProyecto, participante);
+		Proyecto proyecto = singleton.nuevoProyecto(nombreProyecto, descripcionProyecto, fechaInicioProyecto, fechaFinProyecto, nombreParticipanteInicial, correoParticipanteInicial);
 		reader.readLine();
 		int marcador = 0;
 		while (marcador == 0) {

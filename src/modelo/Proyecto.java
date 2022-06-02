@@ -42,7 +42,7 @@ public class Proyecto {
 	// Constructor
 	//******************************************************************
 	
-	public Proyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Participante participante, Paquete paquete) {
+	public Proyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Participante participante) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.fechaInicio = fechaInicio;
@@ -52,7 +52,6 @@ public class Proyecto {
 		this.correos = new HashMap<String, Participante>();
 		this.paquetes = new HashMap<String,Paquete>();
 		addParticipante(participante);
-		addPaquete(paquete);
 	}
 	
 	//************************************************************************************
@@ -91,9 +90,9 @@ public class Proyecto {
 	// Otros metodos
 	//************************************************************************************
 	
-	public void addParticipante(Participante otroParticipante) {
-		correos.put(otroParticipante.getCorreo(), otroParticipante);
-		participantes.add(otroParticipante);
+	public void addParticipante(Participante participante) {
+		correos.put(participante.getCorreo(), participante);
+		participantes.add(participante);
 	}
 	
 	public Participante getParticipantePorCorreo(String correo) {

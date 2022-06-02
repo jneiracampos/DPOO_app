@@ -13,21 +13,33 @@ public class Tarea {
 	private LocalDate fechaPlaneada;
 	private LocalTime tiempoPlaneado;
 	/**
+	 * Fecha de finalización de la tarea
+	 */
+	private LocalDate fechaFin;
+	/**
+	 * Tiempo que tomo finalizar la tarea
+	 */
+	private Long tiempoReal;
+	/**
+	 * Verifica si la tarea se ha finalizado
+	 */
+	private Boolean finalizado;
+	/**
 	 * ArrayList que almacena los participantes de esta tarea
 	 */
 	private ArrayList<Participante> participantes;
 	/**
-	 * HashMap que almacena las parejas (nombreActividad: ArrayList(Actividad))
+	 * ArrayList que almacena las actividades de esta tarea
 	 */
-	private HashMap<String, ArrayList<Actividad>> actividades;
+	private ArrayList<Actividad> actividades;
+	/**
+	 * HashMap que almacena las parejas (nombreParticipante: ArrayList(Actividad))
+	 */
+	private HashMap<String, ArrayList<Actividad>> actividadesPorParticipante;
 	/**
 	 * HashMap que almacena las parejas (nombreParticipante: HashMap(diaActividad: ArrayList(Actividad)))
 	 */
 	private HashMap<String, HashMap<LocalDate, ArrayList<Actividad>>> diaActividadPorParticipante;
-	/**
-	 * HashMap que almacena las parejas (nombreParticipante: HashMap(tipoActividad: ArrayList(Actividad)))
-	 */
-	private HashMap<String, HashMap<String, ArrayList<Actividad>>> tipoActividadesPorParticipante;
 	
 	//******************************************************************
 	// Estructuras de datos auxiliares
@@ -41,10 +53,6 @@ public class Tarea {
 	 * HashMap que almacena las parejas (fechaActividad: arrayList(Actividad))
 	 */
 	private HashMap<LocalDate, ArrayList<Actividad>> auxiliarFechas;
-	/**
-	 * HashMap que almacena las parejas (tipoActividad: arrayList(Actividad))
-	 */
-	private HashMap<String, ArrayList<Actividad>> auxiliarTipos;
 	
 	//******************************************************************
 	// Constructor
@@ -56,9 +64,10 @@ public class Tarea {
 		this.tipo = tipo;
 		this.fechaPlaneada = fechaPlaneada;
 		this.tiempoPlaneado = tiempoPlaneado;
-		this.actividades = new HashMap<String, ArrayList<Actividad>>();
+		this.finalizado = false;
+		this.actividades = new ArrayList<Actividad>();
+		this.actividadesPorParticipante = new HashMap<String, ArrayList<Actividad>>();
 		this.diaActividadPorParticipante = new HashMap<String, HashMap<LocalDate, ArrayList<Actividad>>>();
-		this.tipoActividadesPorParticipante = new HashMap<String, HashMap<String, ArrayList<Actividad>>>();
 		participantes.add(participante);	
 	}
 	
@@ -86,21 +95,28 @@ public class Tarea {
 		return tiempoPlaneado;
 	}
 	
+	public Boolean getFinalizado() {
+		return finalizado;
+	}
+	
+	public LocalDate getFechaFin() {
+		return fechaFin;
+	}
+	
 	//************************************************************************************
 	// Metodos para almacenar una actividad
 	//************************************************************************************
 	
 	private void addActividadPorParticipante(Actividad actividad) {
-		if(actividades.containsKey(actividad.getParticipanteActividad().getCorreo())) {
-			auxiliarActividades = actividades.get(actividad.getParticipanteActividad().getCorreo());
+		if(actividadesPorParticipante.containsKey(actividad.getParticipanteActividad().getCorreo())) {
+			auxiliarActividades = actividadesPorParticipante.get(actividad.getParticipanteActividad().getCorreo());
 			auxiliarActividades.add(actividad);				
 		}
 		else {
 			auxiliarActividades = new ArrayList<Actividad>();
 			auxiliarActividades.add(actividad);
-			actividades.put(actividad.getParticipanteActividad().getCorreo(), auxiliarActividades);
+			actividadesPorParticipante.put(actividad.getParticipanteActividad().getCorreo(), auxiliarActividades);
 		}
-		//actividadesAlmacenamiento.add(actividad);
 	}
 	
 	private void addDiaActividadPorParticipante(Actividad actividad) {
@@ -124,31 +140,11 @@ public class Tarea {
 		}
 	}
 	
-	private void addTipoActividadesPorParticipante(Actividad actividad) {
-		if(tipoActividadesPorParticipante.containsKey(actividad.getParticipanteActividad().getCorreo())) {
-			if(auxiliarTipos.containsKey(actividad.getTipo())) {
-				auxiliarActividades = auxiliarTipos.get(actividad.getTipo());
-				auxiliarActividades.add(actividad);
-			}
-			else {
-				auxiliarActividades = new ArrayList<Actividad>();
-				auxiliarActividades.add(actividad);
-				auxiliarTipos.put(actividad.getTipo(), auxiliarActividades);
-			}
-		}
-		else {
-			auxiliarTipos = new HashMap<String, ArrayList<Actividad>>();
-			auxiliarActividades = new ArrayList<Actividad>();
-			auxiliarActividades.add(actividad);
-			auxiliarTipos.put(actividad.getTipo(), auxiliarActividades);
-			tipoActividadesPorParticipante.put(actividad.getParticipanteActividad().getCorreo(), auxiliarTipos);
-		}
-	}
-	
 	public void addActividad(Actividad actividad) {
+		actividades.add(actividad);
 		addActividadPorParticipante(actividad);
 		addDiaActividadPorParticipante(actividad);
-		addTipoActividadesPorParticipante(actividad);
+		finalizarTarea(actividad);
 	}
 	
 	//************************************************************************************
@@ -156,15 +152,25 @@ public class Tarea {
 	//************************************************************************************
 	
 	public ArrayList<Actividad> getActividadPorParticipante(String correoParticipante) {
-		return actividades.get(correoParticipante);
+		return actividadesPorParticipante.get(correoParticipante);
 	}
 	
 	public ArrayList<Actividad> getDiaActividadPorParticipante(String correoParticipante, LocalDate fechaActividad) {
 		return diaActividadPorParticipante.get(correoParticipante).get(fechaActividad);
 	}
 	
-	public ArrayList<Actividad> getTipoActividadesPorParticipante(String correoParticipante, String tipoActividad) {
-		return tipoActividadesPorParticipante.get(correoParticipante).get(tipoActividad);
+	//************************************************************************************
+	// Otros metodos
+	//************************************************************************************
+	
+	private void finalizarTarea(Actividad actividad) {
+		if (actividad.getFinalizar().equals(true)) {
+			this.finalizado = true;
+			this.fechaFin = actividad.getFecha();
+			for (int i = 0; i < actividades.size(); i++) {
+				tiempoReal += actividades.get(i).getTiempoTotal();
+			}
+		}
 	}
 	
 }

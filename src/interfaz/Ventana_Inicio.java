@@ -95,7 +95,7 @@ public class Ventana_Inicio extends JFrame implements ActionListener {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				usuario = Enrutador.nuevoParticipante(nombreParticipante, correoParticipante);
+				usuario = Enrutador.getInstance().nuevoParticipante(nombreParticipante, correoParticipante);
 				setVisible(false);
 				new Ventana_Menu_Principal(this);
 			}	

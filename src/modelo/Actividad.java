@@ -15,10 +15,6 @@ public class Actividad {
 	 */
 	private String descripcion;
 	/**
-	 * El tipo de actividad.
-	 */
-	private String tipo;
-	/**
 	 * La fecha en que se realizó la actividad.
 	 */
 	private LocalDate fecha;
@@ -41,20 +37,24 @@ public class Actividad {
 	/**
 	 * Tiempo de la actividad
 	 */
-	private Long tiempo;
+	private long tiempo;
+	/**
+	 * Indica si esa actividad finaliza con la tarea asociada
+	 */
+	private Boolean finalizar;
 	
 	//******************************************************************
 	// Constructor
 	//******************************************************************
 		
-	public Actividad(String nombre, String descripcion, String tipo, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Participante participante) {
+	public Actividad(String nombre, String descripcion, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Boolean finaliza, Participante participante) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.tipo = tipo;
 		this.fecha = fecha;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
 		this.participante = participante;
+		this.finalizar = finaliza;
 	}
 		
 	//******************************************************************
@@ -67,10 +67,6 @@ public class Actividad {
 
 	public String getDescripcion() {
 		return descripcion;
-	}
-
-	public String getTipo() {
-		return tipo;
 	}
 
 	public LocalDate getFecha() {
@@ -89,9 +85,18 @@ public class Actividad {
 		return horaFin;
 	}
 	
+	public Boolean getFinalizar() {
+		return finalizar;
+	}
+	
 	public long getTiempoTotal() {
-		for (int i = 0; i < tiempoTotal.size(); i++)
-			tiempo = tiempoTotal.get(i);
+		try {
+			for (int i = 0; i < tiempoTotal.size(); i++)
+				tiempo = tiempoTotal.get(i);
+		}
+		catch (Exception e) {
+			tiempo = 0;
+		}
 		return tiempo;
 	}
 	

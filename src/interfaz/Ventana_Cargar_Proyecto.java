@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.GroupLayout.*;
 
 import modelo.Proyecto;
-import procesamiento.AdministradorDatos;
+import procesamiento.Administrador_Datos;
 
 @SuppressWarnings("serial")
 public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
@@ -93,7 +93,7 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Cargar")){
 			try {
-				Proyecto proyecto = AdministradorDatos.cargarDatos(txtNombre.getText());
+				Proyecto proyecto = Administrador_Datos.cargarDatos(txtNombre.getText());
 				Enrutador.setProyecto(proyecto);
 				setVisible(false);
 				new Ventana_Opciones(ventanaMenuPrincipal);

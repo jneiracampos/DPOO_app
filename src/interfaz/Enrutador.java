@@ -7,8 +7,8 @@ import java.util.HashMap;
 import modelo.Participante;
 import modelo.Proyecto;
 import modelo.Tarea;
-import procesamiento.AdministradorDatos;
-import procesamiento.Reporte;
+import procesamiento.Administrador_Datos;
+import procesamiento.Reporte_Participante;
 import modelo.Actividad;
 import modelo.Paquete;
 
@@ -43,10 +43,9 @@ public class Enrutador {
 	// Constructores
 	//***************************************************************************************
 	
-	public Proyecto nuevoProyecto(String nombreProyecto, String descripcionProyecto, LocalDate fechaInicio, LocalDate fechaFin, String nombreParticipante, String correoParticipante, String nombrePaquete, String descripcionPaquete, ArrayList<String> tipos) {
+	public Proyecto nuevoProyecto(String nombreProyecto, String descripcionProyecto, LocalDate fechaInicio, LocalDate fechaFin, String nombreParticipante, String correoParticipante) {
 		Participante participante = new Participante(nombreParticipante, correoParticipante);
-		Paquete paquete = new Paquete(nombrePaquete, descripcionPaquete, tipos);
-		proyecto = new Proyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, participante, paquete);
+		proyecto = new Proyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, participante);
 		proyectos.put(nombreProyecto, proyecto);
 		return proyecto;
 	}
@@ -67,8 +66,9 @@ public class Enrutador {
 		return tarea;
 	}
 	
-	public Actividad nuevaActividad(String nombre, String descripcion, String tipo, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Participante participante) {
-		Actividad actividad = new Actividad(nombre, descripcion, tipo, fecha, horaInicio, horaFin, participante);
+	public Actividad nuevaActividad(String nombre, String descripcion, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Boolean finaliza, String nombreParticipante, String correoParticipante) {
+		Participante participante = new Participante(nombreParticipante, correoParticipante);
+		Actividad actividad = new Actividad(nombre, descripcion, fecha, horaInicio, horaFin, finaliza, participante);
 		return actividad;
 	}
 	
@@ -77,12 +77,12 @@ public class Enrutador {
 	//***************************************************************************************
 	
 	public void cargarArchivo(String nombreProyecto) throws Throwable {
-		AdministradorDatos singleton = AdministradorDatos.getInstance();
+		Administrador_Datos singleton = Administrador_Datos.getInstance();
 		proyecto = singleton.cargarArchivo(nombreProyecto);
 	}
 	
 	public void generarArchivo(Proyecto proyecto) throws Throwable {
-		AdministradorDatos singleton = AdministradorDatos.getInstance();
+		Administrador_Datos singleton = Administrador_Datos.getInstance();
 		singleton.generarArchivo(proyecto);
 	}
 	
@@ -90,8 +90,8 @@ public class Enrutador {
 	// Metodo para generar el reporte de un participante
 	//***************************************************************************************
 	
-	public Reporte generarReporte(Proyecto proyecto, String correoParticipante, String nombrePaquete, String nombreTarea, String tipoActividad, LocalDate fechaActividad) {
-		Reporte reporte = new Reporte(proyecto, correoParticipante, nombrePaquete, nombreTarea, tipoActividad, fechaActividad);
+	public Reporte_Participante generarReporte(Proyecto proyecto, String correoParticipante, String nombrePaquete, String nombreTarea, LocalDate fechaActividad) {
+		Reporte_Participante reporte = new Reporte_Participante(proyecto, correoParticipante, nombrePaquete, nombreTarea, fechaActividad);
 		return reporte;
 	}
 	
