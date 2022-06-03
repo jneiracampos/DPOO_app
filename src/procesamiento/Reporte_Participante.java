@@ -3,6 +3,7 @@ package procesamiento;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import modelo.Actividad;
+import modelo.Paquete;
 import modelo.Proyecto;
 import modelo.Tarea;
 
@@ -33,8 +34,8 @@ public class Reporte_Participante {
 	// Constructor
 	//************************************************************************************************
 	
-	public Reporte_Participante(Proyecto proyecto, String correoParticipante, String nombrePaquete, String nombreTarea, LocalDate fechaActividad) {
-		Tarea tarea = proyecto.getPaquete(nombrePaquete).getTarea(nombreTarea);
+	public Reporte_Participante(Proyecto proyecto, String correoParticipante, String[] paquetes, String nombreTarea, LocalDate fechaActividad) {
+		Tarea tarea = encontrarTarea(proyecto, paquetes, nombreTarea);
 		setTiempoTotal(tarea, correoParticipante);
 		setSizeTiempoTotal(tarea, correoParticipante);
 		setTiempoDiaActividad(tarea, correoParticipante, fechaActividad);
@@ -122,5 +123,18 @@ public class Reporte_Participante {
 			tiempoPromedio = 0;
 		}
 	}
-
+	
+	//***************************************************************************************
+	// Otros metodos
+	//***************************************************************************************
+	
+	public Tarea encontrarTarea(Proyecto proyecto, String[] paquetes, String nombreTarea) {
+		Paquete paquete = proyecto.getPaquete(paquetes[0]);
+		for (int i=0; i<paquetes.length; i++) {
+			paquete = paquete.getPaquete(paquetes[i]);
+		}
+		Tarea tarea = paquete.getTarea(nombreTarea);
+		return tarea;
+	}
+	
 }

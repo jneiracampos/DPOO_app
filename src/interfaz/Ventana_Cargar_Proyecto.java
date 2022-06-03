@@ -19,13 +19,9 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 	
 	public Ventana_Cargar_Proyecto(Ventana_Menu_Principal padre) {
 		ventanaMenuPrincipal = padre;
-		
-		//crear y agregar paneles
 		addPanelNorte();
 		addPanel1();
 		addPanel2();
-		
-		//set ventana
 		setSize(400,200);
 		setTitle("Cargar un proyecto");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -74,7 +70,6 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		panel2.setOpaque(true);
 		add(panel2, BorderLayout.SOUTH);
 		
-		//agregar elementos al panel
 		JButton volver = new JButton("Volver");
 		JButton cargar = new JButton("Cargar");
 		panel2.add(volver);
@@ -93,8 +88,8 @@ public class Ventana_Cargar_Proyecto extends JFrame implements ActionListener {
 		}
 		else if (comando.equals("Cargar")){
 			try {
-				Proyecto proyecto = Administrador_Datos.cargarDatos(txtNombre.getText());
-				Enrutador.setProyecto(proyecto);
+				Proyecto proyecto = Administrador_Datos.getInstance().cargarArchivo(txtNombre.getText());
+				Enrutador.getInstance().setProyecto(proyecto);
 				setVisible(false);
 				new Ventana_Opciones(ventanaMenuPrincipal);
 			} catch (Throwable e1) {

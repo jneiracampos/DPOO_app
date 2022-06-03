@@ -17,14 +17,14 @@ import com.toedter.calendar.JDateChooser;
 @SuppressWarnings("serial")
 public class Ventana_Cambiar_Fecha_Proyecto extends JFrame implements ActionListener {
 
-	private Ventana_Opciones ventanaOpciones;
+	private Ventana_Planear_Proyecto ventana;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
 	private JDateChooser calendario;
 	
-	public Ventana_Cambiar_Fecha_Proyecto(Ventana_Opciones padre) {
-		ventanaOpciones = padre;
+	public Ventana_Cambiar_Fecha_Proyecto(Ventana_Planear_Proyecto padre) {
+		ventana = padre;
 		
 		addNorthLabel();
 		addTextField();
@@ -96,9 +96,9 @@ public class Ventana_Cambiar_Fecha_Proyecto extends JFrame implements ActionList
 			else {
 				LocalDate fechaFin = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				if (fechaFin.isAfter(LocalDate.now())) {
-					Enrutador.getProyecto().setFechaFin(fechaFin);
+					Enrutador.getInstance().getProyecto().setFechaFin(fechaFin);
 					setVisible(false);
-					ventanaOpciones.setVisible(true);
+					ventana.setVisible(true);
 				}
 				else {
 					JOptionPane.showMessageDialog(this, "Ingresa una fecha de fin que sea posterior a " + LocalDate.now(), "Aviso",
@@ -108,7 +108,7 @@ public class Ventana_Cambiar_Fecha_Proyecto extends JFrame implements ActionList
 		}
 		else if (comando.equals("Volver")) {
 			setVisible(false);
-			ventanaOpciones.setVisible(true);
+			ventana.setVisible(true);
 		}
 	}
 }

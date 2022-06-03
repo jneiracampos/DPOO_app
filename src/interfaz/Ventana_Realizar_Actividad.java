@@ -19,14 +19,13 @@ import modelo.Participante;
 		private JTextField txtFieldNombre;
 		private JTextField txtFieldDescripcion;
 		private JTextField txtFieldCorreoParticipante;
-		private JComboBox<String> tipo;
+		private JComboBox<String> finalizarTarea;
 		
 		public Ventana_Realizar_Actividad(Ventana_Opciones padre) {
 			ventanaOpciones = padre;
 			addTextField();
 			addButtons();
 			addNorthLabel();
-			
 			setSize(500, 350);
 			setTitle("");
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -51,15 +50,15 @@ import modelo.Participante;
 			JLabel txtSolicitud = new JLabel("Ingrese los siguientes datos sobre la actividad...");
 			JLabel txtNombre = new JLabel("Nombre:");
 			JLabel txtDescripcion = new JLabel("Descripcion:");
-			JLabel txtTipo = new JLabel("Tipo:");
+			JLabel txtFinaliza = new JLabel("Seleccione:");
 			JLabel txtNull = new JLabel();
 			
 			txtFieldCorreoParticipante = new JTextField();
 			txtFieldNombre = new JTextField();
 			txtFieldDescripcion = new JTextField();
 			
-			String[] optionsToChoose = {"Documentacion", "Implementacion", "Pruebas", "Investigacion", "Diseño", "Analisis"};
-			tipo = new JComboBox<String>(optionsToChoose);
+			String[] optionsToChoose = {"Finaliza la tarea", "No finaliza la tarea"};
+			finalizarTarea = new JComboBox<String>(optionsToChoose);
 			
 			GroupLayout layout = new GroupLayout(panelCentro);
 			panelCentro.setLayout(layout);
@@ -67,8 +66,8 @@ import modelo.Participante;
 			layout.setAutoCreateContainerGaps(true);
 			
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-			hGroup.addGroup(layout.createParallelGroup().addComponent(txtCorreoParticipante).addComponent(txtSolicitud).addComponent(txtNombre).addComponent(txtDescripcion).addComponent(txtTipo));
-			hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldCorreoParticipante).addComponent(txtNull).addComponent(txtFieldNombre).addComponent(txtFieldDescripcion).addComponent(tipo));
+			hGroup.addGroup(layout.createParallelGroup().addComponent(txtCorreoParticipante).addComponent(txtSolicitud).addComponent(txtNombre).addComponent(txtDescripcion).addComponent(txtFinaliza));
+			hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldCorreoParticipante).addComponent(txtNull).addComponent(txtFieldNombre).addComponent(txtFieldDescripcion).addComponent(finalizarTarea));
 			layout.setHorizontalGroup(hGroup);
 			
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
@@ -76,7 +75,7 @@ import modelo.Participante;
 			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtSolicitud).addComponent(txtNull));
 			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtNombre).addComponent(txtFieldNombre));
 			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtDescripcion).addComponent(txtFieldDescripcion));
-			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtTipo).addComponent(tipo));
+			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtFinaliza).addComponent(finalizarTarea));
 			layout.setVerticalGroup(vGroup);
 		}
 		
@@ -98,7 +97,7 @@ import modelo.Participante;
 			String correo = txtFieldCorreoParticipante.getText();
 			String nombreActividad = txtFieldNombre.getText();
 			String descripcionActividad = txtFieldDescripcion.getText();
-			String tipoActividad = (String) tipo.getSelectedItem();
+			String finalizar = (String) finalizarTarea.getSelectedItem();
 			LocalDate fecha = LocalDate.now();
 			LocalTime horaInicio = LocalTime.now();
 			LocalTime horaFin = null;
@@ -113,13 +112,16 @@ import modelo.Participante;
 					JOptionPane.showMessageDialog(this, "Recuerde ingresar la descripcion de la actividad", "Aviso",
 					JOptionPane.INFORMATION_MESSAGE);
 				}
-				else if (Enrutador.getProyecto().isParticipantePorCorreo(correo) == false) {
+				else if (Enrutador.getInstance().getProyecto().isParticipantePorCorreo(correo) == false) {
 					JOptionPane.showMessageDialog(this, "No se tiene registro de este participante", "Aviso",
 					JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					Participante participante = Enrutador.getProyecto().getParticipantePorCorreo(correo);
-					Actividad actividad = Enrutador.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fecha, horaInicio, horaFin, participante);
+					Boolean finalizaTarea = false;
+					if (finalizar.equals("Finaliza la tarea"))
+						finalizaTarea = true;					
+					Participante participante = Enrutador.getInstance().getProyecto().getParticipantePorCorreo(correo);
+					Actividad actividad = Enrutador.getInstance().nuevaActividad(nombreActividad, descripcionActividad, fecha, horaInicio, horaFin, finalizaTarea, participante);
 					new Ventana_Cronometro(actividad, ventanaOpciones);
 					setVisible(false);
 				}

@@ -43,8 +43,7 @@ public class Enrutador {
 	// Constructores
 	//***************************************************************************************
 	
-	public Proyecto nuevoProyecto(String nombreProyecto, String descripcionProyecto, LocalDate fechaInicio, LocalDate fechaFin, String nombreParticipante, String correoParticipante) {
-		Participante participante = new Participante(nombreParticipante, correoParticipante);
+	public Proyecto nuevoProyecto(String nombreProyecto, String descripcionProyecto, LocalDate fechaInicio, LocalDate fechaFin, Participante participante) {
 		proyecto = new Proyecto(nombreProyecto, descripcionProyecto, fechaInicio, fechaFin, participante);
 		proyectos.put(nombreProyecto, proyecto);
 		return proyecto;
@@ -66,8 +65,7 @@ public class Enrutador {
 		return tarea;
 	}
 	
-	public Actividad nuevaActividad(String nombre, String descripcion, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Boolean finaliza, String nombreParticipante, String correoParticipante) {
-		Participante participante = new Participante(nombreParticipante, correoParticipante);
+	public Actividad nuevaActividad(String nombre, String descripcion, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, Boolean finaliza, Participante participante) {
 		Actividad actividad = new Actividad(nombre, descripcion, fecha, horaInicio, horaFin, finaliza, participante);
 		return actividad;
 	}
@@ -90,8 +88,8 @@ public class Enrutador {
 	// Metodo para generar el reporte de un participante
 	//***************************************************************************************
 	
-	public Reporte_Participante generarReporte(Proyecto proyecto, String correoParticipante, String nombrePaquete, String nombreTarea, LocalDate fechaActividad) {
-		Reporte_Participante reporte = new Reporte_Participante(proyecto, correoParticipante, nombrePaquete, nombreTarea, fechaActividad);
+	public Reporte_Participante generarReporte(Proyecto proyecto, String correoParticipante, String[] paquetes, String nombreTarea, LocalDate fechaActividad) {
+		Reporte_Participante reporte = new Reporte_Participante(proyecto, correoParticipante, paquetes, nombreTarea, fechaActividad);
 		return reporte;
 	}
 	

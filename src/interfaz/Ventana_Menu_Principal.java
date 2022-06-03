@@ -9,9 +9,9 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 	
 	private JPanel panelCentro;
 	private JPanel panelNorte;
+	private JPanel panelSur;
 	private JPanel panelW;
 	private JPanel panelE;
-	private JPanel panelS;
 	
 	private Ventana_Inicio ventanaInicio;
 	
@@ -26,10 +26,10 @@ public class Ventana_Menu_Principal extends JFrame implements ActionListener {
 		panelE.setOpaque(true);
 		add(panelE, BorderLayout.EAST);
 		
-		panelS = new JPanel();
-		panelS.setOpaque(true);
-		add(panelS, BorderLayout.SOUTH);
-		panelS.setPreferredSize(new Dimension(400,80));
+		panelSur = new JPanel();
+		panelSur.setOpaque(true);
+		add(panelSur, BorderLayout.SOUTH);
+		panelSur.setPreferredSize(new Dimension(400,80));
 		
 		addButtons();
 		addNorthLabel();

@@ -2,18 +2,21 @@ package interfaz;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+
 import javax.swing.*;
+
+import procesamiento.Administrador_Datos;
 
 @SuppressWarnings("serial")
 public class Ventana_Opciones extends JFrame implements ActionListener {
 	
 	private Ventana_Menu_Principal ventanaMenuPrincipal;
-	
 	private JPanel panelCentro;
 	private JPanel panelNorte;
+	private JPanel panelSur;
 	private JPanel panelW;
 	private JPanel panelE;
-	private JPanel panelS;
 	
 	public Ventana_Opciones(Ventana_Menu_Principal padre) {
 		ventanaMenuPrincipal = padre;
@@ -26,10 +29,10 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		panelE.setOpaque(true);
 		add(panelE, BorderLayout.EAST);
 		
-		panelS = new JPanel();
-		panelS.setOpaque(true);
-		add(panelS, BorderLayout.SOUTH);
-		panelS.setPreferredSize(new Dimension(400,20));
+		panelSur = new JPanel();
+		panelSur.setOpaque(true);
+		add(panelSur, BorderLayout.SOUTH);
+		panelSur.setPreferredSize(new Dimension(400,20));
 		
 		addButtons();
 		addNorthLabel();
@@ -41,7 +44,7 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 	}
 	
 	private void addNorthLabel() {
-		String nombreProyecto = Enrutador.getProyecto().getNombre();
+		String nombreProyecto = Enrutador.getInstance().getProyecto().getNombre();
 		panelNorte = new JPanel();
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
@@ -56,32 +59,28 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 		panelCentro.setLayout(new GridLayout(9, 1, 0, 9));
 		add(panelCentro, BorderLayout.CENTER);
 
-		JButton cambiarDesc = new JButton("Cambiar la descripcion del proyecto");
-		JButton cambiarFecha = new JButton("Cambiar fecha final del proyecto");
-		JButton registrarPart = new JButton("Registrar un participante");
-		JButton realizarAct = new JButton("Realizar una actividad");
-		JButton registrarAct = new JButton("Registrar una actividad pasada");
-		JButton cambiarHora = new JButton("Cambiar la hora final de una actividad");
-		JButton reporte = new JButton("Consultar el reporte de un participante");
-		JButton guardarProyecto = new JButton("Consultar el estado de este proyecto");
-		JButton volver = new JButton("Volver al Menu Principal");
+		JLabel txtUsuario = new JLabel("Por favor seleccione una de las siguientes opciones:");
+		JButton registrarParticipante = new JButton("Registrar un participante");
+		JButton planearProyecto = new JButton("Realizar la planeacion del proyecto");
+		JButton realizarActividad = new JButton("Realizar una actividad");
+		JButton registrarActividad = new JButton("Registrar una actividad pasada");
+		JButton reporte = new JButton("Consultar un reporte");
+		JButton guardarProyecto = new JButton("Guardar este proyecto en el disco local");
+		JButton volver = new JButton("Volver");
 		
-		panelCentro.add(cambiarDesc);
-		panelCentro.add(cambiarFecha);
-		panelCentro.add(registrarPart);
-		panelCentro.add(realizarAct);
-		panelCentro.add(registrarAct);
-		panelCentro.add(cambiarHora);
+		panelCentro.add(txtUsuario);
+		panelCentro.add(registrarParticipante);
+		panelCentro.add(planearProyecto);
+		panelCentro.add(realizarActividad);
+		panelCentro.add(registrarActividad);
 		panelCentro.add(reporte);
 		panelCentro.add(guardarProyecto);
 		panelCentro.add(volver);
 		
-		cambiarDesc.addActionListener(this);
-		cambiarFecha.addActionListener(this);
-		registrarPart.addActionListener(this);
-		realizarAct.addActionListener(this);
-		registrarAct.addActionListener(this);
-		cambiarHora.addActionListener(this);
+		registrarParticipante.addActionListener(this);
+		planearProyecto.addActionListener(this);
+		realizarActividad.addActionListener(this);
+		registrarActividad.addActionListener(this);
 		reporte.addActionListener(this);
 		guardarProyecto.addActionListener(this);
 		volver.addActionListener(this);
@@ -91,17 +90,13 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
 		
-		if (comando.equals("Cambiar la descripcion del proyecto")) {
-			setVisible(false);
-			new Ventana_Descripcion(this);
-		}
-		else if (comando.equals("Cambiar fecha final del proyecto")){
-			setVisible(false);
-			new Ventana_Cambiar_Fecha_Proyecto(this);
-		}
-		else if (comando.equals("Registrar un participante")) {
+		if (comando.equals("Registrar un participante")) {
 			setVisible(false);
 			new Ventana_Registrar_Participante(this);
+		}
+		else if (comando.equals("Realizar la planeacion del proyecto")){
+			setVisible(false);
+			new Ventana_Planear_Proyecto(this);
 		}
 		else if (comando.equals("Realizar una actividad")){
 			setVisible(false);
@@ -111,19 +106,19 @@ public class Ventana_Opciones extends JFrame implements ActionListener {
 			setVisible(false);
 			new Ventana_Registrar_Actividad(this);
 		}
-		else if (comando.equals("Cambiar la hora final de una actividad")){
-			setVisible(false);
-			new Ventana_Cambiar_Hora_Actividad(this);
-		}
-		else if (comando.equals("Consultar el reporte de un participante")) {
+		else if (comando.equals("Consultar un reporte")) {
 			setVisible(false);
 			new Ventana_Consultar_Reporte(this);
 		}
-		else if (comando.equals("Consultar el estado de este proyecto")) {
+		else if (comando.equals("Guardar este proyecto en el disco local")) {
 			setVisible(false);
-			new Ventana_Estado_Proyecto(this);
+			try {
+				Administrador_Datos.getInstance().generarArchivo(Enrutador.getInstance().getProyecto());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
-		else if (comando.equals("Volver al Menu Principal")) {
+		else if (comando.equals("Volver")) {
 			ventanaMenuPrincipal.setVisible(true);
 			setVisible(false);
 		}

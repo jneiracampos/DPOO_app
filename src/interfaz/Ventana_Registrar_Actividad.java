@@ -25,7 +25,6 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 	private JTextField txtFieldCorreoParticipante;
 	private TimePicker timeInicio;
 	private TimePicker timeFin;
-	private JComboBox<String> tipo;
 
 	
 	public Ventana_Registrar_Actividad(Ventana_Opciones padre) {
@@ -43,7 +42,6 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		panelNorte = new JPanel();
 		panelNorte.setOpaque(true);
 		add(panelNorte, BorderLayout.NORTH);
-
 		JLabel txt = new JLabel("Registrar una actividad");
 		panelNorte.add(txt);
 	}
@@ -57,14 +55,11 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		JLabel txtSolicitud = new JLabel("Ingrese los siguientes datos sobre la actividad...");
 		JLabel txtNombre = new JLabel("Nombre:");
 		JLabel txtDescripcion = new JLabel("Descripcion:");
-		JLabel txtTipo = new JLabel("Tipo:");
 		JLabel txtFecha = new JLabel("Fecha de realizacion:");
 		JLabel txtHoraInicio = new JLabel("Hora de inicio:");
 		JLabel txtHoraFin = new JLabel("Hora de fin:");
 		JLabel txtNull = new JLabel();
 		
-		String[] optionsToChoose = {"Documentacion", "Implementacion", "Pruebas", "Investigacion", "Diseño", "Analisis"};
-		tipo = new JComboBox<String>(optionsToChoose);
 		
 		txtFieldCorreoParticipante = new JTextField();
 		txtFieldNombre = new JTextField();
@@ -79,8 +74,8 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		layout.setAutoCreateContainerGaps(true);
 		
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtCorreoParticipante).addComponent(txtSolicitud).addComponent(txtNombre).addComponent(txtDescripcion).addComponent(txtTipo).addComponent(txtFecha).addComponent(txtHoraInicio).addComponent(txtHoraFin));
-		hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldCorreoParticipante).addComponent(txtNull).addComponent(txtFieldNombre).addComponent(txtFieldDescripcion).addComponent(tipo).addComponent(calendario).addComponent(timeInicio).addComponent(timeFin));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtCorreoParticipante).addComponent(txtSolicitud).addComponent(txtNombre).addComponent(txtDescripcion).addComponent(txtFecha).addComponent(txtHoraInicio).addComponent(txtHoraFin));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(txtFieldCorreoParticipante).addComponent(txtNull).addComponent(txtFieldNombre).addComponent(txtFieldDescripcion).addComponent(calendario).addComponent(timeInicio).addComponent(timeFin));
 		layout.setHorizontalGroup(hGroup);
 		
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
@@ -88,7 +83,6 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtSolicitud).addComponent(txtNull));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtNombre).addComponent(txtFieldNombre));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtDescripcion).addComponent(txtFieldDescripcion));
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtTipo).addComponent(tipo));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtFecha).addComponent(calendario));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtHoraInicio).addComponent(timeInicio));
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(txtHoraFin).addComponent(timeFin));
@@ -116,14 +110,14 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Registrar")) {
-			String correo = txtFieldCorreoParticipante.getText();
 			String nombreActividad = txtFieldNombre.getText();
 			String descripcionActividad = txtFieldDescripcion.getText();
-			String tipoActividad = (String) tipo.getSelectedItem();
 			LocalDate fecha = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			LocalTime horaInicio = timeInicio.getTime();
 			LocalTime horaFin = timeFin.getTime();
-			Participante participante = Enrutador.getProyecto().getParticipantePorCorreo(correo);
+			Boolean finalizar = false;
+			String correo = txtFieldCorreoParticipante.getText();
+			Participante participante = Enrutador.getInstance().getProyecto().getParticipantePorCorreo(correo);
 			
 			if (nombreActividad.equals("")) {
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar el nombre de la actividad", "Aviso",
@@ -133,7 +127,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 				JOptionPane.showMessageDialog(this, "Recuerde ingresar la descripcion de la actividad", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
 			}
-			else if (Enrutador.getProyecto().isParticipantePorCorreo(correo) == false) {
+			else if (Enrutador.getInstance().getProyecto().isParticipantePorCorreo(correo) == false) {
 				JOptionPane.showMessageDialog(this, "No se tiene registro de este participante", "Aviso",
 				JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -159,9 +153,9 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 					JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					Actividad actividad = Enrutador.nuevaActividad(nombreActividad, descripcionActividad, tipoActividad, fecha, horaInicio, horaFin, participante);
+					Actividad actividad = Enrutador.getInstance().nuevaActividad(nombreActividad, descripcionActividad, fecha, horaInicio, horaFin, finalizar, participante);
 					actividad.addTiempo(horaInicio, horaFin);
-					Enrutador.getProyecto().addActividad(actividad);
+					//Enrutador.getProyecto().addActividad(actividad);
 					
 					setVisible(false);
 					ventanaOpciones.setVisible(true);
