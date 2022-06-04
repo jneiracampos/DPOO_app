@@ -59,8 +59,7 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		JLabel txtHoraInicio = new JLabel("Hora de inicio:");
 		JLabel txtHoraFin = new JLabel("Hora de fin:");
 		JLabel txtNull = new JLabel();
-		
-		
+				
 		txtFieldCorreoParticipante = new JTextField();
 		txtFieldNombre = new JTextField();
 		txtFieldDescripcion = new JTextField();

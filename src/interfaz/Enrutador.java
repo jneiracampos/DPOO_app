@@ -59,8 +59,7 @@ public class Enrutador {
 		return paquete;
 	}
 	
-	public Tarea nuevaTarea(String nombreTarea, String descripcionTarea, String tipo, LocalDate fechaPlaneada, LocalTime tiempoPlaneado, String nombreParticipante, String correoParticipante) {
-		Participante participante = new Participante(nombreParticipante, correoParticipante);
+	public Tarea nuevaTarea(String nombreTarea, String descripcionTarea, String tipo, LocalDate fechaPlaneada, LocalTime tiempoPlaneado, Participante participante) {
 		Tarea tarea = new Tarea(nombreTarea, descripcionTarea, tipo, fechaPlaneada, tiempoPlaneado, participante);
 		return tarea;
 	}
