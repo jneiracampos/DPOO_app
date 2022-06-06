@@ -17,6 +17,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.tree.TreePath;
 import com.toedter.calendar.JDateChooser;
 
+import procesamiento.Reporte_Participante;
+
 
 @SuppressWarnings("serial")
 public class Ventana_Consultar_Reporte extends JFrame implements ActionListener {
@@ -119,11 +121,13 @@ public class Ventana_Consultar_Reporte extends JFrame implements ActionListener 
 			else {
 				TreePath ruta = arbol.getRuta();
 				try {
-					Enrutador.getInstance().generarReporte(Enrutador.getInstance().getProyecto(), correo, ruta, fecha);
+					Reporte_Participante reporte = Enrutador.getInstance().generarReporte(Enrutador.getInstance().getProyecto(), correo, ruta, fecha);
+					new Ventana_Mostrar_Reporte(reporte);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(this, "No se tiene registro de esta actividad", "Aviso",
 					JOptionPane.INFORMATION_MESSAGE);
 				}
+				
 			}
 		}
 		else if (comando.equals("Volver")) {

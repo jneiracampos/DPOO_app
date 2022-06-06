@@ -49,6 +49,10 @@ public class Paquete {
 	public HashMap<String,Paquete> getPaquetes() {
 		return paquetes;
 	}
+	
+	public HashMap<String,Tarea> getTareas() {
+		return tareas;
+	}
 
 	public Tarea getTarea(String nombreTarea) {
 		return tareas.get(nombreTarea);
@@ -58,9 +62,7 @@ public class Paquete {
 	// Metodos para agregar una tarea o un paquete
 	//******************************************************************
 	
-	public Tarea addTarea(String nombreTarea, String descripcionTarea, String tipo, LocalDate fechaPlaneada, LocalTime tiempoPlaneado, String nombreParticipante, String correoParticipante) {
-		Participante participante = new Participante(nombreParticipante, correoParticipante);
-		Tarea tarea = new Tarea(nombreTarea, descripcionTarea, tipo, fechaPlaneada, tiempoPlaneado, participante);
+	public Tarea addTarea(Tarea tarea) {
 		tareas.put(tarea.getNombre(), tarea);
 		return tarea;
 	}

@@ -3,20 +3,32 @@ package interfaz;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.tree.TreePath;
+
 import com.github.lgooddatepicker.components.TimePicker;
 import com.toedter.calendar.JDateChooser;
+
+import modelo.Paquete;
+import modelo.Participante;
+import modelo.Tarea;
 
 @SuppressWarnings("serial")
 public class Ventana_Registrar_Tarea extends JFrame implements ActionListener {
 	
-	private Ventana_Planear_Proyecto ventana;
+	private ProyectTree arbol;
+	private Ventana_Planear_Proyecto ventanaPlanear;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
@@ -28,7 +40,7 @@ public class Ventana_Registrar_Tarea extends JFrame implements ActionListener {
 
 	
 	public Ventana_Registrar_Tarea(Ventana_Planear_Proyecto padre) {
-		ventana = padre;
+		ventanaPlanear = padre;
 		
 		addTextField();
 		addButtons();
@@ -94,12 +106,15 @@ public class Ventana_Registrar_Tarea extends JFrame implements ActionListener {
 		add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnRegistrar = new JButton("Registrar");
+		JButton btnUbicacion = new JButton("Seleccionar ubicacion");
 		JButton btnVolver = new JButton("Volver");
 		
 		panelSur.add(btnVolver);
+		panelSur.add(btnUbicacion);
 		panelSur.add(btnRegistrar);
 		
 		btnRegistrar.addActionListener(this);
+		btnUbicacion.addActionListener(this);
 		btnVolver.addActionListener(this);
 	}
 
@@ -108,11 +123,33 @@ public class Ventana_Registrar_Tarea extends JFrame implements ActionListener {
 		String comando = e.getActionCommand();
 		
 		if (comando.equals("Registrar")) {
-
+			String nombreTarea = txtFieldNombreTarea.getText();
+			String descripcionTarea = txtFieldDescripcionTarea.getText();
+			LocalDate fecha = calendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			LocalTime tiempoPlaneadoo = tiempoPlaneado.getTime();
+			String correo = txtFieldCorreoParticipante.getText();
+			Participante participante = Enrutador.getInstance().getProyecto().getParticipantePorCorreo(correo);
+			Tarea tarea = Enrutador.getInstance().nuevaTarea(nombreTarea, descripcionTarea, correo, fecha, tiempoPlaneadoo, participante);
+			
+			TreePath ruta = arbol.getRuta();
+			if (ruta.getPathCount() == 2) {
+				Enrutador.getInstance().getProyecto().getPaquete(ruta.getPathComponent(1).toString()).addTarea(tarea);
+			}
+			
+			setVisible(false);
+			ventanaPlanear.setVisible(true);
+		}
+		else if (comando.equals("Seleccionar ubicacion")) {
+			SwingUtilities.invokeLater(new Runnable() {
+	            @Override
+	            public void run() {
+	            	arbol = new ProyectTree();
+	            }
+	        });
 		}
 		else if (comando.equals("Volver")) {
 			setVisible(false);
-			ventana.setVisible(true);
+			ventanaPlanear.setVisible(true);
 		}
 	}
 

@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import modelo.Participante;
+import procesamiento.Reporte_Participante;
 
 @SuppressWarnings("serial")
 public class Ventana_Mostrar_Reporte extends JFrame implements ActionListener {
@@ -18,10 +19,10 @@ public class Ventana_Mostrar_Reporte extends JFrame implements ActionListener {
 	private JPanel panelSur;
 	private JPanel panelNorte;
 	
-	public Ventana_Mostrar_Reporte(long tiempoTotal, int cantidadActividades, long tiempoTipoActividad, int cantidadTipoActividad, long tiempoDiaActividad, int cantidadDiaActividad, double tiempoPromedio, Participante participante, String tipo, LocalDate fecha) {
+	public Ventana_Mostrar_Reporte(Reporte_Participante reporte) {
 		
 		addNorthLabel();
-		addTextField(tiempoTotal,cantidadActividades,tiempoTipoActividad,cantidadTipoActividad,tiempoDiaActividad,cantidadDiaActividad,tiempoPromedio,participante,tipo,fecha);
+		addTextField(reporte);
 		addButtons();
 		
 		setSize(500,300);
@@ -39,7 +40,7 @@ public class Ventana_Mostrar_Reporte extends JFrame implements ActionListener {
 		panelNorte.add(txt);
 	}
 	
-	private void addTextField(long tiempoTotal, int cantidadActividades, long tiempoTipoActividad, int cantidadTipoActividad, long tiempoDiaActividad, int cantidadDiaActividad, double tiempoPromedio, Participante participante, String tipo, LocalDate fecha) {
+	private void addTextField(Reporte_Participante reporte) {
 		panelCentro = new JPanel();
 		panelCentro.setOpaque(true);
 		panelCentro.setLayout(new GridLayout(8, 1, 0, 8));
@@ -53,14 +54,13 @@ public class Ventana_Mostrar_Reporte extends JFrame implements ActionListener {
 		JLabel txt6 = new JLabel();
 		JLabel txt7 = new JLabel();
 		
-		txt.setText("Se le generó al participante llamado " + participante.getNombre() + " el siguiente reporte:");
-		txt1.setText(participante.getNombre() + " realizó " + String.valueOf(cantidadActividades) + " actividades.");
-		txt2.setText("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTotal) + " minutos.");
-		txt3.setText("Realizar estas actividades le tomó en promedio " + String.valueOf(tiempoPromedio) + " minutos.");
-		txt4.setText(participante.getNombre() + " realizó " + String.valueOf(cantidadTipoActividad) + " actividades de tipo " + tipo + ".");
-		txt5.setText("Realizar estas actividades le tomó en total " + String.valueOf(tiempoTipoActividad) + " minutos.");
-		txt6.setText(participante.getNombre() + " realizó " + String.valueOf(cantidadDiaActividad) + " actividades en la fecha " + fecha + ".");
-		txt7.setText("Realizar estas actividades le tomó en total " + String.valueOf(tiempoDiaActividad) + " minutos.");
+		String nombreParticipante = reporte.getParticipante().getNombre();
+		txt.setText("Se le generó al participante llamado " + nombreParticipante + " el siguiente reporte:");
+		txt1.setText(nombreParticipante + " realizó " + String.valueOf(reporte.getCantidadActividades()) + " actividades.");
+		txt2.setText("Realizar estas actividades le tomó en total " + String.valueOf(reporte.getTiempoTotal()) + " minutos.");
+		txt3.setText("Realizar estas actividades le tomó en promedio " + String.valueOf(reporte.getTiempoPromedio()) + " minutos.");
+		txt6.setText(nombreParticipante + " realizó " + String.valueOf(reporte.getCantidadDiaActividades()) + " actividades en la fecha " + reporte.getFechaActividad() + ".");
+		txt7.setText("Realizar estas actividades le tomó en total " + String.valueOf(reporte.getTiempoDiaActividad()) + " minutos.");
 		
 		panelCentro.add(txt);
 		panelCentro.add(txt1);

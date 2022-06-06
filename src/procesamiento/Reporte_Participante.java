@@ -8,6 +8,7 @@ import javax.swing.tree.TreePath;
 import interfaz.Enrutador;
 import modelo.Actividad;
 import modelo.Paquete;
+import modelo.Participante;
 import modelo.Proyecto;
 import modelo.Tarea;
 
@@ -34,6 +35,10 @@ public class Reporte_Participante {
 	 */
 	private int cantidadDiaActividades;
 	
+	private Participante participante;
+	
+	private LocalDate fechaActividad;
+	
 	//************************************************************************************************
 	// Constructor
 	//************************************************************************************************
@@ -45,6 +50,8 @@ public class Reporte_Participante {
 		setTiempoDiaActividad(tarea, correoParticipante, fechaActividad);
 		setSizeTiempoDiaActividad(tarea, correoParticipante, fechaActividad);
 		setTiempoPromedio(tarea, correoParticipante);
+		participante = proyecto.getParticipantePorCorreo(correoParticipante);
+		this.fechaActividad = fechaActividad;
 	}
 	
 	//***************************************************************************************
@@ -70,6 +77,15 @@ public class Reporte_Participante {
 	public int getCantidadDiaActividades() {
 		return cantidadDiaActividades;
 	}
+	
+	public Participante getParticipante() {
+		return participante;
+	}
+	
+	public LocalDate getFechaActividad() {
+		return fechaActividad;
+	}
+	
 	
 	//***************************************************************************************
 	// Metodos para generar el reporte
@@ -154,5 +170,6 @@ public class Reporte_Participante {
 			}
 		}
 	}
+
 	
 }

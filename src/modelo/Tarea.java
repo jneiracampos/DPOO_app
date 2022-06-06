@@ -68,6 +68,7 @@ public class Tarea {
 		this.actividades = new ArrayList<Actividad>();
 		this.actividadesPorParticipante = new HashMap<String, ArrayList<Actividad>>();
 		this.diaActividadPorParticipante = new HashMap<String, HashMap<LocalDate, ArrayList<Actividad>>>();
+		this.participantes = new ArrayList<Participante>();
 		participantes.add(participante);	
 	}
 	

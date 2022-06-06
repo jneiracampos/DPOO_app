@@ -17,6 +17,7 @@ import javax.swing.tree.TreePath;
 
 import modelo.Paquete;
 import modelo.Proyecto;
+import modelo.Tarea;
 
 public class ProyectTree extends JFrame
 {
@@ -24,7 +25,9 @@ public class ProyectTree extends JFrame
     private TreePath ruta;
     private DefaultMutableTreeNode paquete;
     private DefaultMutableTreeNode paquete1;
+    private DefaultMutableTreeNode tarea;
     private HashMap<String,Paquete> paquetesPaquete;
+    private HashMap<String,Tarea> tareasPaquete;
     private HashMap<String,Paquete> paquetesProyecto = Enrutador.getInstance().getProyecto().getPaquetes();
     
     public ProyectTree()
@@ -43,7 +46,7 @@ public class ProyectTree extends JFrame
 	        //create paquetes
 			paquete = new DefaultMutableTreeNode(nombre);
 			
-			while (Enrutador.getInstance().getProyecto().getPaquete(nombre).isEmptyPaquetes() == false) {
+			if (Enrutador.getInstance().getProyecto().getPaquete(nombre).isEmptyPaquetes() == false) {
 				
 				paquetesPaquete = Enrutador.getInstance().getProyecto().getPaquete(nombre).getPaquetes();
 				
@@ -54,16 +57,39 @@ public class ProyectTree extends JFrame
 		        for (String x : nombresPaquetes1)
 		        	nombresPaquetesA1.add(x);
 		      
-		    	for (int j = 0; j < nombresPaquetesA.size(); j++) {
-					String nombre1 = nombresPaquetesA.get(j);
-					
+		    	for (int j = 0; j < nombresPaquetesA1.size(); j++) {
+					String nombre1 = nombresPaquetesA1.get(j);
+					System.out.println(nombre1);
 			        //create paquetes
-					paquete = new DefaultMutableTreeNode(nombre1);
+					paquete1 = new DefaultMutableTreeNode(nombre1);
 					
-		        //add the child nodes to paquetes
-		        paquete.add(paquete);
+			        //add the child nodes to paquetes
+			        paquete.add(paquete1);
+		        
 		    	}
-			}    
+		        
+			} 
+
+			if (Enrutador.getInstance().getProyecto().getPaquete(nombre).isEmptyTareas() == false) {
+				tareasPaquete = Enrutador.getInstance().getProyecto().getPaquete(nombre).getTareas();
+				
+				//create the child nodes of paquetes
+				Set<String> nombresTareas = tareasPaquete.keySet();    	
+		    	int nt = nombresTareas.size();
+		        ArrayList<String> nombresTareasA = new ArrayList<String>(nt);
+		        for (String x : nombresTareas)
+		        	nombresTareasA.add(x);
+		      
+		    	for (int j = 0; j < nombresTareasA.size(); j++) {
+					String nombreT = nombresTareasA.get(j);
+					System.out.println(nombreT);
+			        //create paquetes
+					tarea = new DefaultMutableTreeNode(nombreT);
+					
+			        //add the child nodes to paquetes
+			        paquete.add(tarea);
+		    	}
+			}
 
 	        //add paquetes a proyecto
 	        proyecto.add(paquete);
@@ -77,6 +103,7 @@ public class ProyectTree extends JFrame
         this.setTitle("Proyecto"); 
         this.setSize(500,500);
         this.setVisible(true);
+        //tree.setRootVisible(false);
         
         tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
             @Override
