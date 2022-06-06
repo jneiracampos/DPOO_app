@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class Ventana_Planear_Proyecto extends JFrame implements ActionListener {
@@ -65,17 +66,20 @@ public class Ventana_Planear_Proyecto extends JFrame implements ActionListener {
 		JButton cambiarFecha = new JButton("Cambiar fecha final del proyecto");
 		JButton registrarPaquete = new JButton("Registrar un paquete");
 		JButton registrarTarea = new JButton("Registrar una tarea");
+		JButton verCarpetas = new JButton("Ver Carpetas");
 		JButton volver = new JButton("Volver");
 		
 		panelCentro.add(txtUsuario);
 		panelCentro.add(cambiarFecha);
 		panelCentro.add(registrarPaquete);
 		panelCentro.add(registrarTarea);
+		panelCentro.add(verCarpetas);
 		panelCentro.add(volver);
 		
 		cambiarFecha.addActionListener(this);
 		registrarPaquete.addActionListener(this);
 		registrarTarea.addActionListener(this);
+		verCarpetas.addActionListener(this);
 		volver.addActionListener(this);
 	}
 	
@@ -94,6 +98,14 @@ public class Ventana_Planear_Proyecto extends JFrame implements ActionListener {
 		else if (comando.equals("Registrar una tarea")){
 			setVisible(false);
 			new Ventana_Registrar_Tarea(this);
+		}
+		else if (comando.equals("Ver Carpetas")){
+			SwingUtilities.invokeLater(new Runnable() {
+	            @Override
+	            public void run() {
+	                new ProyectTree();
+	            }
+	        });
 		}
 		else if (comando.equals("Volver")) {
 			ventanaOpciones.setVisible(true);

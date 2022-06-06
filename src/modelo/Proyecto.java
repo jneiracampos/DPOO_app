@@ -82,6 +82,10 @@ public class Proyecto {
 		return paquetes.get(nombrePaquete);	
 	}
 	
+	public HashMap<String,Paquete> getPaquetes() {
+		return paquetes;	
+	}
+	
 	public ArrayList<Participante> getParticipantes() {
 		return participantes;
 	}

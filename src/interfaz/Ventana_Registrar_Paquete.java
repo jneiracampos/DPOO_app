@@ -12,13 +12,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.tree.TreePath;
 import javax.swing.GroupLayout.Alignment;
 import modelo.Paquete;
+import modelo.Tarea;
 
 @SuppressWarnings("serial")
 public class Ventana_Registrar_Paquete extends JFrame implements ActionListener {
 	
-	private Ventana_Planear_Proyecto ventana;
+	private ProyectTree arbol;
+	private Ventana_Planear_Proyecto ventanaPlanear;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
@@ -32,7 +36,7 @@ public class Ventana_Registrar_Paquete extends JFrame implements ActionListener 
 	private JCheckBox analisis;
 	
 	public Ventana_Registrar_Paquete(Ventana_Planear_Proyecto padre) {
-		ventana = padre;
+		ventanaPlanear = padre;
 		
 		addNorthLabel();
 		addTextField();
@@ -108,12 +112,15 @@ public class Ventana_Registrar_Paquete extends JFrame implements ActionListener 
 		add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnRegistrar = new JButton("Registrar");
+		JButton btnUbicacion = new JButton("Seleccionar ubicacion");
 		JButton btnVolver = new JButton("Volver");
 		
 		panelSur.add(btnVolver);
+		panelSur.add(btnUbicacion);
 		panelSur.add(btnRegistrar);
 		
 		btnRegistrar.addActionListener(this);
+		btnUbicacion.addActionListener(this);
 		btnVolver.addActionListener(this);
 	}
 
@@ -150,12 +157,33 @@ public class Ventana_Registrar_Paquete extends JFrame implements ActionListener 
 			}
 			else {
 				Paquete paquete = Enrutador.getInstance().nuevoPaquete(nombrePaquete, descripcionPaquete, tipos);
-
+				TreePath ruta = arbol.getRuta();
+				if (ruta.getPathCount() == 1) {
+					Enrutador.getInstance().getProyecto().addPaquete(paquete);
+				}
+				else {
+					Paquete paquete1 = Enrutador.getInstance().getProyecto().getPaquete(ruta.getPathComponent(1).toString());
+					
+					for (int i=2; i<ruta.getPathCount(); i++) {
+						paquete1 = paquete1.getPaquete(ruta.getPathComponent(i).toString());
+					}
+					paquete1.addPaquete(paquete);
+				}
+				setVisible(false);
+				ventanaPlanear.setVisible(true);
 			}
+		}
+		else if (comando.equals("Seleccionar ubicacion")) {
+			SwingUtilities.invokeLater(new Runnable() {
+	            @Override
+	            public void run() {
+	            	arbol = new ProyectTree();
+	            }
+	        });
 		}
 		else if (comando.equals("Volver")) {
 			setVisible(false);
-			ventana.setVisible(true);
+			ventanaPlanear.setVisible(true);
 		}
 	}
 

@@ -45,6 +45,10 @@ public class Paquete {
 	public Paquete getPaquete(String nombrePaquete) {
 		return paquetes.get(nombrePaquete);
 	}
+	
+	public HashMap<String,Paquete> getPaquetes() {
+		return paquetes;
+	}
 
 	public Tarea getTarea(String nombreTarea) {
 		return tareas.get(nombreTarea);
@@ -61,9 +65,8 @@ public class Paquete {
 		return tarea;
 	}
 	
-	public Paquete addPaquete(String nombrePaquete, String descripcionPaquete, ArrayList<String> tipos) {
-		Paquete paquete = new Paquete(nombrePaquete, descripcionPaquete, tipos);
-		paquetes.put(nombrePaquete, paquete);
+	public Paquete addPaquete(Paquete paquete) {
+		paquetes.put(paquete.getNombre(), paquete);
 		return paquete;
 	}
 	

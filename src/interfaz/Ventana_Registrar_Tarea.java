@@ -30,11 +30,11 @@ public class Ventana_Registrar_Tarea extends JFrame implements ActionListener {
 	public Ventana_Registrar_Tarea(Ventana_Planear_Proyecto padre) {
 		ventana = padre;
 		
-		addNorthLabel();
 		addTextField();
 		addButtons();
+		addNorthLabel();
 		
-		setSize(400,200);
+		setSize(540, 270);
 		setTitle("Cambiar la fecha de fin del proyecto");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -60,7 +60,7 @@ public class Ventana_Registrar_Tarea extends JFrame implements ActionListener {
 		JLabel txtDescripcion = new JLabel("Descripcion:");
 		JLabel txtFecha = new JLabel("Fecha de fin planeada:");
 		JLabel txtTiempo = new JLabel("Tiempo planedo:");
-		JLabel txtNull = new JLabel("");
+		JLabel txtNull = new JLabel();
 		
 		txtFieldCorreoParticipante = new JTextField();
 		txtFieldNombreTarea = new JTextField();
