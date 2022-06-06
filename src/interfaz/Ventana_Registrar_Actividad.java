@@ -7,6 +7,8 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import javax.swing.*;
 import javax.swing.GroupLayout.*;
+import javax.swing.tree.TreePath;
+
 import com.github.lgooddatepicker.components.TimePicker;
 import com.toedter.calendar.JDateChooser;
 import modelo.Actividad;
@@ -15,6 +17,7 @@ import modelo.Participante;
 @SuppressWarnings("serial")
 public class Ventana_Registrar_Actividad extends JFrame implements ActionListener {
 	
+	private ProyectTree arbol;
 	private Ventana_Opciones ventanaOpciones;
 	private JDateChooser calendario;
 	private JPanel panelCentro;
@@ -154,7 +157,11 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 				else {
 					Actividad actividad = Enrutador.getInstance().nuevaActividad(nombreActividad, descripcionActividad, fecha, horaInicio, horaFin, finalizar, participante);
 					actividad.addTiempo(horaInicio, horaFin);
-					//Enrutador.getProyecto().addActividad(actividad);
+					
+					TreePath ruta = arbol.getRuta();
+					if (ruta.getPathCount() == 3) {
+						Enrutador.getInstance().getProyecto().getPaquete(ruta.getPathComponent(1).toString()).getTarea(ruta.getPathComponent(2).toString()).addActividad(actividad);
+					}
 					
 					setVisible(false);
 					ventanaOpciones.setVisible(true);

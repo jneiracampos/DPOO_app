@@ -11,12 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.tree.TreePath;
 
 import modelo.Actividad;
 
 @SuppressWarnings("serial")
 public class Ventana_Cronometro extends JFrame implements ActionListener {
 	
+	private ProyectTree arbol;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JPanel panelNorte;
@@ -110,7 +112,10 @@ public class Ventana_Cronometro extends JFrame implements ActionListener {
 			timer.stop();
 			actividadUsuario.addTiempo(actividadUsuario.getHoraInicio(), LocalTime.now());
 			actividadUsuario.setHoraFin(LocalTime.now());
-			//Enrutador.getInstance().getProyecto().addActividad(actividadUsuario);
+			TreePath ruta = arbol.getRuta();
+			if (ruta.getPathCount() == 3) {
+				Enrutador.getInstance().getProyecto().getPaquete(ruta.getPathComponent(1).toString()).getTarea(ruta.getPathComponent(2).toString()).addActividad(actividadUsuario);
+			}
 			setVisible(false);
 			ventanaOpciones.setVisible(true);
 		}
