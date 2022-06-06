@@ -16,7 +16,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
 import javax.swing.GroupLayout.Alignment;
 import modelo.Paquete;
-import modelo.Tarea;
 
 @SuppressWarnings("serial")
 public class Ventana_Registrar_Paquete extends JFrame implements ActionListener {
