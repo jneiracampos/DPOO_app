@@ -97,12 +97,15 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 		add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnRegistrar = new JButton("Registrar");
+		JButton btnUbicacion = new JButton("Seleccionar ubicacion");
 		JButton btnVolver = new JButton("Volver");
 		
 		panelSur.add(btnVolver);
+		panelSur.add(btnUbicacion);
 		panelSur.add(btnRegistrar);
 		
 		btnRegistrar.addActionListener(this);
+		btnUbicacion.addActionListener(this);
 		btnVolver.addActionListener(this);
 	}
 
@@ -167,6 +170,14 @@ public class Ventana_Registrar_Actividad extends JFrame implements ActionListene
 					ventanaOpciones.setVisible(true);
 				}
 			}
+		}
+		else if (comando.equals("Seleccionar ubicacion")) {
+			SwingUtilities.invokeLater(new Runnable() {
+	            @Override
+	            public void run() {
+	            	arbol = new ProyectTree();
+	            }
+	        });
 		}
 		else if (comando.equals("Volver")) {
 			setVisible(false);

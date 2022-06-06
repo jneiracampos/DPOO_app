@@ -122,6 +122,7 @@ import modelo.Participante;
 						finalizaTarea = true;					
 					Participante participante = Enrutador.getInstance().getProyecto().getParticipantePorCorreo(correo);
 					Actividad actividad = Enrutador.getInstance().nuevaActividad(nombreActividad, descripcionActividad, fecha, horaInicio, horaFin, finalizaTarea, participante);
+					
 					new Ventana_Cronometro(actividad, ventanaOpciones);
 					setVisible(false);
 				}

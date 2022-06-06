@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.tree.TreePath;
@@ -86,7 +87,11 @@ public class Ventana_Cronometro extends JFrame implements ActionListener {
 		add(panelSur, BorderLayout.SOUTH);
 		
 		JButton btnVolver = new JButton("Finalizar la actividad");
+		JButton btnUbicacion = new JButton("Seleccionar ubicacion");
+		
+		panelSur.add(btnUbicacion);
 		panelSur.add(btnVolver);
+		btnUbicacion.addActionListener(this);
 		btnVolver.addActionListener(this);
 	}
 	
@@ -107,6 +112,14 @@ public class Ventana_Cronometro extends JFrame implements ActionListener {
 		else if (comando.equals("Pausar el cronometro")) {
 			timer.stop();
 			actividadUsuario.addTiempo(actividadUsuario.getHoraInicio(), LocalTime.now());
+		}
+		else if (comando.equals("Seleccionar ubicacion")) {
+			SwingUtilities.invokeLater(new Runnable() {
+	            @Override
+	            public void run() {
+	            	arbol = new ProyectTree();
+	            }
+	        });
 		}
 		else if (comando.equals("Finalizar la actividad")) {
 			timer.stop();
