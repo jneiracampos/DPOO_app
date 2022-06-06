@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.tree.TreePath;
+
 import modelo.Participante;
 import modelo.Proyecto;
 import modelo.Tarea;
@@ -87,8 +90,8 @@ public class Enrutador {
 	// Metodo para generar el reporte de un participante
 	//***************************************************************************************
 	
-	public Reporte_Participante generarReporte(Proyecto proyecto, String correoParticipante, String[] paquetes, String nombreTarea, LocalDate fechaActividad) {
-		Reporte_Participante reporte = new Reporte_Participante(proyecto, correoParticipante, paquetes, nombreTarea, fechaActividad);
+	public Reporte_Participante generarReporte(Proyecto proyecto, String correoParticipante, TreePath ruta, LocalDate fechaActividad) throws Exception {
+		Reporte_Participante reporte = new Reporte_Participante(proyecto, correoParticipante, ruta, fechaActividad);
 		return reporte;
 	}
 	

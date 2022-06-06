@@ -2,6 +2,10 @@ package procesamiento;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import javax.swing.tree.TreePath;
+
+import interfaz.Enrutador;
 import modelo.Actividad;
 import modelo.Paquete;
 import modelo.Proyecto;
@@ -34,8 +38,8 @@ public class Reporte_Participante {
 	// Constructor
 	//************************************************************************************************
 	
-	public Reporte_Participante(Proyecto proyecto, String correoParticipante, String[] paquetes, String nombreTarea, LocalDate fechaActividad) {
-		Tarea tarea = encontrarTarea(proyecto, paquetes, nombreTarea);
+	public Reporte_Participante(Proyecto proyecto, String correoParticipante, TreePath ruta, LocalDate fechaActividad) throws Exception {
+		Tarea tarea = encontrarTarea(proyecto, ruta);
 		setTiempoTotal(tarea, correoParticipante);
 		setSizeTiempoTotal(tarea, correoParticipante);
 		setTiempoDiaActividad(tarea, correoParticipante, fechaActividad);
@@ -128,13 +132,27 @@ public class Reporte_Participante {
 	// Otros metodos
 	//***************************************************************************************
 	
-	public Tarea encontrarTarea(Proyecto proyecto, String[] paquetes, String nombreTarea) {
-		Paquete paquete = proyecto.getPaquete(paquetes[0]);
-		for (int i=0; i<paquetes.length; i++) {
-			paquete = paquete.getPaquete(paquetes[i]);
+	public Tarea encontrarTarea(Proyecto proyecto, TreePath ruta) throws Exception {
+
+		if (ruta.getPathCount() == 1) {
+			throw new Exception("Seleccione una ruta");
 		}
-		Tarea tarea = paquete.getTarea(nombreTarea);
-		return tarea;
+		else {
+			Paquete paquete = null;
+			
+			for (int i=1; i<(ruta.getPathCount()-1); i++) {
+				paquete = Enrutador.getInstance().getProyecto().getPaquete(ruta.getPathComponent(i).toString());
+			}
+			
+			Tarea tarea = paquete.getTarea(ruta.getLastPathComponent().toString());
+			
+			if (tarea == null) {
+				throw new Exception("No se encuentra la tarea");
+			}
+			else {
+				return tarea;
+			}
+		}
 	}
 	
 }
